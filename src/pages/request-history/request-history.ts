@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { ServiceRequest } from '../../models/serviceRequest';
 
-/**
- * Generated class for the RequestHistoryPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-request-history',
@@ -14,11 +10,23 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class RequestHistoryPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  serviceRequests = [];
+
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+  
+    public db: AngularFirestore,) {
+
+    db.collection('/serviceRequests').valueChanges().subscribe((data) => {
+      this.serviceRequests = data;
+      console.log(data);
+    });
   }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RequestHistoryPage');
   }
 
+  
 }

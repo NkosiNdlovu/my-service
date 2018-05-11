@@ -20,6 +20,7 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { PostsService } from '../providers/posts-service/posts-service';
 import { Settings } from '../providers/providers';
+import { RequestHistoryPage } from '../pages/request-history/request-history';
 
 
 @Component({
@@ -55,6 +56,7 @@ export class MyApp {
     { title: 'Tutorial', component: TutorialPage },
     { title: 'Home', component: TabsPage },
     // { title: 'Home', component: HomePage },
+    { title: 'Request History', component: RequestHistoryPage },
     { title: 'Social', component: CardsPage },
     // { title: 'Content', component: ContentPage },
     // { title: 'Login', component: LoginPage },

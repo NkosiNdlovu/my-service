@@ -1,18 +1,34 @@
-<!--
-  Generated template for the RequestHistoryPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>request-history</ion-title>
+    <ion-title>Request history</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+
+
+  <ion-list>
+
+    <ion-list-header>Today</ion-list-header>
+
+
+    <ion-item *ngFor="let request of serviceRequests">
+      <ion-avatar item-left>
+        <ion-icon name="car"></ion-icon>
+      </ion-avatar>
+      <h2>{{request.service?.name}}</h2>
+      <p>Comment: {{request.comment}}</p>
+      <div item-right>
+        <p>
+          <ion-note>{{request.requestDate: | timeAgo }}</ion-note>
+        </p>
+        <ion-note>3:43 pm</ion-note>
+      </div>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

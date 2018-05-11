@@ -8,6 +8,7 @@ import { Items } from '../../providers/providers';
 import * as firebase from 'firebase';
 import { ServiceRequest, Guid } from '../../models/serviceRequest';
 import { UserEditPage } from '../user-edit/user-edit';
+import { RequestHistoryPage } from '../request-history/request-history';
 
 @Component({
   selector: 'page-search',
@@ -160,7 +161,9 @@ export class SearchPage {
           subTitle: 'Your request was saved successfully. Go to the request history view to check for progress',
           buttons: ['Dismiss']
         });
-        alert.present();
+        alert.present().then((res) => {
+          this.navCtrl.push(RequestHistoryPage);
+        });
       })
       .catch((error)=>{
 

@@ -2,9 +2,12 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { Http } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicStorageModule, Storage } from '@ionic/storage';
+import { AngularFireModule } from 'angularfire2/angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { TranslateLoader, TranslateModule, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 import { Items } from '../mocks/providers/items';
 import { AboutPage } from '../pages/about/about';
@@ -18,6 +21,7 @@ import { ListMasterPage } from '../pages/list-master/list-master';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
 import { MenuPage } from '../pages/menu/menu';
+import { RequestHistoryPage } from '../pages/request-history/request-history';
 import { SearchPage } from '../pages/search/search';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignupPage } from '../pages/signup/signup';
@@ -31,9 +35,6 @@ import { LocationTracker } from '../providers/location-tracker';
 import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
 import { MyApp } from './app.component';
-import {AngularFireDatabaseModule} from 'angularfire2/database'
-import { AngularFireModule } from 'angularfire2/angularfire2';
-import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
 
 
 // Initialize Firebase
@@ -95,11 +96,34 @@ let pages = [
   ItemCreatePage,
   MenuPage,
   SettingsPage,
-  SearchPage
+  SearchPage,
+  RequestHistoryPage
 ];
 
 export function declarations() {
-  return pages;
+  
+  return [MyApp,
+  CardsPage,
+  UserViewPage,
+  UserEditPage,
+  HomePage,
+  AboutPage,
+  ContactPage,
+  ContentPage,
+  LoginPage,
+  MapPage,
+  SignupPage,
+  TabsPage,
+  TutorialPage,
+  WelcomePage,
+  ListMasterPage,
+  ItemDetailPage,
+  ItemCreatePage,
+  MenuPage,
+  SettingsPage,
+  SearchPage,
+  RequestHistoryPage,
+  TimeAgoPipe]
 }
 
 export function entryComponents() {
