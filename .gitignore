@@ -19,6 +19,9 @@ npm-debug.log*
 .versions/
 coverage/
 node_modules/
+platforms/
+plugins/
+www/
 
 $RECYCLE.BIN/
 
