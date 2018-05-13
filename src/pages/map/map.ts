@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
 
-import { GoogleMap, GoogleMapsLatLng } from 'ionic-native';
+// import { GoogleMap, GoogleMapsLatLng } from 'ionic-native';
 
 declare var google: any;
 
@@ -22,13 +22,13 @@ export class MapPage {
   }
 
   initNativeMaps(mapEle) {
-    this.map = new GoogleMap(mapEle);
-    mapEle.classList.add('show-map');
+    // this.map = new GoogleMap(mapEle);
+    // mapEle.classList.add('show-map');
 
-    GoogleMap.isAvailable().then(() => {
-      const position = new GoogleMapsLatLng(43.074395, -89.381056);
-      this.map.setPosition(position);
-    });
+    // GoogleMap.isAvailable().then(() => {
+    //   const position = new GoogleMapsLatLng(43.074395, -89.381056);
+    //   this.map.setPosition(position);
+    // });
   }
 
   ionViewDidLoad() {

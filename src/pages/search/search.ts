@@ -35,8 +35,8 @@ export class SearchPage {
     public items: Items,
     public actionSheetCtrl: ActionSheetController) {
 
-    db.firestore.settings({ timestampsInSnapshots: true });
-    
+    // db.firestore.settings({ timestampsInSnapshots: true });
+
     this.serviceCategories = [];
 
     db.collection('/serviceCategory').valueChanges().subscribe((data) => {
@@ -78,7 +78,7 @@ export class SearchPage {
 
 
   selectService() {
-    
+
     if(!this.selectedCategory){
       return;
     }
@@ -116,7 +116,7 @@ export class SearchPage {
         this.saveRequest(user);
       } else {
         // User is not logged in- go to the profile page
-        
+
         let alert = this.alertCtrl.create({
           title: 'Login Required',
           subTitle: 'Creating service request requires authentication. Please login or create a profile',
@@ -125,7 +125,7 @@ export class SearchPage {
               text: 'Cancel',
               role: 'cancel',
               handler: () => {
-                this.serviceRequest.service = this.selectedService; 
+                this.serviceRequest.service = this.selectedService;
                 this.navCtrl.push(UserEditPage, this.serviceRequest.service);
               }
             }]
@@ -144,7 +144,7 @@ export class SearchPage {
   }
 
   saveRequest(user){
-    // remove fields that are for display purposes 
+    // remove fields that are for display purposes
     delete this.selectedService.isActive;
 
     // set defaults

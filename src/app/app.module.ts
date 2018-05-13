@@ -1,41 +1,46 @@
-import { ErrorHandler, NgModule } from '@angular/core';
-import { Http } from '@angular/http';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicStorageModule, Storage } from '@ionic/storage';
-import { AngularFireModule } from 'angularfire2/angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import * as firebase from 'firebase';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { TranslateLoader, TranslateModule, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
-import { TimeAgoPipe } from 'time-ago-pipe';
+import { ErrorHandler, NgModule } from "@angular/core";
+import { Http } from "@angular/http";
+import { BrowserModule } from "@angular/platform-browser";
+import { SplashScreen } from "@ionic-native/splash-screen";
+import { StatusBar } from "@ionic-native/status-bar";
+import { IonicStorageModule, Storage } from "@ionic/storage";
+import { AngularFireModule } from "angularfire2";
+import { AngularFirestoreModule } from "angularfire2/firestore";
+import * as firebase from "firebase";
+import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateStaticLoader
+} from "ng2-translate/ng2-translate";
+import { TimeAgoPipe } from "time-ago-pipe";
 
-import { Items } from '../mocks/providers/items';
-import { AboutPage } from '../pages/about/about';
-import { CardsPage } from '../pages/cards/cards';
-import { ContactPage } from '../pages/contact/contact';
-import { ContentPage } from '../pages/content/content';
-import { HomePage } from '../pages/home/home';
-import { ItemCreatePage } from '../pages/item-create/item-create';
-import { ItemDetailPage } from '../pages/item-detail/item-detail';
-import { ListMasterPage } from '../pages/list-master/list-master';
-import { LoginPage } from '../pages/login/login';
-import { MapPage } from '../pages/map/map';
-import { MenuPage } from '../pages/menu/menu';
-import { RequestHistoryPage } from '../pages/request-history/request-history';
-import { SearchPage } from '../pages/search/search';
-import { SettingsPage } from '../pages/settings/settings';
-import { SignupPage } from '../pages/signup/signup';
-import { TabsPage } from '../pages/tabs/tabs';
-import { TutorialPage } from '../pages/tutorial/tutorial';
-import { UserEditPage } from '../pages/user-edit/user-edit';
-import { UserViewPage } from '../pages/user-view/user-view';
-import { WelcomePage } from '../pages/welcome/welcome';
-import { Api } from '../providers/api';
-import { LocationTracker } from '../providers/location-tracker';
-import { Settings } from '../providers/settings';
-import { User } from '../providers/user';
-import { MyApp } from './app.component';
-
+import { Items } from "../mocks/providers/items";
+import { AboutPage } from "../pages/about/about";
+import { CardsPage } from "../pages/cards/cards";
+import { ContactPage } from "../pages/contact/contact";
+import { ContentPage } from "../pages/content/content";
+import { HomePage } from "../pages/home/home";
+import { ItemCreatePage } from "../pages/item-create/item-create";
+import { ItemDetailPage } from "../pages/item-detail/item-detail";
+import { ListMasterPage } from "../pages/list-master/list-master";
+import { LoginPage } from "../pages/login/login";
+import { MapPage } from "../pages/map/map";
+import { MenuPage } from "../pages/menu/menu";
+import { RequestHistoryPage } from "../pages/request-history/request-history";
+import { SearchPage } from "../pages/search/search";
+import { SettingsPage } from "../pages/settings/settings";
+import { SignupPage } from "../pages/signup/signup";
+import { TabsPage } from "../pages/tabs/tabs";
+import { TutorialPage } from "../pages/tutorial/tutorial";
+import { UserEditPage } from "../pages/user-edit/user-edit";
+import { UserViewPage } from "../pages/user-view/user-view";
+import { WelcomePage } from "../pages/welcome/welcome";
+import { Api } from "../providers/api";
+import { LocationTracker } from "../providers/location-tracker";
+import { Settings } from "../providers/settings";
+import { User } from "../providers/user";
+import { MyApp } from "./app.component";
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -52,7 +57,7 @@ firebase.initializeApp(firebaseConfig);
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
 export function createTranslateLoader(http: Http) {
-  return new TranslateStaticLoader(http, './assets/i18n', '.json');
+  return new TranslateStaticLoader(http, "./assets/i18n", ".json");
 }
 
 export function provideSettings(storage: Storage) {
@@ -64,12 +69,11 @@ export function provideSettings(storage: Storage) {
    */
   return new Settings(storage, {
     option1: true,
-    option2: 'Ionitron J. Framework',
-    option3: '3',
-    option4: 'Hello'
+    option2: "Ionitron J. Framework",
+    option3: "3",
+    option4: "Hello"
   });
 }
-
 
 /**
  * The Pages array lists all of the pages we want to use in our app.
@@ -101,29 +105,30 @@ let pages = [
 ];
 
 export function declarations() {
-  
-  return [MyApp,
-  CardsPage,
-  UserViewPage,
-  UserEditPage,
-  HomePage,
-  AboutPage,
-  ContactPage,
-  ContentPage,
-  LoginPage,
-  MapPage,
-  SignupPage,
-  TabsPage,
-  TutorialPage,
-  WelcomePage,
-  ListMasterPage,
-  ItemDetailPage,
-  ItemCreatePage,
-  MenuPage,
-  SettingsPage,
-  SearchPage,
-  RequestHistoryPage,
-  TimeAgoPipe]
+  return [
+    MyApp,
+    CardsPage,
+    UserViewPage,
+    UserEditPage,
+    HomePage,
+    AboutPage,
+    ContactPage,
+    ContentPage,
+    LoginPage,
+    MapPage,
+    SignupPage,
+    TabsPage,
+    TutorialPage,
+    WelcomePage,
+    ListMasterPage,
+    ItemDetailPage,
+    ItemCreatePage,
+    MenuPage,
+    SettingsPage,
+    SearchPage,
+    RequestHistoryPage,
+    TimeAgoPipe
+  ];
 }
 
 export function entryComponents() {
@@ -136,6 +141,8 @@ export function providers() {
     User,
     Api,
     Items,
+    StatusBar,
+    SplashScreen,
     AngularFirestoreModule,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
@@ -153,7 +160,7 @@ export function providers() {
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       provide: TranslateLoader,
-      useFactory: (createTranslateLoader),
+      useFactory: createTranslateLoader,
       deps: [Http]
     })
   ],
@@ -161,4 +168,4 @@ export function providers() {
   entryComponents: entryComponents(),
   providers: providers()
 })
-export class AppModule { }
+export class AppModule {}
