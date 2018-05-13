@@ -13,8 +13,7 @@
 
   <ion-list>
 
-    <ion-list-header>Today</ion-list-header>
-
+    <!-- <ion-list-header>Today</ion-list-header> -->
 
     <ion-item *ngFor="let request of serviceRequests">
       <ion-avatar item-left>
@@ -24,10 +23,13 @@
       <p>Comment: {{request.comment}}</p>
       <div item-right>
         <p>
-          <ion-note>{{request.requestDate: | timeAgo }}</ion-note>
+          <ion-note>{{request.requestDate | timeAgo }}</ion-note>
         </p>
-        <ion-note>3:43 pm</ion-note>
+        <ion-note>Booking: {{request.bookingDate | date}}</ion-note>
       </div>
+
+      <ion-icon item-right name="done-all"></ion-icon>
+      
     </ion-item>
   </ion-list>
 

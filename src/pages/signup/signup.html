@@ -13,11 +13,11 @@
   <form (submit)="doSignup()">
     <ion-list>
     
-      <ion-item >
+      <!-- <ion-item >
         <ion-label stacked>Skill Set (separate with comma)</ion-label>
         <ion-input type="text" [(ngModel)]="skills" name="skills" placeholder="eg. PHP, Writing, Chef" required="required"></ion-input>
       </ion-item>
-      
+       -->
      <ion-item>
         <ion-label stacked>{{ 'EMAIL' | translate }}</ion-label>
         <ion-input type="email" [(ngModel)]="email" name="email" placeholder="eg. john@doe.com"></ion-input>

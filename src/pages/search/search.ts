@@ -35,6 +35,8 @@ export class SearchPage {
     public items: Items,
     public actionSheetCtrl: ActionSheetController) {
 
+    db.firestore.settings({ timestampsInSnapshots: true });
+    
     this.serviceCategories = [];
 
     db.collection('/serviceCategory').valueChanges().subscribe((data) => {
