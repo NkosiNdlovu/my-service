@@ -14,6 +14,7 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { PostsService } from '../providers/posts-service/posts-service';
 import { Settings } from '../providers/providers';
+import { MapPage } from '../pages/map/map';
 
 @Component({
   template: `<ion-menu [content]="content">
@@ -49,7 +50,7 @@ export class MyApp {
     // { title: 'Content', component: ContentPage },
     // { title: 'Login', component: LoginPage },
     // { title: 'Signup', component: SignupPage },
-    // { title: 'Map', component: MapPage },
+    { title: 'Map', component: MapPage },
     // { title: 'Master Detail', component: ListMasterPage },
     // { title: 'Menu', component: MenuPage },
     { title: "Settings", component: SettingsPage },

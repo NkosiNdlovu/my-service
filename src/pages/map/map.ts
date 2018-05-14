@@ -1,52 +1,50 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { NavController } from 'ionic-angular';
 
-// import { GoogleMap, GoogleMapsLatLng } from 'ionic-native';
 
-declare var google: any;
+declare var google;
 
 @Component({
   selector: 'page-map',
   templateUrl: 'map.html'
 })
 export class MapPage {
-  @ViewChild('map') map;
+  @ViewChild('map') mapElement: ElementRef;
+  map: any;
+  start = 'chicago, il';
+  end = 'chicago, il';
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
 
-  constructor(public navCtrl: NavController, public platform: Platform) {}
+  constructor(public navCtrl: NavController) {
 
-  initJSMaps(mapEle) {
-    new google.maps.Map(mapEle, {
-      center: { lat: 43.071584, lng: -89.380120 },
-      zoom: 16
+  }
+
+  ionViewDidLoad(){
+    this.initMap();
+  }
+
+  initMap() {
+    this.map = new google.maps.Map(this.mapElement.nativeElement, {
+      zoom: 15,
+      center: {lat: -25.731340, lng: 28.218370}
     });
+
+    this.directionsDisplay.setMap(this.map);
   }
 
-  initNativeMaps(mapEle) {
-    // this.map = new GoogleMap(mapEle);
-    // mapEle.classList.add('show-map');
-
-    // GoogleMap.isAvailable().then(() => {
-    //   const position = new GoogleMapsLatLng(43.074395, -89.381056);
-    //   this.map.setPosition(position);
-    // });
-  }
-
-  ionViewDidLoad() {
-    let mapEle = this.map.nativeElement;
-
-    if (!mapEle) {
-      console.error('Unable to initialize map, no map element with #map view reference.');
-      return;
-    }
-
-    // Disable this switch if you'd like to only use JS maps, as the APIs
-    // are slightly different between the two. However, this makes it easy
-    // to use native maps while running in Cordova, and JS maps on the web.
-    if (this.platform.is('cordova') === true) {
-      this.initNativeMaps(mapEle);
-    } else {
-      this.initJSMaps(mapEle);
-    }
+  calculateAndDisplayRoute() {
+    this.directionsService.route({
+      origin: this.start,
+      destination: this.end,
+      travelMode: 'DRIVING'
+    }, (response, status) => {
+      if (status === 'OK') {
+        this.directionsDisplay.setDirections(response);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
   }
 
 }
