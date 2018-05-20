@@ -1,6 +1,7 @@
 import { ErrorHandler, NgModule } from '@angular/core';
 import { Http } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { Geolocation } from '@ionic-native/geolocation';
 import { Push } from '@ionic-native/push';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -135,6 +136,7 @@ export function entryComponents() {
 export function providers() {
   return [
     Push,
+    Geolocation,
     LocationTracker,
     User,
     Api,

@@ -1,18 +1,25 @@
-import { Component } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
-import { ActionSheetController, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
+import { Component } from "@angular/core";
+import { Geolocation, Geoposition } from "@ionic-native/geolocation";
+import { AngularFirestore } from "angularfire2/firestore";
+import * as firebase from "firebase";
+import {
+  ActionSheetController,
+  AlertController,
+  NavController,
+  NavParams,
+  ToastController
+} from "ionic-angular";
+import { Observable } from "rxjs/Observable";
 
-import { PostsService } from '../../providers/posts-service/posts-service';
-import { Items } from '../../providers/providers';
-import * as firebase from 'firebase';
-import { ServiceRequest, Guid } from '../../models/serviceRequest';
-import { UserEditPage } from '../user-edit/user-edit';
-import { RequestHistoryPage } from '../request-history/request-history';
+import { Guid, ServiceRequest } from "../../models/serviceRequest";
+import { PostsService } from "../../providers/posts-service/posts-service";
+import { Items } from "../../providers/providers";
+import { RequestHistoryPage } from "../request-history/request-history";
+import { UserEditPage } from "../user-edit/user-edit";
 
 @Component({
-  selector: 'page-request-service',
-  templateUrl: 'request-service.html',
+  selector: "page-request-service",
+  templateUrl: "request-service.html"
 })
 export class RequestServicePage {
   currentItems: any = [];
@@ -21,6 +28,7 @@ export class RequestServicePage {
   test: Observable<any[]>;
   selectedCategory: any;
   selectedService: any;
+  currentLocation: any;
   serviceRequest: ServiceRequest = new ServiceRequest();
 
   constructor(
@@ -31,15 +39,44 @@ export class RequestServicePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public items: Items,
-    public actionSheetCtrl: ActionSheetController) {
-
-    // db.firestore.settings({ timestampsInSnapshots: true });
-
+    public actionSheetCtrl: ActionSheetController,
+    public geolocation: Geolocation
+  ) {
+    let context = this;
     this.serviceCategories = [];
 
-    db.collection('/serviceCategory').valueChanges().subscribe((data) => {
-      this.serviceCategories = data;
-    });
+    db
+      .collection("/serviceCategory")
+      .valueChanges()
+      .subscribe(data => {
+        this.serviceCategories = data;
+      });
+
+    this.geolocation
+      .getCurrentPosition()
+      .then(resp => {
+        alert(resp.coords.latitude);
+        context.currentLocation = {
+          latitude: resp.coords.latitude,
+          longitude: resp.coords.longitude
+        };
+      })
+      .catch(error => {
+        let alert = this.alertCtrl.create({
+          title: "Success!",
+          subTitle:
+            "Unable to access you location, please turn on you location",
+          buttons: ["Dismiss"]
+        });
+        alert.present()
+      });
+
+    //  let watch = this.geolocation.watchPosition();
+    //  watch.subscribe((data) => {
+    //   // data can be a set of coordinates, or an error (if an error occurred).
+    //   // data.coords.latitude
+    //   // data.coords.longitude
+    //  });
   }
 
   getServices(ev) {
@@ -57,10 +94,10 @@ export class RequestServicePage {
     let context = this;
     let actionButtons = [];
 
-    this.serviceCategories.forEach((category) => {
+    this.serviceCategories.forEach(category => {
       actionButtons.push({
         text: category.name,
-        role: 'destructive',
+        role: "destructive",
         handler: () => {
           context.selectedCategory = category;
         }
@@ -68,47 +105,48 @@ export class RequestServicePage {
     });
 
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Select service category',
+      title: "Select service category",
       buttons: actionButtons
     });
     actionSheet.present();
   }
 
-
   selectService() {
-
-    if(!this.selectedCategory){
+    if (!this.selectedCategory) {
       return;
     }
 
     let context = this;
 
-    this.db.collection('/serviceCategory').doc(this.selectedCategory.id).collection("services").valueChanges().subscribe((data) => {
+    this.db
+      .collection("/serviceCategory")
+      .doc(this.selectedCategory.id)
+      .collection("services")
+      .valueChanges()
+      .subscribe(data => {
+        let actionButtons = [];
 
-      let actionButtons = [];
-
-      data.forEach((service: any) => {
-        actionButtons.push({
-          text: service.name,
-          role: 'destructive',
-          handler: () => {
-            context.selectedService = service;
-          }
+        data.forEach((service: any) => {
+          actionButtons.push({
+            text: service.name,
+            role: "destructive",
+            handler: () => {
+              context.selectedService = service;
+            }
+          });
         });
-      });
 
-      let actionSheet = this.actionSheetCtrl.create({
-        title: 'Select Service',
-        buttons: actionButtons
+        let actionSheet = this.actionSheetCtrl.create({
+          title: "Select Service",
+          buttons: actionButtons
+        });
+        actionSheet.present();
       });
-      actionSheet.present();
-
-    });
   }
 
-  requestService(){
+  requestService() {
     // check if the user is logged in
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       if (user) {
         // User is logged in- go to the confirmation page
         this.saveRequest(user);
@@ -116,32 +154,34 @@ export class RequestServicePage {
         // User is not logged in- go to the profile page
 
         let alert = this.alertCtrl.create({
-          title: 'Login Required',
-          subTitle: 'Creating service request requires authentication. Please login or create a profile',
+          title: "Login Required",
+          subTitle:
+            "Creating service request requires authentication. Please login or create a profile",
           buttons: [
             {
-              text: 'Cancel',
-              role: 'cancel',
+              text: "Cancel",
+              role: "cancel",
               handler: () => {
                 this.serviceRequest.service = this.selectedService;
                 this.navCtrl.push(UserEditPage, this.serviceRequest.service);
               }
-            }]
+            }
+          ]
         });
         alert.present();
       }
-
     });
   }
 
   newGuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+      var r = (Math.random() * 16) | 0,
+        v = c == "x" ? r : (r & 0x3) | 0x8;
       return v.toString(16);
     });
   }
 
-  saveRequest(user){
+  saveRequest(user) {
     // remove fields that are for display purposes
     delete this.selectedService.isActive;
 
@@ -150,30 +190,33 @@ export class RequestServicePage {
     this.serviceRequest.bookingDate = new Date();
     this.serviceRequest.id = Guid.newGuid();
     this.serviceRequest.service = this.selectedService;
-    this.serviceRequest.user = {'id': user.uid, 'name': user.email};
+    this.serviceRequest.location = this.currentLocation;
+    this.serviceRequest.user = { id: user.uid, name: user.email };
 
-    this.db.collection('/serviceRequests').doc(this.serviceRequest.id).set(JSON.parse( JSON.stringify(this.serviceRequest)))
-      .then((res)=>{
-
+    this.db
+      .collection("/serviceRequests")
+      .doc(this.serviceRequest.id)
+      .set(JSON.parse(JSON.stringify(this.serviceRequest)))
+      .then(res => {
         // Success
         let alert = this.alertCtrl.create({
-          title: 'Success!',
-          subTitle: 'Your request was saved successfully. Go to the request history view to check for progress',
-          buttons: ['Dismiss']
+          title: "Success!",
+          subTitle:
+            "Your request was saved successfully. Go to the request history view to check for progress",
+          buttons: ["Dismiss"]
         });
-        alert.present().then((res) => {
+        alert.present().then(res => {
           this.navCtrl.push(RequestHistoryPage);
         });
       })
-      .catch((error)=>{
-
+      .catch(error => {
         // Error
         let alert = this.alertCtrl.create({
-          title: 'Error',
-          subTitle: 'Error occurred. Please try again later.',
-          buttons: ['Dismiss']
+          title: "Error",
+          subTitle: "Error occurred. Please try again later.",
+          buttons: ["Dismiss"]
         });
         alert.present();
-      })
+      });
   }
 }
