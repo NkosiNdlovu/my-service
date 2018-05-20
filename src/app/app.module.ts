@@ -1,46 +1,43 @@
-import { ErrorHandler, NgModule } from "@angular/core";
-import { Http } from "@angular/http";
-import { BrowserModule } from "@angular/platform-browser";
-import { SplashScreen } from "@ionic-native/splash-screen";
-import { StatusBar } from "@ionic-native/status-bar";
-import { IonicStorageModule, Storage } from "@ionic/storage";
-import { AngularFireModule } from "angularfire2";
-import { AngularFirestoreModule } from "angularfire2/firestore";
-import * as firebase from "firebase";
-import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
-import {
-  TranslateLoader,
-  TranslateModule,
-  TranslateStaticLoader
-} from "ng2-translate/ng2-translate";
-import { TimeAgoPipe } from "time-ago-pipe";
+import { ErrorHandler, NgModule } from '@angular/core';
+import { Http } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { Push } from '@ionic-native/push';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { IonicStorageModule, Storage } from '@ionic/storage';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import * as firebase from 'firebase';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { TranslateLoader, TranslateModule, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
-import { Items } from "../mocks/providers/items";
-import { AboutPage } from "../pages/about/about";
-import { CardsPage } from "../pages/cards/cards";
-import { ContactPage } from "../pages/contact/contact";
-import { ContentPage } from "../pages/content/content";
-import { HomePage } from "../pages/home/home";
-import { ItemCreatePage } from "../pages/item-create/item-create";
-import { ItemDetailPage } from "../pages/item-detail/item-detail";
-import { ListMasterPage } from "../pages/list-master/list-master";
-import { LoginPage } from "../pages/login/login";
-import { MapPage } from "../pages/map/map";
-import { MenuPage } from "../pages/menu/menu";
-import { RequestHistoryPage } from "../pages/request-history/request-history";
-import { SearchPage } from "../pages/search/search";
-import { SettingsPage } from "../pages/settings/settings";
-import { SignupPage } from "../pages/signup/signup";
-import { TabsPage } from "../pages/tabs/tabs";
-import { TutorialPage } from "../pages/tutorial/tutorial";
-import { UserEditPage } from "../pages/user-edit/user-edit";
-import { UserViewPage } from "../pages/user-view/user-view";
-import { WelcomePage } from "../pages/welcome/welcome";
-import { Api } from "../providers/api";
-import { LocationTracker } from "../providers/location-tracker";
-import { Settings } from "../providers/settings";
-import { User } from "../providers/user";
-import { MyApp } from "./app.component";
+import { Items } from '../mocks/providers/items';
+import { AboutPage } from '../pages/about/about';
+import { CardsPage } from '../pages/cards/cards';
+import { ContactPage } from '../pages/contact/contact';
+import { ContentPage } from '../pages/content/content';
+import { HomePage } from '../pages/home/home';
+import { ItemCreatePage } from '../pages/item-create/item-create';
+import { ItemDetailPage } from '../pages/item-detail/item-detail';
+import { ListMasterPage } from '../pages/list-master/list-master';
+import { LoginPage } from '../pages/login/login';
+import { MapPage } from '../pages/map/map';
+import { MenuPage } from '../pages/menu/menu';
+import { RequestHistoryPage } from '../pages/request-history/request-history';
+import { RequestServicePage } from '../pages/request-service/request-service';
+import { SearchPage } from '../pages/search/search';
+import { SettingsPage } from '../pages/settings/settings';
+import { SignupPage } from '../pages/signup/signup';
+import { TutorialPage } from '../pages/tutorial/tutorial';
+import { UserEditPage } from '../pages/user-edit/user-edit';
+import { UserViewPage } from '../pages/user-view/user-view';
+import { WelcomePage } from '../pages/welcome/welcome';
+import { Api } from '../providers/api';
+import { LocationTracker } from '../providers/location-tracker';
+import { Settings } from '../providers/settings';
+import { User } from '../providers/user';
+import { MyApp } from './app.component';
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -82,6 +79,7 @@ export function provideSettings(storage: Storage) {
  */
 let pages = [
   MyApp,
+  RequestServicePage,
   CardsPage,
   UserViewPage,
   UserEditPage,
@@ -92,7 +90,6 @@ let pages = [
   LoginPage,
   MapPage,
   SignupPage,
-  TabsPage,
   TutorialPage,
   WelcomePage,
   ListMasterPage,
@@ -107,6 +104,7 @@ let pages = [
 export function declarations() {
   return [
     MyApp,
+    RequestServicePage,
     CardsPage,
     UserViewPage,
     UserEditPage,
@@ -117,7 +115,6 @@ export function declarations() {
     LoginPage,
     MapPage,
     SignupPage,
-    TabsPage,
     TutorialPage,
     WelcomePage,
     ListMasterPage,
@@ -137,6 +134,7 @@ export function entryComponents() {
 
 export function providers() {
   return [
+    Push,
     LocationTracker,
     User,
     Api,
