@@ -21,7 +21,7 @@
 
       <h2>{{request.service?.name}}</h2>
       <p>
-        <button ion-button icon-left clear item-right>
+        <button ion-button icon-left clear item-right (click)="openMap(request)">
           <ion-icon name="navigate"></ion-icon>
           View Map
         </button>
@@ -32,9 +32,6 @@
           </p>
           <ion-note>Booking: {{request.bookingDate | date}}</ion-note>
         </div>
-
-        <!-- <ion-icon color="secondary" item-right name="done"></ion-icon> -->
-
     </ion-item>
   </ion-list>
 
