@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ userDislplayName }}</ion-title>
+    <ion-title>{{ userDisplayName }}</ion-title>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -14,7 +14,7 @@
       </button>
     </ion-buttons>
 </ion-navbar>
-  
+
 </ion-header>
 
 
@@ -25,7 +25,7 @@
     <ion-avatar item-left>
       <img src="assets/img/advance-card-bttf.png">
     </ion-avatar>
-    <h2>{{userDislplayName}}</h2>
+    <h2>{{userDisplayName}}</h2>
     <p>{{userCity}} , {{userState}}</p>
   </ion-item>
 
@@ -53,8 +53,8 @@
     </button>
   </ion-item>
 <button ion-button block  color="light" *ngIf="userPhone"><ion-icon name="call"></ion-icon> &nbsp; {{userPhone}}</button>
-  
-  
+
+
 
   <ion-item>
     <ion-icon name="cog" item-left large></ion-icon>

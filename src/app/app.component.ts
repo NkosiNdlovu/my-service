@@ -2,7 +2,7 @@ import { Component, ViewChild } from "@angular/core";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import * as firebase from "firebase";
-import { Config, Nav, Platform } from "ionic-angular";
+import { Config, Nav, Platform, AlertController } from "ionic-angular";
 import { TranslateService } from "ng2-translate/ng2-translate";
 import { Push, PushObject, PushOptions } from "@ionic-native/push";
 
@@ -17,25 +17,12 @@ import { Settings } from "../providers/providers";
 import { MapPage } from "../pages/map/map";
 import { SearchPage } from "../pages/search/search";
 import { RequestServicePage } from "../pages/request-service/request-service";
+import { UserViewPage } from "../pages/user-view/user-view";
+import { UsersService } from "../providers/users-service/users-service";
+import { LoginPage } from "../pages/login/login";
 
 @Component({
-  template: `<ion-menu [content]="content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Menu</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
-      <ion-list>
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-          {{p.title}}
-        </button>
-      </ion-list>
-    </ion-content>
-
-  </ion-menu>
-  <ion-nav #content [root]="rootPage"></ion-nav>`,
+  templateUrl: "app.html",
   providers: [PostsService]
 })
 export class MyApp {
@@ -58,13 +45,17 @@ export class MyApp {
   pushObject: PushObject = this.push.init(this.options);
 
   pages: any[] = [
-    { title: "Tutorial", component: TutorialPage },
-    { title: "Home", component: SearchPage },
-    { title: "Request History", component: RequestHistoryPage },
-    { title: "Social", component: CardsPage },
-    { title: "Map", component: MapPage },
-    { title: "Settings", component: SettingsPage },
-    { title: "Log out", component: WelcomePage }
+    // { title: "Tutorial", component: TutorialPage },
+    { title: "Home", icon: "ios-home-outline", component: SearchPage },
+    {
+      title: "Request History",
+      icon: "ios-apps-outline",
+      component: RequestHistoryPage
+    },
+    { title: "Social", icon: "logo-twitter", component: CardsPage },
+    { title: "Map", icon: "ios-navigate-outline", component: MapPage },
+    { title: "Profile", icon: "ios-contact-outline", component: UserViewPage },
+    { title: "Settings", icon: "ios-settings-outline", component: SettingsPage }
   ];
   constructor(
     private push: Push,
@@ -73,7 +64,9 @@ export class MyApp {
     settings: Settings,
     config: Config,
     statusBar: StatusBar,
-    splashScreen: SplashScreen
+    splashScreen: SplashScreen,
+    public usersService: UsersService,
+    public alertCtrl: AlertController
   ) {
     // Set the default language for translation strings, and the current language.
 
@@ -145,6 +138,34 @@ export class MyApp {
       .then(channels => console.log("List of channels", channels));
   }
 
+  logUserOut() {
+    //pop to confirm if user really wishes to logout
+    let context = this;
+
+    let confirm = this.alertCtrl.create({
+      title: "Are you sure you want to logout?",
+      message: "",
+      buttons: [
+        {
+          text: "Cancel",
+          handler: () => {
+            //do nothing
+          }
+        },
+        {
+          text: "Yes",
+          handler: () => {
+            //call user logout service
+            context.usersService.logoutUser().then(() => {
+              //show toast before redirecting
+              this.nav.setRoot(LoginPage);
+            });
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
   // to initialize push notifications
 
   // pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));

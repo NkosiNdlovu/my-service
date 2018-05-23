@@ -18,7 +18,7 @@
         <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
       </ion-item> -->
       <ion-item>
-        <ion-label stacked>Email</ion-label> 
+        <ion-label stacked>Email</ion-label>
         <ion-input type="email" [(ngModel)]="email" name="email"  required="required"></ion-input>
       </ion-item>
 
@@ -37,21 +37,21 @@
       </ion-item>
 
       <div padding text-center>
-       
-         <button *ngIf="email && password " ion-button color="danger" round (click)="submitLogin()">{{ 'LOGIN_BUTTON' | translate }}</button>
+
+         <button *ngIf="email && password " ion-button color="primary" (click)="submitLogin()">Login</button>
         <!-- Show dead button if form is not filled -->
-        <button *ngIf="!email && !password" ion-button color="danger" clear round>Login Now</button>
-        
-        
+        <button *ngIf="!email && !password" ion-button color="primary" block>Login Now</button>
+
+
       </div>
-     
+
 
     </ion-list>
   </form>
-  
+
    <br/>
-      
+
       <div padding text-center>
-        <button ion-button color="gray" block clear (click)="redirectToSignup()">Create new account</button>
+        <button ion-button color="light" block clear (click)="redirectToSignup()">Create new account</button>
       </div>
 </ion-content>

@@ -12,7 +12,7 @@
 
   <form (submit)="doSignup()">
     <ion-list>
-    
+
       <!-- <ion-item >
         <ion-label stacked>Skill Set (separate with comma)</ion-label>
         <ion-input type="text" [(ngModel)]="skills" name="skills" placeholder="eg. PHP, Writing, Chef" required="required"></ion-input>
@@ -36,7 +36,7 @@
         <ion-label stacked>{{ 'PASSWORD' | translate }}</ion-label>
         <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
       </ion-item>
- <!--     
+ <!--
       <ion-item>
         <ion-label stacked>Repeat Password</ion-label>
         <ion-input type="password" [(ngModel)]="repeat-password" name="repeat-password"></ion-input>
@@ -46,12 +46,12 @@
 <hr/>
       <ion-item>
         <ion-label stacked>First name</ion-label>
-        <ion-input type="text" [(ngModel)]="first_name" name="first_name"></ion-input>
+        <ion-input type="text" [(ngModel)]="firstName" name="firstName"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label stacked>Last name</ion-label>
-        <ion-input type="text" [(ngModel)]="last_name" name="last_name"></ion-input>
+        <ion-input type="text" [(ngModel)]="lastName" name="lastName"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -71,10 +71,10 @@
 
 
 
-     
+
 
       <div padding text-center>
-        <button ion-button color="danger" round>{{ 'SIGNUP_BUTTON' | translate }}</button>
+        <button ion-button round>Sign UP</button>
       </div>
 
     </ion-list>

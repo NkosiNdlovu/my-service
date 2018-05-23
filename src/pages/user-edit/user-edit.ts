@@ -26,8 +26,8 @@ public skills : string;
   public about : any;
   public phone : any;
   public password : any;
-  public first_name : any;
-  public last_name : any;
+  public firstName : any;
+  public lastName : any;
   public city : any;
   public state : any;
   public country : any;
@@ -63,8 +63,8 @@ public userDetails = [];
           that.skills = snapshot.val().skills || '';
 		  that.email  = snapshot.val().email || '';
 		  that.phone  = snapshot.val().phone || '';
-		  that.first_name  = snapshot.val().first_name || '';
-		  that.last_name  = snapshot.val().last_name || '';
+		  that.firstName  = snapshot.val().firstName || '';
+		  that.lastName  = snapshot.val().lastName || '';
 		  that.city  = snapshot.val().city || '';
 		  that.about  = snapshot.val().about || '';
 		  that.state  = snapshot.val().state || '';
@@ -87,8 +87,8 @@ public userDetails = [];
    updateProfile(){
    	 var  postData = {
 	  	email: this.email,
-	  	first_name: this.first_name,
-	  	last_name: this.last_name,
+	  	firstName: this.firstName,
+	  	lastName: this.lastName,
 	  	skills: this.skills,
 	  	phone: this.phone,
 	  	city: this.about,

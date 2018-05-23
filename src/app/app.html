@@ -1,17 +1,25 @@
-<!-- <ion-menu [content]="content">
-    <ion-header>
-        <ion-toolbar>
-            <ion-title>Menu</ion-title>
-        </ion-toolbar>
-    </ion-header>
+<ion-menu [content]="content">
 
-    <ion-content>
-        <ion-list>
-            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-                {{p.title}}
-            </button>
-        </ion-list>
-    </ion-content>
+  <ion-content>
+
+    <ion-list>
+      <ion-item>
+        <ion-icon margin style="color:red" menuClose name="close"></ion-icon>
+      </ion-item>
+      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+
+        <ion-icon class="menu-icon" name="{{p.icon}}"></ion-icon>
+        {{p.title}}
+      </button>
+
+    </ion-list>
+    <ion-footer>
+      <button color="primary" menuClose ion-item no-lines (click)="logUserOut()">
+        <ion-icon name="ios-log-out-outline" start></ion-icon>
+        Log out
+      </button>
+    </ion-footer>
+  </ion-content>
+
 </ion-menu>
-
-<ion-nav #content [root]="rootPage"></ion-nav> -->
+<ion-nav #content [root]="rootPage"></ion-nav>

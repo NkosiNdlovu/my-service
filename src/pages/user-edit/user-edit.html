@@ -16,7 +16,7 @@
   <img src="{[userDetails.profilePic}}"/>
   <ion-card-content>
     <ion-card-title>
-      {{first_name}} {{last_name}}
+      {{firstName}} {{lastName}}
       </ion-card-title>
     <p>
       {{about}}
@@ -27,7 +27,7 @@
 
   <form >
     <ion-list>
-    
+
       <ion-item >
         <ion-label stacked>Skill Set (separate with comma)</ion-label>
         <ion-input type="text" [(ngModel)]="skills" name="skills" placeholder="eg. PHP, Writing, Chef" required="required"></ion-input>
@@ -36,12 +36,12 @@
 <hr/>
       <ion-item>
         <ion-label stacked>First name</ion-label>
-        <ion-input type="text" [(ngModel)]="first_name" name="first_name"></ion-input>
+        <ion-input type="text" [(ngModel)]="firstName" name="firstName"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label stacked>Last name</ion-label>
-        <ion-input type="text" [(ngModel)]="last_name" name="last_name"></ion-input>
+        <ion-input type="text" [(ngModel)]="lastName" name="lastName"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -61,10 +61,10 @@
 
 
 
-     
+
 
       <div padding text-center>
-        <button ion-button color="danger" round  (click)="updateProfile()">Update Profile </button>
+        <button ion-button (click)="updateProfile()">Update Profile </button>
       </div>
 
     </ion-list>
