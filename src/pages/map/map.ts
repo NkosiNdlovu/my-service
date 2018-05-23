@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
 import { Geolocation } from "@ionic-native/geolocation";
 import { AngularFirestore } from "angularfire2/firestore";
-import { NavController, AlertController } from "ionic-angular";
+import { NavController, AlertController, NavParams } from "ionic-angular";
 
 declare var google;
 
@@ -15,6 +15,8 @@ export class MapPage {
   start = "chicago, il";
   end = "chicago, il";
   serviceRequests: any;
+
+  serviceRequest: any;
   directionsService = new google.maps.DirectionsService();
   directionsDisplay = new google.maps.DirectionsRenderer();
   mapCenter: any;
@@ -23,27 +25,35 @@ export class MapPage {
     public navCtrl: NavController,
     public db: AngularFirestore,
     public geolocation: Geolocation,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    public navParams: NavParams
   ) {
     let context = this;
 
     this.serviceRequests = [];
 
-
+    this.serviceRequests = navParams.get("serviceRequests");
   }
 
   ionViewDidLoad() {
-    this.db
-    .collection("/serviceRequests")
-    .valueChanges()
-    .subscribe(data => {
-      this.serviceRequests = data;
-      this.createMapView();
-    });
+    console.log(this.serviceRequests);
+    let context = this;
+    if (!this.serviceRequests) {
+      this.db
+        .collection("/serviceRequests")
+        .valueChanges()
+        .subscribe(data => {
+          this.serviceRequests = data;
+          context.createMapView();
+        });
+    } else {
 
+      context.createMapView();
+
+    }
   }
 
-  createMapView(){
+  createMapView() {
     let context = this;
     this.geolocation
       .getCurrentPosition()
@@ -53,25 +63,24 @@ export class MapPage {
           lat: resp.coords.latitude,
           lng: resp.coords.longitude
         };
-        context.initMap()
+        context.initMap();
       })
       .catch(error => {
         context.mapCenter = { lat: -25.73134, lng: 28.21837 };
-        context.initMap()
+        context.initMap();
         let alert = this.alertCtrl.create({
           title: "Success!",
           subTitle:
             "Unable to access you location, please turn on you location",
           buttons: ["Dismiss"]
         });
-        alert.present()
+        alert.present();
       });
   }
   showCurrentLocation() {
     this.geolocation.watchPosition().subscribe(
       position => {
-
-        if(! position.coords){
+        if (!position.coords) {
           return;
         }
 
@@ -109,8 +118,7 @@ export class MapPage {
     });
   }
   addMarkersToMap(request) {
-
-    if(!request.location){
+    if (!request.location) {
       return;
     }
 

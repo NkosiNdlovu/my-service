@@ -24,17 +24,15 @@ export class RequestHistoryPage {
     });
   }
 
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad RequestHistoryPage');
   }
 
-  openMap(request){
+  openMap(serviceRequest){
 
     this.navCtrl.push(MapPage, {
-      data: request
+      serviceRequests: [serviceRequest]
     });
 
   }
-
 }
