@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import { Geolocation, Geoposition } from "@ionic-native/geolocation";
+import { DatePicker } from "@ionic-native/date-picker";
+import { Geolocation } from "@ionic-native/geolocation";
 import { AngularFirestore } from "angularfire2/firestore";
 import * as firebase from "firebase";
 import {
@@ -16,6 +17,7 @@ import { PostsService } from "../../providers/posts-service/posts-service";
 import { Items } from "../../providers/providers";
 import { RequestHistoryPage } from "../request-history/request-history";
 import { UserEditPage } from "../user-edit/user-edit";
+import { Time } from "@angular/common";
 
 @Component({
   selector: "page-request-service",
@@ -29,9 +31,15 @@ export class RequestServicePage {
   selectedCategory: any;
   selectedService: any;
   currentLocation: any;
+  bookingDate: Date;
+  bookingTimeRangeStart: number;
+  bookingTimeRangeEnd: number;
+  allowedHoursSelectionButtons: Array<any>;
+  allowedHours = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
   serviceRequest: ServiceRequest = new ServiceRequest();
 
   constructor(
+    private datePicker: DatePicker,
     public db: AngularFirestore,
     public toastCtrl: ToastController,
     private alertCtrl: AlertController,
@@ -68,7 +76,7 @@ export class RequestServicePage {
             "Unable to access you location, please turn on you location",
           buttons: ["Dismiss"]
         });
-        alert.present()
+        alert.present();
       });
 
     //  let watch = this.geolocation.watchPosition();
@@ -144,7 +152,75 @@ export class RequestServicePage {
       });
   }
 
+
+
+  selectStartTime() {
+    let context = this;
+    let actionButtons = [];
+
+    this.allowedHours.forEach(hour => {
+      actionButtons.push({
+        text: hour + "00h",
+        role: "destructive",
+        handler: () => {
+          context.selectedCategory = hour;
+        }
+      });
+    });
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: "Select availability start time",
+      buttons: actionButtons
+    });
+    actionSheet.present();
+  }
+
+  selectEndTime() {
+    let context = this;
+    let actionButtons = [];
+
+    this.allowedHours.forEach(hour => {
+      actionButtons.push({
+        text: hour + "00h",
+        role: "destructive",
+        handler: () => {
+          context.selectedCategory = hour;
+        }
+      });
+    });
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: "Select availability end time",
+      buttons: actionButtons
+    });
+    actionSheet.present();
+  }
+
+  selectBookingDate() {
+    let context = this;
+
+    this.datePicker
+      .show({
+        date: new Date(),
+        mode: "date",
+        androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+      })
+      .then(date => context.submitRequest());
+  }
+
   requestService() {
+    let context = this;
+
+    this.datePicker
+      .show({
+        date: new Date(),
+        mode: "date",
+        androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+      })
+      .then(date => context.submitRequest());
+  }
+
+  submitRequest() {
     // check if the user is logged in
     firebase.auth().onAuthStateChanged(user => {
       if (user) {

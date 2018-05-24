@@ -29,6 +29,33 @@
     </ion-item>
 
     <ion-item>
+      <div  text-center>
+        <button full outline padding ion-button color="primary" (click)="selectBookingDate()">
+          <span *ngIf="!bookingDate">Select booking date</span>
+          <span style="color:green" *ngIf="bookingDate">Date: {{bookingDate}}</span>
+        </button>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <div  text-center>
+        <button full outline padding ion-button color="primary" (click)="selectStartTime()">
+          <span *ngIf="!bookingTimeRangeStart">Select availability (start time)</span>
+          <span style="color:green" *ngIf="bookingTimeRangeStart">Date: {{bookingTimeRangeStart}}</span>
+        </button>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <div  text-center>
+        <button full outline padding ion-button color="primary" (click)="selectEndTime()">
+          <span *ngIf="!bookingTimeRangeEnd">Select availability (end time</span>
+          <span style="color:green" *ngIf="bookingTimeRangeEnd">Date: {{bookingTimeRangeEnd}}</span>
+        </button>
+      </div>
+    </ion-item>
+
+    <ion-item>
 
         <input style="width: 100%;" [ngModel]="serviceRequest.comment" type="text" placeholder="Comment"/>
 
