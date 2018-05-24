@@ -44,6 +44,9 @@ import { Settings } from "../providers/settings";
 import { User } from "../providers/user";
 import { MyApp } from "./app.component";
 import { UsersService } from "../providers/users-service/users-service";
+import { DatePicker } from "@ionic-native/date-picker";
+import { CreateSchedulePage } from "../pages/create-schedule/create-schedule";
+import { MySchedulePage } from "../pages/my-schedule/my-schedule";
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -85,6 +88,8 @@ export function provideSettings(storage: Storage) {
  */
 let pages = [
   MyApp,
+  MySchedulePage,
+  CreateSchedulePage,
   RequestServicePage,
   CardsPage,
   UserViewPage,
@@ -146,6 +151,7 @@ export function providers() {
     User,
     UsersService,
     Api,
+    DatePicker,
     Items,
     StatusBar,
     SplashScreen,

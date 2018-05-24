@@ -20,6 +20,8 @@ import { RequestServicePage } from "../pages/request-service/request-service";
 import { UserViewPage } from "../pages/user-view/user-view";
 import { UsersService } from "../providers/users-service/users-service";
 import { LoginPage } from "../pages/login/login";
+import { CreateSchedulePage } from "../pages/create-schedule/create-schedule";
+import { MySchedulePage } from "../pages/my-schedule/my-schedule";
 
 @Component({
   templateUrl: "app.html",
@@ -47,6 +49,7 @@ export class MyApp {
   pages: any[] = [
     // { title: "Tutorial", component: TutorialPage },
     { title: "Home", icon: "ios-home-outline", component: SearchPage },
+    { title: "Schedule", icon: "ios-home-outline", component: MySchedulePage },
     {
       title: "Request History",
       icon: "ios-apps-outline",

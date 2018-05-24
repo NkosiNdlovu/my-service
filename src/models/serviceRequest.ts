@@ -8,6 +8,9 @@ export class ServiceRequest{
   service: IdName;
   user: UserNameSurname;
   requestDate?:Date;
+  bookingTimeRangeStart?: number;
+  bookingTimeRangeEnd?: number;
+
   constructor(){
     this.bookingDate = null;
     this.comment = null;
@@ -15,6 +18,8 @@ export class ServiceRequest{
     this.service = null;
     this.user = null;
     this.requestDate = null;
+    this.bookingTimeRangeEnd = null;
+    this.bookingTimeRangeStart = null;
   }
 }
 

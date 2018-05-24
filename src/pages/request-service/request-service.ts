@@ -152,18 +152,16 @@ export class RequestServicePage {
       });
   }
 
-
-
   selectStartTime() {
     let context = this;
     let actionButtons = [];
 
     this.allowedHours.forEach(hour => {
       actionButtons.push({
-        text: hour + "00h",
+        text: hour + " 00h",
         role: "destructive",
         handler: () => {
-          context.selectedCategory = hour;
+          context.bookingTimeRangeStart = hour;
         }
       });
     });
@@ -180,13 +178,15 @@ export class RequestServicePage {
     let actionButtons = [];
 
     this.allowedHours.forEach(hour => {
-      actionButtons.push({
-        text: hour + "00h",
-        role: "destructive",
-        handler: () => {
-          context.selectedCategory = hour;
-        }
-      });
+      if (context.bookingTimeRangeStart > hour) {
+        actionButtons.push({
+          text: hour + " 00h",
+          role: "destructive",
+          handler: () => {
+            context.bookingTimeRangeEnd = hour;
+          }
+        });
+      }
     });
 
     let actionSheet = this.actionSheetCtrl.create({
@@ -209,15 +209,17 @@ export class RequestServicePage {
   }
 
   requestService() {
-    let context = this;
 
-    this.datePicker
-      .show({
-        date: new Date(),
-        mode: "date",
-        androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-      })
-      .then(date => context.submitRequest());
+    this.submitRequest();
+    // let context = this;
+
+    // this.datePicker
+    //   .show({
+    //     date: new Date(),
+    //     mode: "date",
+    //     androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+    //   })
+    //   .then(date => context.submitRequest());
   }
 
   submitRequest() {
@@ -268,6 +270,8 @@ export class RequestServicePage {
     this.serviceRequest.service = this.selectedService;
     this.serviceRequest.location = this.currentLocation;
     this.serviceRequest.user = { id: user.uid, name: user.email };
+    this.serviceRequest.bookingTimeRangeStart = this.bookingTimeRangeStart;
+    this.serviceRequest.bookingTimeRangeEnd = this.bookingTimeRangeEnd;
 
     this.db
       .collection("/serviceRequests")
