@@ -6,13 +6,13 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { MainPage } from '../../pages/pages';
 import { SignupPage } from '../signup/signup';
 //import { User } from '../../providers/user';
-import { UsersService } from '../../providers/users-service/users-service';
+import { UserService } from '../../providers/users-service/users-service';
 import * as firebase from 'firebase';
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
-  providers: [UsersService]
+  providers: [UserService]
 })
 export class LoginPage {
   // The account fields for the login form.
@@ -33,7 +33,7 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public toastCtrl: ToastController,
     public translateService: TranslateService,
-    public usersService: UsersService,
+    public usersService: UserService,
     public loadingCtrl: LoadingController) {
 
     this.translateService.get('LOGIN_ERROR').subscribe((value) => {

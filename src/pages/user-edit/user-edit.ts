@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController, AlertController, NavParams } from 'ionic-angular';
-import { UsersService } from '../../providers/users-service/users-service';
+import { UserService } from '../../providers/users-service/users-service';
 import { PostsService } from '../../providers/posts-service/posts-service';
 import * as firebase from 'firebase';
 import { UserViewPage } from '../user-view/user-view';

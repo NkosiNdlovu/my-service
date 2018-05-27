@@ -1,14 +1,17 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title class="text-center"><ion-icon name="add-circle"></ion-icon> {{ 'SIGNUP_TITLE' | translate }}</ion-title>
+    <ion-title class="text-center">
+      <ion-icon name="add-circle"></ion-icon> {{ 'SIGNUP_TITLE' | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-<div class="splash-logo"></div>
+  <div class="splash-logo-container">
+    <div class="splash-logo"></div>
+  </div>
 
   <form (submit)="doSignup()">
     <ion-list>
@@ -18,7 +21,7 @@
         <ion-input type="text" [(ngModel)]="skills" name="skills" placeholder="eg. PHP, Writing, Chef" required="required"></ion-input>
       </ion-item>
        -->
-     <ion-item>
+      <ion-item>
         <ion-label stacked>{{ 'EMAIL' | translate }}</ion-label>
         <ion-input type="email" [(ngModel)]="email" name="email" placeholder="eg. john@doe.com"></ion-input>
       </ion-item>
@@ -36,14 +39,14 @@
         <ion-label stacked>{{ 'PASSWORD' | translate }}</ion-label>
         <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
       </ion-item>
- <!--
+      <!--
       <ion-item>
         <ion-label stacked>Repeat Password</ion-label>
         <ion-input type="password" [(ngModel)]="repeat-password" name="repeat-password"></ion-input>
       </ion-item>
 -->
 
-<hr/>
+      <hr/>
       <ion-item>
         <ion-label stacked>First name</ion-label>
         <ion-input type="text" [(ngModel)]="firstName" name="firstName"></ion-input>
@@ -64,7 +67,7 @@
       </ion-item>
 
 
-      <ion-item >
+      <ion-item>
         <ion-label stacked>Phone</ion-label>
         <ion-input type="text" [(ngModel)]="phone" name="phone" placeholder="eg. 0802222222" required="required"></ion-input>
       </ion-item>

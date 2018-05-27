@@ -9,7 +9,7 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { UserAccount } from "../../models/account";
 
 @Injectable()
-export class UsersService {
+export class UserService {
   public data: any;
   public fireAuth: any;
   public userProfile: AngularFirestoreCollection<any>;

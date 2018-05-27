@@ -7,7 +7,7 @@ import {
 } from "ionic-angular";
 import { LoginPage } from "../login/login";
 import { UserEditPage } from "../user-edit/user-edit";
-import { UsersService } from "../../providers/users-service/users-service";
+import { UserService } from "../../providers/users-service/users-service";
 import * as firebase from "firebase";
 import { UserAccount } from "../../models/account";
 //import { Items } from '../../providers/providers';
@@ -15,7 +15,7 @@ import { UserAccount } from "../../models/account";
 @Component({
   selector: "page-user-view",
   templateUrl: "user-view.html",
-  providers: [UsersService]
+  providers: [UserService]
 })
 export class UserViewPage {
   item: any;
@@ -34,7 +34,7 @@ export class UserViewPage {
     public toatCtrl: ToastController,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public usersService: UsersService
+    public usersService: UserService
   ) {
     this.myUserId = firebase.auth().currentUser.uid; //current user id
 

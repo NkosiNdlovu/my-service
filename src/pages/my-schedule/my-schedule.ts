@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { CreateSchedulePage } from '../create-schedule/create-schedule';
+import { UserService } from '../../providers/users-service/users-service';
 
 @Component({
   selector: "page-my-schedule",
@@ -17,7 +18,9 @@ export class MySchedulePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public db: AngularFirestore
+    public db: AngularFirestore,
+    public userService: UserService
+
   ) {
     let context = this;
     let userRef = this.db.collection("/schedules").doc(this.userId).ref;

@@ -41,7 +41,7 @@ import { Api } from '../providers/api';
 import { LocationTracker } from '../providers/location-tracker';
 import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
-import { UsersService } from '../providers/users-service/users-service';
+import { UserService } from '../providers/users-service/users-service';
 import { MyApp } from './app.component';
 
 // Initialize Firebase
@@ -147,7 +147,7 @@ export function providers() {
     Geolocation,
     LocationTracker,
     User,
-    UsersService,
+    UserService,
     Api,
     DatePicker,
     Items,

@@ -8,7 +8,7 @@ import {
 import { TranslateService } from "ng2-translate/ng2-translate";
 
 import { MainPage } from "../../pages/pages";
-import { UsersService } from "../../providers/users-service/users-service";
+import { UserService } from "../../providers/users-service/users-service";
 import * as firebase from "firebase";
 import { UserAccount } from "../../models/account";
 
@@ -21,7 +21,7 @@ import { UserAccount } from "../../models/account";
 @Component({
   selector: "page-signup",
   templateUrl: "signup.html",
-  providers: [UsersService]
+  providers: [UserService]
 })
 export class SignupPage {
   // The account fields for the login form.
@@ -45,7 +45,7 @@ export class SignupPage {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public translateService: TranslateService,
-    public usersService: UsersService
+    public usersService: UserService
   ) {
     this.translateService.get("SIGNUP_ERROR").subscribe(value => {
       this.signupErrorString = value;

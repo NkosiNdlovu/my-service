@@ -8,18 +8,21 @@
 
 
 <ion-content>
-<div class="splash-logo"></div>
-<br/>
-<br/>
-  <form >
+
+  <div class="splash-logo-container">
+    <div class="splash-logo"></div>
+  </div>
+  <br/>
+  <br/>
+  <form>
     <ion-list>
-     <!-- <ion-item>
+      <!-- <ion-item>
         <ion-label fixed>{{ 'EMAIL' | translate }}</ion-label>
         <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
       </ion-item> -->
       <ion-item>
         <ion-label stacked>Email</ion-label>
-        <ion-input type="email" [(ngModel)]="email" name="email"  required="required"></ion-input>
+        <ion-input type="email" [(ngModel)]="email" name="email" required="required"></ion-input>
       </ion-item>
 
       <!--
@@ -38,7 +41,7 @@
 
       <div padding text-center>
 
-         <button *ngIf="email && password " ion-button color="primary" (click)="submitLogin()">Login</button>
+        <button *ngIf="email && password " ion-button color="primary" (click)="submitLogin()">Login</button>
         <!-- Show dead button if form is not filled -->
         <button *ngIf="!email && !password" ion-button color="primary" block>Login Now</button>
 
@@ -49,9 +52,9 @@
     </ion-list>
   </form>
 
-   <br/>
+  <br/>
 
-      <div padding text-center>
-        <button ion-button color="light" block clear (click)="redirectToSignup()">Create new account</button>
-      </div>
+  <div padding text-center>
+    <button ion-button color="light" block clear (click)="redirectToSignup()">Create new account</button>
+  </div>
 </ion-content>

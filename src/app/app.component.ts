@@ -18,7 +18,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { UserViewPage } from '../pages/user-view/user-view';
 import { PostsService } from '../providers/posts-service/posts-service';
 import { Settings } from '../providers/providers';
-import { UsersService } from '../providers/users-service/users-service';
+import { UserService } from '../providers/users-service/users-service';
 
 @Component({
   templateUrl: "app.html",
@@ -64,7 +64,7 @@ export class MyApp {
     config: Config,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    public usersService: UsersService,
+    public usersService: UserService,
     public alertCtrl: AlertController
   ) {
     // Set the default language for translation strings, and the current language.
