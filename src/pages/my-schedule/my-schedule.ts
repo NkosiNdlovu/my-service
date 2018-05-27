@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { AngularFirestore } from "angularfire2/firestore";
-import { Schedule } from "../../models/schedule";
-import * as firebase from "firebase";
+import { Component } from '@angular/core';
+import { AngularFirestore } from 'angularfire2/firestore';
+import * as firebase from 'firebase';
+import { NavController, NavParams } from 'ionic-angular';
+
+import { CreateSchedulePage } from '../create-schedule/create-schedule';
 
 @Component({
   selector: "page-my-schedule",
@@ -48,7 +49,11 @@ export class MySchedulePage {
     });
   }
 
-  editSchedule() {}
+  editSchedule() {
+    this.navCtrl.push(CreateSchedulePage);
+  }
 
-  createSchedule() {}
+  createSchedule() {
+    this.navCtrl.push(CreateSchedulePage);
+  }
 }

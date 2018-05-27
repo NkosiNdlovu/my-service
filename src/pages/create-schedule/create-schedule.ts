@@ -1,13 +1,7 @@
-import { Component } from "@angular/core";
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  ActionSheetController
-} from "ionic-angular";
-import { Schedule } from "../../models/schedule";
-import * as firebase from "firebase";
-import { AngularFirestore } from "angularfire2/firestore";
+import { Component } from '@angular/core';
+import { AngularFirestore } from 'angularfire2/firestore';
+import * as firebase from 'firebase';
+import { ActionSheetController, NavController, NavParams } from 'ionic-angular';
 
 @Component({
   selector: "page-create-schedule",

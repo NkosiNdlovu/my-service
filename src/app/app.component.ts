@@ -1,27 +1,24 @@
-import { Component, ViewChild } from "@angular/core";
-import { SplashScreen } from "@ionic-native/splash-screen";
-import { StatusBar } from "@ionic-native/status-bar";
-import * as firebase from "firebase";
-import { Config, Nav, Platform, AlertController } from "ionic-angular";
-import { TranslateService } from "ng2-translate/ng2-translate";
-import { Push, PushObject, PushOptions } from "@ionic-native/push";
+import { Component, ViewChild } from '@angular/core';
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import * as firebase from 'firebase';
+import { AlertController, Config, Nav, Platform } from 'ionic-angular';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { CardsPage } from "../pages/cards/cards";
-import { FirstRunPage, MainPage } from "../pages/pages";
-import { RequestHistoryPage } from "../pages/request-history/request-history";
-import { SettingsPage } from "../pages/settings/settings";
-import { TutorialPage } from "../pages/tutorial/tutorial";
-import { WelcomePage } from "../pages/welcome/welcome";
-import { PostsService } from "../providers/posts-service/posts-service";
-import { Settings } from "../providers/providers";
-import { MapPage } from "../pages/map/map";
-import { SearchPage } from "../pages/search/search";
-import { RequestServicePage } from "../pages/request-service/request-service";
-import { UserViewPage } from "../pages/user-view/user-view";
-import { UsersService } from "../providers/users-service/users-service";
-import { LoginPage } from "../pages/login/login";
-import { CreateSchedulePage } from "../pages/create-schedule/create-schedule";
-import { MySchedulePage } from "../pages/my-schedule/my-schedule";
+import { CardsPage } from '../pages/cards/cards';
+import { LoginPage } from '../pages/login/login';
+import { MapPage } from '../pages/map/map';
+import { MySchedulePage } from '../pages/my-schedule/my-schedule';
+import { FirstRunPage } from '../pages/pages';
+import { RequestHistoryPage } from '../pages/request-history/request-history';
+import { RequestServicePage } from '../pages/request-service/request-service';
+import { SearchPage } from '../pages/search/search';
+import { SettingsPage } from '../pages/settings/settings';
+import { UserViewPage } from '../pages/user-view/user-view';
+import { PostsService } from '../providers/posts-service/posts-service';
+import { Settings } from '../providers/providers';
+import { UsersService } from '../providers/users-service/users-service';
 
 @Component({
   templateUrl: "app.html",

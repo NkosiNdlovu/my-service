@@ -1,7 +1,7 @@
-import { Component, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { NavController, ViewController } from "ionic-angular";
-import { Camera, CameraOptions } from "@ionic-native/camera";
+import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { NavController, ViewController } from 'ionic-angular';
 
 @Component({
   selector: "page-item-create",

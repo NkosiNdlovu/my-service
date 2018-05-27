@@ -11,7 +11,7 @@
 
 
 <ion-content padding>
-  <ion-card>
+  <ion-card *ngIf="schedule">
     Occurs every week on Sunday starting from 2/04/2018 until 30/06/2018
 
     <ion-item>
@@ -20,6 +20,15 @@
       </div>
     </ion-item>
 
+  </ion-card>
+
+  <ion-card *ngIf="!schedule">
+    No schedule has been created
+    <ion-item>
+      <div text-center>
+        <button padding ion-button color="light" (click)="createSchedule()">Create</button>
+      </div>
+    </ion-item>
   </ion-card>
 
   <ion-item>
