@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
-import * as firebase from 'firebase';
-import { ActionSheetController, NavController, NavParams } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { AngularFirestore } from "angularfire2/firestore";
+import * as firebase from "firebase";
+import { ActionSheetController, NavController, NavParams } from "ionic-angular";
+import { UserService } from "../../providers/users-service/users-service";
+import { Schedule } from "../../models/schedule";
 
 @Component({
   selector: "page-create-schedule",
   templateUrl: "create-schedule.html"
 })
 export class CreateSchedulePage {
-  schedule: any; //= new Schedule();
+  schedule = new Schedule();
 
   userId: string;
 
@@ -18,15 +20,17 @@ export class CreateSchedulePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public actionSheetCtrl: ActionSheetController,
-    public db: AngularFirestore
+    public db: AngularFirestore,
+    public userService: UserService
   ) {
     let context = this;
-
+    this.userId = userService.currentUserId;
+    console.log(this.userId);
     let userRef = this.db.collection("/schedules").doc(this.userId).ref;
 
     userRef
       .get()
-      .then(function(documentSnapshot) {
+      .then(function(documentSnapshot: any) {
         if (documentSnapshot.exists) {
           // do something with the data
 
@@ -40,15 +44,6 @@ export class CreateSchedulePage {
       .then(function(err) {
         console.log();
       });
-
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        context.userId = user.uid;
-      } else {
-        // user is not logged in
-        // Redirect TBD
-      }
-    });
   }
 
   selectWeekFrequency() {
@@ -96,7 +91,7 @@ export class CreateSchedulePage {
 
     days.forEach(x => {
       actionButtons.push({
-        text: "Every " + x + " weeks",
+        text:  x + "s",
         role: "destructive",
         handler: () => {
           context.schedule.day = x;
@@ -138,16 +133,23 @@ export class CreateSchedulePage {
     let actionButtons = [];
 
     this.allowedHours.forEach(hour => {
-      if (context.schedule.timeRangeStart > hour) {
+      if (context.schedule.timeRangeStart < hour) {
         actionButtons.push({
           text: hour + " 00h",
           role: "destructive",
           handler: () => {
-            context.schedule.timeRangeStart = hour;
+            context.schedule.timeRangeEnd = hour;
           }
         });
       }
     });
+
+    // Show action sheet
+    let actionSheet = this.actionSheetCtrl.create({
+      title: "Select availability end time",
+      buttons: actionButtons
+    });
+    actionSheet.present();
   }
 
   saveSchedule() {

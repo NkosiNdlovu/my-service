@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, AlertController, ToastController, ActionSheetController } from 'ionic-angular';
-
-// import { UserViewPage } from '../user-view/user-view';
+import { Geolocation } from '@ionic-native/geolocation';
+import * as firebase from 'firebase';
+import GeoFire from 'geofire';
+import { ActionSheetController, AlertController, ModalController, NavController, ToastController } from 'ionic-angular';
 
 import { PostsService } from '../../providers/posts-service/posts-service';
-import * as firebase from 'firebase';
-import GeoFire from 'geofire'; //I created a geofire.d.ts file in /app folder that's why this works'
+
 
 //geolocation
-import { Geolocation } from '@ionic-native/geolocation';
-
 @Component({
   selector: 'page-list-master',
   templateUrl: 'list-master.html',
@@ -23,11 +21,11 @@ export class ListMasterPage {
   public firebaseRef: any;
   constructor(
     public postsService: PostsService,
-    public alertCtrl: AlertController, 
-    public toastCtrl: ToastController, 
-    public navCtrl: NavController, 
-    public actionSheetCtrl: ActionSheetController, 
-    public modalCtrl: ModalController, 
+    public alertCtrl: AlertController,
+    public toastCtrl: ToastController,
+    public navCtrl: NavController,
+    public actionSheetCtrl: ActionSheetController,
+    public modalCtrl: ModalController,
     private geolocation: Geolocation) {
 
     this.listUsersNearby();
@@ -39,7 +37,7 @@ export class ListMasterPage {
     this.listCategories();
 
     this.firebaseRef = firebase.database().ref('users-location/');
-    this.geoFire = new GeoFire(this.firebaseRef); //this 
+    this.geoFire = new GeoFire(this.firebaseRef); //this
   }
 
   getUserLocation() {
@@ -97,8 +95,8 @@ export class ListMasterPage {
              latitude : data.coords.latitude,
              longitude : data.coords.longitude
           }
-      
-      
+
+
           this.postsService.overwriteAnythingService('/users-location/'+this.userId, postData).then(()=>{
              console.log("location saved");
           });

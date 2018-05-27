@@ -56,7 +56,6 @@ export class RequestServicePage {
     this.geolocation
       .getCurrentPosition()
       .then(resp => {
-        alert(resp.coords.latitude);
         context.currentLocation = {
           latitude: resp.coords.latitude,
           longitude: resp.coords.longitude
@@ -64,7 +63,7 @@ export class RequestServicePage {
       })
       .catch(error => {
         let alert = this.alertCtrl.create({
-          title: "Success!",
+          title: "Error!",
           subTitle:
             "Unable to access you location, please turn on you location",
           buttons: ["Dismiss"]

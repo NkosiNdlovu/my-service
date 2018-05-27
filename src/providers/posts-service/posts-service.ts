@@ -1,6 +1,7 @@
+import 'rxjs/add/operator/map';
+
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
 import * as firebase from 'firebase';
 
 @Injectable()
@@ -73,7 +74,7 @@ export class PostsService {
   updateAnythingService(path: any, postData: {}) {
     /* var updatePath = {};
      updatePath[path] = postData;
-   
+
    //update both nodes simultaneously
      return this.fireRef.set(updatePath); */
 
@@ -127,34 +128,34 @@ export class PostsService {
 
   /*
    addPicture(path: any, uploadDataContent : {}): any {
- 
+
      console.log("Started post service addPicture()");
      var that = this;
       this.eventList.child('questions').push(uploadDataContent['answer'])
      .then((newGuest) => {
        console.log("Pushed uploadcontent good");
- 
+
        if (uploadDataContent['photo'] != null) {
          that.profilePictureRef.child(newGuest.key).child('profilePicture.png')
        .putString(uploadDataContent['photo'], 'base64', {contentType: 'image/png'})
          .then((savedPicture) => {
- 
- 
+
+
            that.eventList.child('questions').child(newGuest.key).child('profilePicture')
            .set(savedPicture.downloadURL);
- 
+
          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
       that.progress = (savedPicture.bytesTransferred / savedPicture.totalBytes) * 100;
- 
- 
+
+
         console.log('Upload is ' + that.progress + '% done');
        return that.progress;
- 
+
          });
        }
- 
- 
- 
+
+
+
      });
    } */
 

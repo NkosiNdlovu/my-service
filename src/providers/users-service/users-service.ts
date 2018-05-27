@@ -13,7 +13,7 @@ export class UserService {
   public data: any;
   public fireAuth: any;
   public userProfile: AngularFirestoreCollection<any>;
-  user: BehaviorSubject<UserAccount> = new BehaviorSubject(null);
+  currentUserId: string
 
   constructor(private http: Http, public db: AngularFirestore) {
     this.fireAuth = firebase.auth();

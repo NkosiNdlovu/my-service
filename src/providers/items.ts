@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { Api } from './api';
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 
 import { Item } from '../models/item';
+import { Api } from './api';
 
 @Injectable()
 export class Items {

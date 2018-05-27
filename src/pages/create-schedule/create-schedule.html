@@ -14,8 +14,8 @@
     <ion-item>
       <div text-center>
         <button full outline padding ion-button color="primary" (click)="selectWeekFrequency()">
-          <span *ngIf="!selectedCategory">Select Frequency</span>
-          <span style="color:green" *ngIf="selectedCategory">Occurs every {{selectedCategory.name}}</span>
+          <span *ngIf="!schedule.weeklyFrequency">Select Frequency</span>
+          <span style="color:green" *ngIf="schedule.weeklyFrequency">Occurs every {{schedule.weeklyFrequency}} week</span>
         </button>
       </div>
     </ion-item>
@@ -23,8 +23,8 @@
     <ion-item>
       <div text-center>
         <button full outline padding ion-button color="primary" (click)="selectDays()">
-          <span *ngIf="!selectedService">Select day</span>
-          <span style="color:green" *ngIf="selectedService">Service: {{selectedService.name}}</span>
+          <span *ngIf="!schedule.day">Select day</span>
+          <span style="color:green" *ngIf="schedule.day">ON: {{schedule.day}}s</span>
         </button>
       </div>
     </ion-item>
@@ -32,8 +32,8 @@
     <ion-item>
       <div text-center>
         <button full outline padding ion-button color="primary" (click)="selectStartTime()">
-          <span *ngIf="!bookingTimeRangeStart">Select availability (start time)</span>
-          <span style="color:green" *ngIf="bookingTimeRangeStart">Date: {{bookingTimeRangeStart}} 00h</span>
+          <span *ngIf="!schedule.timeRangeStart">Select availability (start time)</span>
+          <span style="color:green" *ngIf="schedule.timeRangeStart">Available from: {{schedule.timeRangeStart}} 00h</span>
         </button>
       </div>
     </ion-item>
@@ -41,15 +41,15 @@
     <ion-item>
       <div text-center>
         <button full outline padding ion-button color="primary" (click)="selectEndTime()">
-          <span *ngIf="!bookingTimeRangeEnd">Select availability (end time</span>
-          <span style="color:green" *ngIf="bookingTimeRangeEnd">Date: {{bookingTimeRangeEnd}}</span>
+          <span *ngIf="!schedule.timeRangeEnd">Select availability (end time</span>
+          <span style="color:green" *ngIf="schedule.timeRangeEnd">Available until: {{schedule.timeRangeEnd}}  00h</span>
         </button>
       </div>
     </ion-item>
 
     <ion-item>
       <div text-center>
-        <button padding ion-button color="primary" (click)="createSchedule()">Create</button>
+        <button padding ion-button color="primary" (click)="saveSchedule()">Create</button>
       </div>
     </ion-item>
   </ion-card>

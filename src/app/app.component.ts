@@ -44,7 +44,7 @@ export class MyApp {
   pushObject: PushObject = this.push.init(this.options);
 
   pages: any[] = [
-    { title: "Home", icon: "ios-home-outline", component: SearchPage },
+    { title: "Home", icon: "ios-home-outline", component: RequestServicePage },
     { title: "Schedule", icon: "ios-alarm-outline", component: MySchedulePage },
     {
       title: "Request History",
@@ -72,13 +72,13 @@ export class MyApp {
     //check logged in status
     var that = this;
 
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user: any) => {
       if (user) {
+        console.log(user);
+        this.usersService.currentUserId = user.uid;
         that.nav.setRoot(RequestServicePage);
-        // that.rootPage = RequestServicePage;
       } else {
         that.nav.setRoot(FirstRunPage);
-        // that.rootPage = FirstRunPage;
       }
     });
 

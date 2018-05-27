@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { ActionSheetController, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import * as firebase from 'firebase';
+import { ActionSheetController, AlertController, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
+import { Guid, ServiceRequest } from '../../models/serviceRequest';
 import { PostsService } from '../../providers/posts-service/posts-service';
 import { Items } from '../../providers/providers';
-import * as firebase from 'firebase';
-import { ServiceRequest, Guid } from '../../models/serviceRequest';
-import { UserEditPage } from '../user-edit/user-edit';
 import { RequestHistoryPage } from '../request-history/request-history';
+import { UserEditPage } from '../user-edit/user-edit';
 
 @Component({
   selector: 'page-search',

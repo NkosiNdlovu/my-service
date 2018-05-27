@@ -12,28 +12,37 @@
 
 <ion-content padding>
   <ion-card *ngIf="schedule">
-    Occurs every week on Sunday starting from 2/04/2018 until 30/06/2018
-
+    <ion-card-title text-center padding>
+      Occurs {{schedule.weeklyFrequency}} weeks on {{schedule.day}}
+    </ion-card-title>
+    <span>
+      Schedule end date: {{schedule.validUntil}}
+    </span>
     <ion-item>
       <div text-center>
-        <button padding ion-button color="light" (click)="editSchedule()">Edit</button>
+        <button padding ion-button color="light" (click)="editSchedule()">
+          <ion-icon name="ios-card-outline"></ion-icon> Edit</button>
+        <button padding ion-button color="light" (click)="pauseSchedule()">
+          <ion-icon name="ios-pause-outline"></ion-icon>Pause</button>
+        <button padding ion-button color="light" (click)="cancelSchedule()">
+          <ion-icon name="ios-trash-outline"></ion-icon>Cancel</button>
       </div>
     </ion-item>
 
   </ion-card>
 
   <ion-card *ngIf="!schedule">
-    No schedule has been created
+    <ion-card-title text-center padding>
+      No schedule has been created
+    </ion-card-title>
+
     <ion-item>
       <div text-center>
-        <button padding ion-button color="light" (click)="createSchedule()">Create</button>
+        <button padding ion-button color="light" (click)="createSchedule()">Create New Schedule</button>
+
       </div>
     </ion-item>
   </ion-card>
 
-  <ion-item>
-    <div text-center>
-      <button padding ion-button color="primary" (click)="createSchedule()">Create New Schedule</button>
-    </div>
-  </ion-item>
+
 </ion-content>

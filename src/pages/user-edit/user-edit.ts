@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ToastController, AlertController, NavParams } from 'ionic-angular';
-import { UserService } from '../../providers/users-service/users-service';
-import { PostsService } from '../../providers/posts-service/posts-service';
 import * as firebase from 'firebase';
+import { AlertController, IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+
+import { PostsService } from '../../providers/posts-service/posts-service';
 import { UserViewPage } from '../user-view/user-view';
-import { HomePage } from '../home/home';
+
 //import { ImagePicker } from '@ionic-native/image-picker';
 /**
  * Generated class for the UserEdit page.
@@ -36,30 +36,30 @@ public guestPicture : any;
 public userDetails = [];
 
   constructor( public navCtrl: NavController,public alertCtrl: AlertController, public navParams: NavParams, public toastCtrl: ToastController, public postsService : PostsService) {
-  	
+
   	this.myUserId = firebase.auth().currentUser.uid; //current user id
     this.getUserDetails(this.myUserId);
   }
 
 
- 
+
  getUserDetails(userId : any){
  	var that = this;
   	  let toast = this.toastCtrl.create({
       message: 'Fetching user profile...',
     });
-    
+
     toast.present();
-    
+
   	this.postsService.listSomethingOnceService('/users/'+userId).then((snapshot)=>{
 
 //that.userDetails.length = null; //so that it ddoesn't repeat the list
-  
+
 		  var data = snapshot.val();
           data['profilePic'] = '/assets/img/marty-avatar.png';
           that.userDetails.push(snapshot.val());
           that.userId = snapshot.key;
-          
+
           that.skills = snapshot.val().skills || '';
 		  that.email  = snapshot.val().email || '';
 		  that.phone  = snapshot.val().phone || '';
@@ -69,10 +69,10 @@ public userDetails = [];
 		  that.about  = snapshot.val().about || '';
 		  that.state  = snapshot.val().state || '';
 		  that.country  = snapshot.val().country || '';
-		  
+
 	  toast.dismiss();
-        
-                
+
+
 
   	}, error =>{
   		  let toast = this.toastCtrl.create({
@@ -82,8 +82,8 @@ public userDetails = [];
     toast.present();
   		});
  }
- 
- 
+
+
    updateProfile(){
    	 var  postData = {
 	  	email: this.email,
@@ -94,9 +94,9 @@ public userDetails = [];
 	  	city: this.about,
 	  	state: this.state,
 	  	country: this.country,
-	  	
+
 	  }
-	  
+
 	  console.log(postData);
 
 	  this.postsService.updateAnythingService('users/'+this.myUserId, postData).then(()=> {
@@ -121,14 +121,14 @@ public userDetails = [];
 			    duration: 3000,
 			    position: 'top'
 			  });
-	  		
+
 	  		toast.present();
 	  	});
    }
-   
-   
-   
-   
+
+
+
+
 /*
    deleteCategory(categoryId : any){
    		 let confirm = this.alertCtrl.create({
@@ -179,7 +179,7 @@ public userDetails = [];
   for (var i = 0; i < results.length; i++) {
       console.log('Image URI: ' + results[i]);
       var imageUrl = results[i];
-  } 
+  }
 
   //upload to firebase
   //imageUrl

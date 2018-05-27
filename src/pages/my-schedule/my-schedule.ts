@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import * as firebase from 'firebase';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { CreateSchedulePage } from '../create-schedule/create-schedule';
+import { Schedule } from '../../models/schedule';
 import { UserService } from '../../providers/users-service/users-service';
+import { CreateSchedulePage } from '../create-schedule/create-schedule';
 
 @Component({
   selector: "page-my-schedule",
@@ -13,7 +13,7 @@ import { UserService } from '../../providers/users-service/users-service';
 export class MySchedulePage {
   userId: string;
 
-  schedule: any;
+  schedule: Schedule;
 
   constructor(
     public navCtrl: NavController,
@@ -23,11 +23,12 @@ export class MySchedulePage {
 
   ) {
     let context = this;
+    this.userId = userService.currentUserId;
     let userRef = this.db.collection("/schedules").doc(this.userId).ref;
 
     userRef
       .get()
-      .then(function(documentSnapshot) {
+      .then(function(documentSnapshot: any) {
         if (documentSnapshot.exists) {
           // do something with the data
 
@@ -41,15 +42,6 @@ export class MySchedulePage {
       .then(function(err) {
         console.log();
       });
-
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        context.userId = user.uid;
-      } else {
-        // user is not logged in
-        // Redirect TBD
-      }
-    });
   }
 
   editSchedule() {
@@ -58,5 +50,12 @@ export class MySchedulePage {
 
   createSchedule() {
     this.navCtrl.push(CreateSchedulePage);
+  }
+
+  cancelSchedule(){
+
+  }
+  pauseSchedule(){
+
   }
 }
