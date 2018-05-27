@@ -135,7 +135,9 @@ export function declarations() {
     SettingsPage,
     SearchPage,
     RequestHistoryPage,
-    TimeAgoPipe
+    TimeAgoPipe,
+    MySchedulePage,
+    CreateSchedulePage
   ];
 }
 

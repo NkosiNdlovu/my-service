@@ -1,25 +1,54 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { AngularFirestore } from "angularfire2/firestore";
+import { Schedule } from "../../models/schedule";
+import * as firebase from "firebase";
 
-/**
- * Generated class for the MySchedulePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
-  selector: 'page-my-schedule',
-  templateUrl: 'my-schedule.html',
+  selector: "page-my-schedule",
+  templateUrl: "my-schedule.html"
 })
 export class MySchedulePage {
+  userId: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  schedule: any;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public db: AngularFirestore
+  ) {
+    let context = this;
+    let userRef = this.db.collection("/schedules").doc(this.userId).ref;
+
+    userRef
+      .get()
+      .then(function(documentSnapshot) {
+        if (documentSnapshot.exists) {
+          // do something with the data
+
+          context.schedule = documentSnapshot.data();
+
+          console.log(context.schedule);
+        } else {
+          console.log("document not found");
+        }
+      })
+      .then(function(err) {
+        console.log();
+      });
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        context.userId = user.uid;
+      } else {
+        // user is not logged in
+        // Redirect TBD
+      }
+    });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MySchedulePage');
-  }
+  editSchedule() {}
 
+  createSchedule() {}
 }

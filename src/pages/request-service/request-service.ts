@@ -1,23 +1,16 @@
-import { Component } from "@angular/core";
-import { DatePicker } from "@ionic-native/date-picker";
-import { Geolocation } from "@ionic-native/geolocation";
-import { AngularFirestore } from "angularfire2/firestore";
-import * as firebase from "firebase";
-import {
-  ActionSheetController,
-  AlertController,
-  NavController,
-  NavParams,
-  ToastController
-} from "ionic-angular";
-import { Observable } from "rxjs/Observable";
+import { Component } from '@angular/core';
+import { DatePicker } from '@ionic-native/date-picker';
+import { Geolocation } from '@ionic-native/geolocation';
+import { AngularFirestore } from 'angularfire2/firestore';
+import * as firebase from 'firebase';
+import { ActionSheetController, AlertController, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 
-import { Guid, ServiceRequest } from "../../models/serviceRequest";
-import { PostsService } from "../../providers/posts-service/posts-service";
-import { Items } from "../../providers/providers";
-import { RequestHistoryPage } from "../request-history/request-history";
-import { UserEditPage } from "../user-edit/user-edit";
-import { Time } from "@angular/common";
+import { Guid, ServiceRequest } from '../../models/serviceRequest';
+import { PostsService } from '../../providers/posts-service/posts-service';
+import { Items } from '../../providers/providers';
+import { RequestHistoryPage } from '../request-history/request-history';
+import { UserEditPage } from '../user-edit/user-edit';
 
 @Component({
   selector: "page-request-service",

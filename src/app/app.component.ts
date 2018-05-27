@@ -47,9 +47,8 @@ export class MyApp {
   pushObject: PushObject = this.push.init(this.options);
 
   pages: any[] = [
-    // { title: "Tutorial", component: TutorialPage },
     { title: "Home", icon: "ios-home-outline", component: SearchPage },
-    { title: "Schedule", icon: "ios-home-outline", component: MySchedulePage },
+    { title: "Schedule", icon: "ios-alarm-outline", component: MySchedulePage },
     {
       title: "Request History",
       icon: "ios-apps-outline",
