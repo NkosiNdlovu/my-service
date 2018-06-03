@@ -13,6 +13,7 @@ import { UserAccount } from "../../models/account";
 
 @Injectable()
 export class UserService {
+
   private _currentUserId: string;
   public data: any;
   public fireAuth: any;
@@ -54,6 +55,9 @@ export class UserService {
     userRef.valueChanges().subscribe((user: UserAccount) => {
       context.currentUser$.next(user);
     });
+  }
+  getUsers(): any {
+    return this.userProfileCol.valueChanges();
   }
 
   viewUser(userId: any) {

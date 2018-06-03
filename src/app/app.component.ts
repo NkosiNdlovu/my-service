@@ -22,6 +22,7 @@ import { UserService } from "../providers/users-service/users-service";
 import { PageModel } from "../models/page";
 import { UserAccount } from "../models/account";
 import { ViewMyRequestsPage } from "../pages/view-my-requests/view-my-requests";
+import { UserCreatePage } from "../pages/user-create/user-create";
 
 @Component({
   templateUrl: "app.html",
@@ -81,6 +82,12 @@ export class MyApp {
       title: "Admin Map",
       icon: "ios-navigate-outline",
       component: MapPage,
+      roles: { user: false, provider: false, admin: true }
+    },
+    {
+      title: "Create Users",
+      icon: "ios-contact-outline",
+      component: UserCreatePage,
       roles: { user: false, provider: false, admin: true }
     },
     {

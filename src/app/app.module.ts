@@ -43,6 +43,7 @@ import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
 import { UserService } from '../providers/users-service/users-service';
 import { MyApp } from './app.component';
+import { UserCreatePage } from '../pages/user-create/user-create';
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -90,6 +91,7 @@ let pages = [
   CardsPage,
   UserViewPage,
   UserEditPage,
+  UserCreatePage,
   HomePage,
   AboutPage,
   ContactPage,
@@ -115,6 +117,7 @@ export function declarations() {
     CardsPage,
     UserViewPage,
     UserEditPage,
+    UserCreatePage,
     HomePage,
     AboutPage,
     ContactPage,
