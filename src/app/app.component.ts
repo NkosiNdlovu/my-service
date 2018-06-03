@@ -23,6 +23,7 @@ import { PageModel } from "../models/page";
 import { UserAccount } from "../models/account";
 import { ViewMyRequestsPage } from "../pages/view-my-requests/view-my-requests";
 import { UserCreatePage } from "../pages/user-create/user-create";
+import { UserListPage } from "../pages/user-list/user-list";
 
 @Component({
   templateUrl: "app.html",
@@ -87,7 +88,7 @@ export class MyApp {
     {
       title: "Create Users",
       icon: "ios-contact-outline",
-      component: UserCreatePage,
+      component: UserListPage,
       roles: { user: false, provider: false, admin: true }
     },
     {

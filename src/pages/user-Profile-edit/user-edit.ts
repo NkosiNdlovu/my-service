@@ -10,14 +10,10 @@ import { UserViewPage } from '../user-view/user-view';
 @IonicPage()
 @Component({
   selector: "page-user-edit",
-  templateUrl: "user-edit.html",
-  providers: [PostsService]
+  templateUrl: "user-edit.html"
 })
 export class UserEditPage {
   public userId: any;
-  public guestPicture: any;
-  public userDetails = [];
-
   currentUser: UserAccount;
 
   constructor(
@@ -40,16 +36,7 @@ export class UserEditPage {
   }
 
   updateProfile() {
-    // var postData = {
-    //   email: this.currentUser.email,
-    //   firstName: this.currentUser.firstName,
-    //   lastName: this.currentUser.lastName,
-    //   phone: this.currentUser.phone,
-    //   city: this.currentUser.city,
-    //   state: this.currentUser.state,
-    //   country: this.currentUser.country
-    // };
-
+    
     this.userService.updateUserProfile(this.userId, this.currentUser).then(
       () => {
         //toast

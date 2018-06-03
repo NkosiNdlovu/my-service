@@ -34,7 +34,7 @@ import { SearchPage } from '../pages/search/search';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignupPage } from '../pages/signup/signup';
 import { TutorialPage } from '../pages/tutorial/tutorial';
-import { UserEditPage } from '../pages/user-edit/user-edit';
+import { UserEditPage } from '../pages/user-profile-edit/user-edit';
 import { UserViewPage } from '../pages/user-view/user-view';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { Api } from '../providers/api';
@@ -44,6 +44,7 @@ import { User } from '../providers/user';
 import { UserService } from '../providers/users-service/users-service';
 import { MyApp } from './app.component';
 import { UserCreatePage } from '../pages/user-create/user-create';
+import { UserListPage } from '../pages/user-list/user-list';
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -91,6 +92,7 @@ let pages = [
   CardsPage,
   UserViewPage,
   UserEditPage,
+  UserListPage,
   UserCreatePage,
   HomePage,
   AboutPage,
@@ -117,6 +119,7 @@ export function declarations() {
     CardsPage,
     UserViewPage,
     UserEditPage,
+    UserListPage,
     UserCreatePage,
     HomePage,
     AboutPage,

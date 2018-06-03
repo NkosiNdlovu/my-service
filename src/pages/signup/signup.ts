@@ -54,6 +54,7 @@ export class SignupPage {
 
   doSignup() {
     var account: UserAccount = {
+      id : '',
       firstName: this.firstName,
       lastName: this.lastName || "",
       skills: this.skills || "",

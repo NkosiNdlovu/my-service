@@ -56,8 +56,8 @@ export class UserService {
       context.currentUser$.next(user);
     });
   }
-  getUsers(): any {
-    return this.userProfileCol.valueChanges();
+  getUsers(){
+    return this.db.collection("profiles").valueChanges();
   }
 
   viewUser(userId: any) {
@@ -66,7 +66,6 @@ export class UserService {
   }
 
   signUpUser(account: {}) {
-    console.log(account + "Values to view");
     let context = this;
 
     return this.fireAuth
@@ -89,6 +88,7 @@ export class UserService {
               .signInWithEmailAndPassword(account["email"], account["password"])
               .then(authenticatedUser => {
                 // successful login, create user profile
+                account['id'] = authenticatedUser.uid;
                 context.userProfileCol.doc(authenticatedUser.uid).set(account);
               });
           });

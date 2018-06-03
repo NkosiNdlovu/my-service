@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
-import * as firebase from 'firebase';
-import { AlertController, IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Component } from "@angular/core";
+import {
+  AlertController,
+  NavController,
+  NavParams,
+  ToastController
+} from "ionic-angular";
 
-import { UserAccount } from '../../models/account';
-import { PostsService } from '../../providers/posts-service/posts-service';
-import { UserService } from '../../providers/users-service/users-service';
-import { UserViewPage } from '../user-view/user-view';
+import { UserAccount } from "../../models/account";
+import { PostsService } from "../../providers/posts-service/posts-service";
+import { UserService } from "../../providers/users-service/users-service";
+import { UserCreatePage } from "../user-create/user-create";
 
 @Component({
   selector: "page-user-list",
@@ -13,10 +17,6 @@ import { UserViewPage } from '../user-view/user-view';
   providers: [PostsService]
 })
 export class UserListPage {
-  public userId: any;
-  public guestPicture: any;
-  public userDetails = [];
-
   users: Array<UserAccount>;
 
   constructor(
@@ -26,19 +26,20 @@ export class UserListPage {
     public toastCtrl: ToastController,
     public userService: UserService
   ) {
-
     let that = this;
 
-    this.userId = firebase.auth().currentUser.uid; //current user id
+    this.users = [];
 
-    this.users = []
-
-    this.userService.getUsers().subscribe((user) => {
-      that.users = user;
-    })
+    this.userService.getUsers().subscribe((users: any) => {
+      console.log(users);
+      that.users = users;
+    });
   }
 
-  editUser(){
-
+  editUser(userId) {
+    this.navCtrl.push(UserCreatePage, { userId: userId });
+  }
+  createNew() {
+    this.navCtrl.push(UserCreatePage, { userId: '' });
   }
 }

@@ -10,7 +10,7 @@ import { Guid, ServiceRequest } from '../../models/serviceRequest';
 import { PostsService } from '../../providers/posts-service/posts-service';
 import { Items } from '../../providers/providers';
 import { RequestHistoryPage } from '../request-history/request-history';
-import { UserEditPage } from '../user-edit/user-edit';
+import { UserEditPage } from '../user-profile-edit/user-edit';
 
 @Component({
   selector: "page-request-service",

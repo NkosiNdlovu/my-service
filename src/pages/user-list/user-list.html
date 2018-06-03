@@ -16,21 +16,34 @@
 
       <h2>{{user.firstName}} {{user.lastName}}</h2>
       <p>
-        <button ion-button icon-left clear item-right>
-          <ion-icon name="navigate"></ion-icon>
-          Edit
-        </button>
 
+        <ion-icon name="phone-portrait"></ion-icon> {{user.phone}}
         <div item-right>
-          <p>
-            <ion-note *ngIf="user.roles.admin">Is Admin</ion-note>
-            <ion-note *ngIf="user.roles.user">Is User</ion-note>
-            <ion-note *ngIf="user.roles.provider">Is Provider</ion-note>
+          <p *ngIf="user.roles?.admin">
+            <ion-note>Is Admin</ion-note>
+          </p>
+          <p *ngIf="user.roles?.user">
+            <ion-note>Is User</ion-note>
+          </p>
+          <p *ngIf="user.roles?.provider">
+            <ion-note>Is Provider</ion-note>
           </p>
           <ion-note>
-            <ion-icon name="cell"></ion-icon>: {{user.phone}}</ion-note>
+            <button type="button" ion-button icon-left clear item-right (click)="editUser(user.id)">
+              <ion-icon name="md-create"></ion-icon>
+              Edit
+            </button>
+          </ion-note>
         </div>
+
     </ion-item>
+    <ion-item>
+      <button type="button" ion-button icon-left (click)="createNew()">
+        <ion-icon name="ios-create-outline"></ion-icon>
+        Create new user
+      </button>
+    </ion-item>
+
   </ion-list>
 
 </ion-content>

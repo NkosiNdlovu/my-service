@@ -6,7 +6,7 @@ import {
   ToastController
 } from "ionic-angular";
 import { LoginPage } from "../login/login";
-import { UserEditPage } from "../user-edit/user-edit";
+import { UserEditPage } from "../user-profile-edit/user-edit";
 import { UserService } from "../../providers/users-service/users-service";
 import * as firebase from "firebase";
 import { UserAccount } from "../../models/account";

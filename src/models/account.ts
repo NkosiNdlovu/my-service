@@ -1,4 +1,5 @@
 export class UserAccount {
+  id: string;
   firstName: string;
   lastName: string;
   skills: string;
