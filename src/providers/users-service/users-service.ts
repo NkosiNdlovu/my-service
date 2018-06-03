@@ -2,7 +2,10 @@ import "rxjs/add/operator/map";
 
 import { Injectable } from "@angular/core";
 import { Http } from "@angular/http";
-import { AngularFirestore, AngularFirestoreCollection } from "angularfire2/firestore";
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from "angularfire2/firestore";
 import * as firebase from "firebase";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
@@ -10,14 +13,23 @@ import { UserAccount } from "../../models/account";
 
 @Injectable()
 export class UserService {
+  private _currentUserId: string;
   public data: any;
   public fireAuth: any;
   public userProfile: AngularFirestoreCollection<any>;
-  currentUserId: string
+  set currentUserId(value) {
+    this._currentUserId = value;
+    this.getCurrentUserProfile();
+  }
+  get currentUserId() {
+    return this._currentUserId;
+  }
+  currentUser$: BehaviorSubject<UserAccount>;
 
   constructor(private http: Http, public db: AngularFirestore) {
     this.fireAuth = firebase.auth();
     this.userProfile = db.collection("profiles");
+    this.currentUser$ = new BehaviorSubject<UserAccount>(null);
   }
 
   loadUser(number) {
@@ -33,6 +45,14 @@ export class UserService {
           this.data = data.results;
           resolve(this.data);
         });
+    });
+  }
+
+  getCurrentUserProfile() {
+    let context = this;
+    var userRef = this.userProfile.doc(this.currentUserId);
+    userRef.valueChanges().subscribe((user: UserAccount) => {
+      context.currentUser$.next(user);
     });
   }
 
@@ -99,7 +119,7 @@ export class UserService {
           let user = result.user;
 
           let res = result.user.displayName.split(" ");
-          let userAccount= new  UserAccount();
+          let userAccount = new UserAccount();
 
           // userAccount = {
           //   email: user.email,

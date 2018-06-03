@@ -1,24 +1,27 @@
-import { Component, ViewChild } from '@angular/core';
-import { Push, PushObject, PushOptions } from '@ionic-native/push';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-import * as firebase from 'firebase';
-import { AlertController, Config, Nav, Platform } from 'ionic-angular';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { Component, ViewChild, ApplicationRef } from "@angular/core";
+import { Push, PushObject, PushOptions } from "@ionic-native/push";
+import { SplashScreen } from "@ionic-native/splash-screen";
+import { StatusBar } from "@ionic-native/status-bar";
+import * as firebase from "firebase";
+import { AlertController, Config, Nav, Platform } from "ionic-angular";
+import { TranslateService } from "ng2-translate/ng2-translate";
 
-import { CardsPage } from '../pages/cards/cards';
-import { LoginPage } from '../pages/login/login';
-import { MapPage } from '../pages/map/map';
-import { MySchedulePage } from '../pages/my-schedule/my-schedule';
-import { FirstRunPage } from '../pages/pages';
-import { RequestHistoryPage } from '../pages/request-history/request-history';
-import { RequestServicePage } from '../pages/request-service/request-service';
-import { SearchPage } from '../pages/search/search';
-import { SettingsPage } from '../pages/settings/settings';
-import { UserViewPage } from '../pages/user-view/user-view';
-import { PostsService } from '../providers/posts-service/posts-service';
-import { Settings } from '../providers/providers';
-import { UserService } from '../providers/users-service/users-service';
+import { CardsPage } from "../pages/cards/cards";
+import { LoginPage } from "../pages/login/login";
+import { MapPage } from "../pages/map/map";
+import { MySchedulePage } from "../pages/my-schedule/my-schedule";
+import { FirstRunPage } from "../pages/pages";
+import { RequestHistoryPage } from "../pages/request-history/request-history";
+import { RequestServicePage } from "../pages/request-service/request-service";
+import { SearchPage } from "../pages/search/search";
+import { SettingsPage } from "../pages/settings/settings";
+import { UserViewPage } from "../pages/user-view/user-view";
+import { PostsService } from "../providers/posts-service/posts-service";
+import { Settings } from "../providers/providers";
+import { UserService } from "../providers/users-service/users-service";
+import { PageModel } from "../models/page";
+import { UserAccount } from "../models/account";
+import { ViewMyRequestsPage } from "../pages/view-my-requests/view-my-requests";
 
 @Component({
   templateUrl: "app.html",
@@ -28,6 +31,7 @@ export class MyApp {
   rootPage: any;
   @ViewChild(Nav) nav: Nav;
 
+  currentUser: UserAccount;
   options: PushOptions = {
     android: {},
     ios: {
@@ -43,19 +47,58 @@ export class MyApp {
 
   pushObject: PushObject = this.push.init(this.options);
 
-  pages: any[] = [
-    { title: "Home", icon: "ios-home-outline", component: RequestServicePage },
-    { title: "Schedule", icon: "ios-alarm-outline", component: MySchedulePage },
+  pages: PageModel[] = [
+    {
+      title: "Home",
+      icon: "ios-home-outline",
+      component: RequestServicePage,
+      roles: { user: true, provider: true, admin: true }
+    },
+    {
+      title: "Schedule",
+      icon: "ios-alarm-outline",
+      component: MySchedulePage,
+      roles: { user: true, provider: true, admin: true }
+    },
     {
       title: "Request History",
       icon: "ios-apps-outline",
-      component: RequestHistoryPage
+      component: RequestHistoryPage,
+      roles: { user: false, provider: false, admin: true }
+    },{
+      title: "My Wash",
+      icon: "ios-apps-outline",
+      component: ViewMyRequestsPage,
+      roles: { user: true, provider: false, admin: false }
     },
-    { title: "Social", icon: "logo-twitter", component: CardsPage },
-    { title: "Map", icon: "ios-navigate-outline", component: MapPage },
-    { title: "Profile", icon: "ios-contact-outline", component: UserViewPage },
-    { title: "Settings", icon: "ios-settings-outline", component: SettingsPage }
+    {
+      title: "Social",
+      icon: "logo-twitter",
+      component: CardsPage,
+      roles: { user: true, provider: true, admin: true }
+    },
+    {
+      title: "Admin Map",
+      icon: "ios-navigate-outline",
+      component: MapPage,
+      roles: { user: false, provider: false, admin: true }
+    },
+    {
+      title: "Profile",
+      icon: "ios-contact-outline",
+      component: UserViewPage,
+      roles: { user: true, provider: true, admin: true }
+    },
+    {
+      title: "Settings",
+      icon: "ios-settings-outline",
+      component: SettingsPage,
+      roles: { user: false, provider: false, admin: true }
+    }
   ];
+
+  loading = true;
+
   constructor(
     private push: Push,
     translate: TranslateService,
@@ -64,18 +107,27 @@ export class MyApp {
     config: Config,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    public usersService: UserService,
-    public alertCtrl: AlertController
+    public userService: UserService,
+    public alertCtrl: AlertController,
+    private ref: ApplicationRef
   ) {
     // Set the default language for translation strings, and the current language.
 
     //check logged in status
     var that = this;
 
+    let subscription = this.userService.currentUser$.subscribe(user => {
+      if (user) {
+        that.currentUser = user;
+        that.loading = false;
+        // Force Change Detection in Angular
+        that.ref.tick();
+      }
+    });
+
     firebase.auth().onAuthStateChanged((user: any) => {
       if (user) {
-        console.log(user);
-        this.usersService.currentUserId = user.uid;
+        this.userService.currentUserId = user.uid;
         that.nav.setRoot(RequestServicePage);
       } else {
         that.nav.setRoot(FirstRunPage);
@@ -98,6 +150,16 @@ export class MyApp {
     });
   }
 
+  isPageAccessible(page: PageModel) {
+    if (!this.currentUser) {
+      return false;
+    }
+    return (
+      (this.currentUser.roles.user && page.roles.user) ||
+      (this.currentUser.roles.provider && page.roles.provider) ||
+      (this.currentUser.roles.admin && page.roles.admin)
+    );
+  }
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
@@ -155,7 +217,7 @@ export class MyApp {
           text: "Yes",
           handler: () => {
             //call user logout service
-            context.usersService.logoutUser().then(() => {
+            context.userService.logoutUser().then(() => {
               //show toast before redirecting
               this.nav.setRoot(LoginPage);
             });

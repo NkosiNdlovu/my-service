@@ -1,4 +1,3 @@
-
 <ion-header>
 
   <ion-navbar>
@@ -12,20 +11,20 @@
 
 <ion-content>
 
-<ion-card>
-  <img src="{[userDetails.profilePic}}"/>
-  <ion-card-content>
-    <ion-card-title>
-      {{firstName}} {{lastName}}
+  <ion-card>
+    <img src="{[userDetails.profilePic}}" />
+    <ion-card-content>
+      <ion-card-title>
+        {{firstName}} {{lastName}}
       </ion-card-title>
-    <p>
-      {{about}}
-    </p>
-  </ion-card-content>
-</ion-card>
+      <p>
+        {{about}}
+      </p>
+    </ion-card-content>
+  </ion-card>
 
 
-  <form >
+  <form>
     <ion-list>
 
       <!-- <ion-item >
@@ -33,7 +32,6 @@
         <ion-input type="text" [(ngModel)]="skills" name="skills" placeholder="eg. PHP, Writing, Chef" required="required"></ion-input>
       </ion-item> -->
 
-<hr/>
       <ion-item>
         <ion-label stacked>First name</ion-label>
         <ion-input type="text" [(ngModel)]="firstName" name="firstName"></ion-input>
@@ -54,7 +52,7 @@
       </ion-item>
 
 
-      <ion-item >
+      <ion-item>
         <ion-label stacked>Phone</ion-label>
         <ion-input type="text" [(ngModel)]="phone" name="phone" placeholder="eg. 0802222222" required="required"></ion-input>
       </ion-item>
@@ -70,4 +68,3 @@
     </ion-list>
   </form>
 </ion-content>
-

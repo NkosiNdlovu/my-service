@@ -25,7 +25,6 @@ export class CreateSchedulePage {
   ) {
     let context = this;
     this.userId = userService.currentUserId;
-    console.log(this.userId);
     let userRef = this.db.collection("/schedules").doc(this.userId).ref;
 
     userRef
@@ -36,7 +35,6 @@ export class CreateSchedulePage {
 
           context.schedule = documentSnapshot.data();
 
-          console.log(context.schedule);
         } else {
           console.log("document not found");
         }

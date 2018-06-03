@@ -1,8 +1,8 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
-import { Geolocation, Geoposition } from "@ionic-native/geolocation";
+import { Geolocation } from "@ionic-native/geolocation";
 import { AngularFirestore } from "angularfire2/firestore";
-import { NavController, AlertController, NavParams } from "ionic-angular";
-import { Observable } from "rxjs/Observable";
+import { AlertController, NavController, NavParams } from "ionic-angular";
+import { Subscription } from "rxjs/Subscription";
 
 declare var google;
 
@@ -11,7 +11,7 @@ declare var google;
   templateUrl: "map.html"
 })
 export class MapPage {
-  currentPosition$: Observable<Geoposition>;
+  currentPosition$: Subscription;
   @ViewChild("map") mapElement: ElementRef;
   map: any;
   start = "chicago, il";
@@ -54,17 +54,17 @@ export class MapPage {
   }
 
   ngOnViewDidLoad() {
-    // this.currentPosition$.
+    if (this.currentPosition$) {
+      this.currentPosition$.unsubscribe();
+    }
   }
 
   createMapView() {
     let context = this;
 
-    this.currentPosition$ = this.geolocation.watchPosition();
-
-    this.currentPosition$.subscribe(
+    this.currentPosition$ = this.geolocation.watchPosition().subscribe(
       resp => {
-        alert("doing what");
+
         // set center
         if (
           context.serviceRequests.length == 1 &&
@@ -83,6 +83,7 @@ export class MapPage {
 
         // create map
         context.initMap();
+        this.currentPosition$.unsubscribe();
       },
       error => {
         // set center
