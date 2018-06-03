@@ -1,0 +1,36 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Users</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item *ngFor="let user of users">
+
+      <h2>{{user.firstName}} {{user.lastName}}</h2>
+      <p>
+        <button ion-button icon-left clear item-right>
+          <ion-icon name="navigate"></ion-icon>
+          Edit
+        </button>
+
+        <div item-right>
+          <p>
+            <ion-note *ngIf="user.roles.admin">Is Admin</ion-note>
+            <ion-note *ngIf="user.roles.user">Is User</ion-note>
+            <ion-note *ngIf="user.roles.provider">Is Provider</ion-note>
+          </p>
+          <ion-note>
+            <ion-icon name="cell"></ion-icon>: {{user.phone}}</ion-note>
+        </div>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
