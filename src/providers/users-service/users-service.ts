@@ -16,7 +16,7 @@ export class UserService {
   private _currentUserId: string;
   public data: any;
   public fireAuth: any;
-  public userProfile: AngularFirestoreCollection<any>;
+  public userProfileCol: AngularFirestoreCollection<any>;
   set currentUserId(value) {
     this._currentUserId = value;
     this.getCurrentUserProfile();
@@ -28,7 +28,7 @@ export class UserService {
 
   constructor(private http: Http, public db: AngularFirestore) {
     this.fireAuth = firebase.auth();
-    this.userProfile = db.collection("profiles");
+    this.userProfileCol = db.collection("profiles");
     this.currentUser$ = new BehaviorSubject<UserAccount>(null);
   }
 
@@ -50,14 +50,14 @@ export class UserService {
 
   getCurrentUserProfile() {
     let context = this;
-    var userRef = this.userProfile.doc(this.currentUserId);
+    var userRef = this.userProfileCol.doc(this.currentUserId);
     userRef.valueChanges().subscribe((user: UserAccount) => {
       context.currentUser$.next(user);
     });
   }
 
   viewUser(userId: any) {
-    var userRef = this.userProfile.doc(userId);
+    var userRef = this.userProfileCol.doc(userId);
     return userRef.valueChanges();
   }
 
@@ -85,10 +85,15 @@ export class UserService {
               .signInWithEmailAndPassword(account["email"], account["password"])
               .then(authenticatedUser => {
                 // successful login, create user profile
-                context.userProfile.doc(authenticatedUser.uid).set(account);
+                context.userProfileCol.doc(authenticatedUser.uid).set(account);
               });
           });
       });
+  }
+
+  updateUserProfile(userId,userAccount){
+    // successful login, create user profile
+    return this.userProfileCol.doc(userId).set(userAccount);
   }
 
   loginUser(email: string, password: string): any {
@@ -132,7 +137,7 @@ export class UserService {
           //   }
           // };
 
-          that.userProfile.doc(user.uid).set(userAccount);
+          that.userProfileCol.doc(user.uid).set(userAccount);
         }
       })
       .catch(function(error) {

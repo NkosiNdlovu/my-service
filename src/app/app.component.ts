@@ -151,9 +151,10 @@ export class MyApp {
   }
 
   isPageAccessible(page: PageModel) {
-    if (!this.currentUser) {
+    if (!this.currentUser || !this.currentUser.roles) {
       return false;
     }
+
     return (
       (this.currentUser.roles.user && page.roles.user) ||
       (this.currentUser.roles.provider && page.roles.provider) ||

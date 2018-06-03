@@ -2,134 +2,84 @@ import { Component } from '@angular/core';
 import * as firebase from 'firebase';
 import { AlertController, IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
+import { UserAccount } from '../../models/account';
 import { PostsService } from '../../providers/posts-service/posts-service';
+import { UserService } from '../../providers/users-service/users-service';
 import { UserViewPage } from '../user-view/user-view';
 
-//import { ImagePicker } from '@ionic-native/image-picker';
-/**
- * Generated class for the UserEdit page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
-  selector: 'page-user-edit',
-  templateUrl: 'user-edit.html',
+  selector: "page-user-edit",
+  templateUrl: "user-edit.html",
   providers: [PostsService]
 })
 export class UserEditPage {
+  public userId: any;
+  public guestPicture: any;
+  public userDetails = [];
 
-public userId : string;
-public skills : string;
-  public email : any;
-  public about : any;
-  public phone : any;
-  public password : any;
-  public firstName : any;
-  public lastName : any;
-  public city : any;
-  public state : any;
-  public country : any;
-  public myUserId : any;
-public guestPicture : any;
-public userDetails = [];
+  currentUser: UserAccount;
 
-  constructor( public navCtrl: NavController,public alertCtrl: AlertController, public navParams: NavParams, public toastCtrl: ToastController, public postsService : PostsService) {
+  constructor(
+    public navCtrl: NavController,
+    public alertCtrl: AlertController,
+    public navParams: NavParams,
+    public toastCtrl: ToastController,
+    public userService: UserService
+  ) {
 
-  	this.myUserId = firebase.auth().currentUser.uid; //current user id
-    this.getUserDetails(this.myUserId);
+    let that = this;
+
+    this.userId = firebase.auth().currentUser.uid; //current user id
+
+    this.currentUser = new UserAccount();
+
+    this.userService.currentUser$.subscribe((user) => {
+      that.currentUser = user;
+    })
   }
 
+  updateProfile() {
+    // var postData = {
+    //   email: this.currentUser.email,
+    //   firstName: this.currentUser.firstName,
+    //   lastName: this.currentUser.lastName,
+    //   phone: this.currentUser.phone,
+    //   city: this.currentUser.city,
+    //   state: this.currentUser.state,
+    //   country: this.currentUser.country
+    // };
 
+    this.userService.updateUserProfile(this.userId, this.currentUser).then(
+      () => {
+        //toast
+        let toast = this.toastCtrl.create({
+          message: "update successful",
+          duration: 1500,
+          position: "top"
+        });
 
- getUserDetails(userId : any){
- 	var that = this;
-  	  let toast = this.toastCtrl.create({
-      message: 'Fetching user profile...',
-    });
+        toast.onDidDismiss(() => {
+          this.navCtrl.push(UserViewPage, {
+            key: this.userId
+          });
+        });
 
-    toast.present();
+        toast.present();
+      },
+      error => {
+        let toast = this.toastCtrl.create({
+          message: error.message,
+          duration: 3000,
+          position: "top"
+        });
 
-  	this.postsService.listSomethingOnceService('/users/'+userId).then((snapshot)=>{
+        toast.present();
+      }
+    );
+  }
 
-//that.userDetails.length = null; //so that it ddoesn't repeat the list
-
-		  var data = snapshot.val();
-          data['profilePic'] = '/assets/img/marty-avatar.png';
-          that.userDetails.push(snapshot.val());
-          that.userId = snapshot.key;
-
-          that.skills = snapshot.val().skills || '';
-		  that.email  = snapshot.val().email || '';
-		  that.phone  = snapshot.val().phone || '';
-		  that.firstName  = snapshot.val().firstName || '';
-		  that.lastName  = snapshot.val().lastName || '';
-		  that.city  = snapshot.val().city || '';
-		  that.about  = snapshot.val().about || '';
-		  that.state  = snapshot.val().state || '';
-		  that.country  = snapshot.val().country || '';
-
-	  toast.dismiss();
-
-
-
-  	}, error =>{
-  		  let toast = this.toastCtrl.create({
-      message: 'Sorry couldnt retrive user details, check your internet connection',
-      duration: 3000
-    });
-    toast.present();
-  		});
- }
-
-
-   updateProfile(){
-   	 var  postData = {
-	  	email: this.email,
-	  	firstName: this.firstName,
-	  	lastName: this.lastName,
-	  	skills: this.skills,
-	  	phone: this.phone,
-	  	city: this.about,
-	  	state: this.state,
-	  	country: this.country,
-
-	  }
-
-	  console.log(postData);
-
-	  this.postsService.updateAnythingService('users/'+this.myUserId, postData).then(()=> {
-
-	  	//toast
-			  let toast = this.toastCtrl.create({
-			    message: 'update successful',
-			    duration: 1500,
-			    position: 'top'
-			  });
-
-			  toast.onDidDismiss(() => {
-			   this.navCtrl.push(UserViewPage, {
-			   	key: this.myUserId
-			   });
-			  });
-
-			  toast.present();
-	  	}, error =>{
-	  		 let toast = this.toastCtrl.create({
-			    message: error.message,
-			    duration: 3000,
-			    position: 'top'
-			  });
-
-	  		toast.present();
-	  	});
-   }
-
-
-
-
-/*
+  /*
    deleteCategory(categoryId : any){
    		 let confirm = this.alertCtrl.create({
 		      title: 'This will delete this category and all the questions in it!',
@@ -172,8 +122,7 @@ public userDetails = [];
 
 */
 
-
-/*
+  /*
  selectImage(){
    ImagePicker.getPictures({maximumImagesCount: 1}).then((results) => {
   for (var i = 0; i < results.length; i++) {
@@ -189,7 +138,7 @@ public userDetails = [];
 
 } */
 
-/*
+  /*
 choosePicture(){
 	Camera.getPicture(options).then((imageData) => {
  // imageData is either a base64 encoded string or a file URI
@@ -202,8 +151,7 @@ choosePicture(){
 });
 } */
 
-
-/*
+  /*
 getPictureFromGallery(){
 
   Camera.getPicture({
@@ -245,7 +193,7 @@ addPicture(path : any, photoData : any) {
     toast.present();
  */
 
-/*
+  /*
       let loader = this.loadingCtrl.create({
            content: "Uploading Image, Please Wait...",
          });
@@ -294,8 +242,7 @@ addPicture(path : any, photoData : any) {
 
 */
 
-
-/*
+  /*
   // Create the file metadata
   var metadata = {
     contentType: 'image/jpeg'
@@ -380,22 +327,4 @@ var that = this;
   }
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
