@@ -38,11 +38,12 @@
         <ion-label stacked>Phone</ion-label>
         <ion-input type="text" [(ngModel)]="currentUser.phone" name="phone" placeholder="eg. 0802222222" required="required"></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="currentUser.roles">
         <ion-label>Is Admin</ion-label>
-        <ion-checkbox name="admin" [(ngModel)]="currentUse.roles.admin"></ion-checkbox>
+        <ion-checkbox name="admin" [(ngModel)]="currentUser.roles.admin"></ion-checkbox>
       </ion-item>
-      <ion-item>
+
+      <ion-item *ngIf="currentUser.roles">
         <ion-label>Is Provider</ion-label>
         <ion-checkbox name="provider" [(ngModel)]="currentUser.roles.provider"></ion-checkbox>
       </ion-item>

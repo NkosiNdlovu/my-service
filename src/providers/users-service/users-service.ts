@@ -33,21 +33,6 @@ export class UserService {
     this.currentUser$ = new BehaviorSubject<UserAccount>(null);
   }
 
-  loadUser(number) {
-    if (this.data) {
-      return Promise.resolve(this.data);
-    }
-
-    return new Promise(resolve => {
-      this.http
-        .get("https://randomuser.me/api/?results=" + number)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data.results;
-          resolve(this.data);
-        });
-    });
-  }
 
   getCurrentUserProfile() {
     let context = this;
@@ -60,7 +45,7 @@ export class UserService {
     return this.db.collection("profiles").valueChanges();
   }
 
-  viewUser(userId: any) {
+  getUser(userId: any) {
     var userRef = this.userProfileCol.doc(userId);
     return userRef.valueChanges();
   }

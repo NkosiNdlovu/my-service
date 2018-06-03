@@ -1,16 +1,22 @@
-import { Component } from '@angular/core';
-import { DatePicker } from '@ionic-native/date-picker';
-import { Geolocation } from '@ionic-native/geolocation';
-import { AngularFirestore } from 'angularfire2/firestore';
-import * as firebase from 'firebase';
-import { ActionSheetController, AlertController, NavController, NavParams, ToastController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
+import { Component } from "@angular/core";
+import { DatePicker } from "@ionic-native/date-picker";
+import { Geolocation } from "@ionic-native/geolocation";
+import { AngularFirestore } from "angularfire2/firestore";
+import * as firebase from "firebase";
+import {
+  ActionSheetController,
+  AlertController,
+  NavController,
+  NavParams,
+  ToastController
+} from "ionic-angular";
+import { Observable } from "rxjs/Observable";
 
-import { Guid, ServiceRequest } from '../../models/serviceRequest';
-import { PostsService } from '../../providers/posts-service/posts-service';
-import { Items } from '../../providers/providers';
-import { RequestHistoryPage } from '../request-history/request-history';
-import { UserEditPage } from '../user-profile-edit/user-edit';
+import { Guid, ServiceRequest } from "../../models/serviceRequest";
+import { PostsService } from "../../providers/posts-service/posts-service";
+import { Items } from "../../providers/providers";
+import { RequestHistoryPage } from "../request-history/request-history";
+import { UserEditPage } from "../user-profile-edit/user-edit";
 
 @Component({
   selector: "page-request-service",
@@ -20,9 +26,11 @@ export class RequestServicePage {
   currentItems: any = [];
   item: Observable<any>;
   serviceCategories: Array<any>;
+  vehicleTypes: Array<any>;
   test: Observable<any[]>;
   selectedCategory: any;
   selectedService: any;
+  selectedVehicleType:any;
   currentLocation: any;
   bookingDate: Date;
   bookingTimeRangeStart: number;
@@ -46,11 +54,21 @@ export class RequestServicePage {
     let context = this;
     this.serviceCategories = [];
 
+    // get service types
     db
       .collection("/serviceCategory")
       .valueChanges()
       .subscribe(data => {
         this.serviceCategories = data;
+      });
+
+
+    // get vehicle types
+    db
+      .collection("/carWashVehicleType")
+      .valueChanges()
+      .subscribe(data => {
+        this.vehicleTypes = data;
       });
 
     this.geolocation
@@ -91,6 +109,27 @@ export class RequestServicePage {
   }
 
   selectServiceCategory() {
+    let context = this;
+    let actionButtons = [];
+
+    this.serviceCategories.forEach(category => {
+      actionButtons.push({
+        text: category.name,
+        role: "destructive",
+        handler: () => {
+          context.selectedCategory = category;
+        }
+      });
+    });
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: "Select service category",
+      buttons: actionButtons
+    });
+    actionSheet.present();
+  }
+
+  selectVehicleType() {
     let context = this;
     let actionButtons = [];
 
@@ -197,11 +236,10 @@ export class RequestServicePage {
         mode: "date",
         androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
       })
-      .then(date => context.submitRequest());
+      .then(date => (this.bookingDate = date));
   }
 
   requestService() {
-
     this.submitRequest();
     // let context = this;
 
@@ -264,7 +302,7 @@ export class RequestServicePage {
     this.serviceRequest.user = { id: user.uid, name: user.email };
     this.serviceRequest.bookingTimeRangeStart = this.bookingTimeRangeStart;
     this.serviceRequest.bookingTimeRangeEnd = this.bookingTimeRangeEnd;
-
+    this.serviceRequest.vehicleType = this.selectedVehicleType;
     this.db
       .collection("/serviceRequests")
       .doc(this.serviceRequest.id)

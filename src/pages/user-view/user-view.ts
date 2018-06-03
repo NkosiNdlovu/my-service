@@ -48,7 +48,7 @@ export class UserViewPage {
   displayUser(theUserId) {
     var that = this;
 
-    this.usersService.viewUser(theUserId).subscribe((user: UserAccount) => {
+    this.usersService.getUser(theUserId).subscribe((user: UserAccount) => {
       // get user photo
       if (user) {
         // that.userPhotoUrl = user.photo || ''; //get user photo

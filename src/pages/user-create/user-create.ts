@@ -39,10 +39,10 @@ export class UserCreatePage {
 
     if (navParams.get("userId") && navParams.get("userId") != '') {
       this.userId = navParams.get("userId");
-      this.userService.currentUser$.subscribe(user => {
+      this.userService.getUser(this.userId).subscribe((user:any) => {
 
         that.currentUser = user;
-        console.log(that.currentUser)
+
         if(that.currentUser.roles == undefined){
           that.currentUser.roles = {
             admin: false,
@@ -50,9 +50,17 @@ export class UserCreatePage {
           }
         }
 
+        console.log(that.currentUser)
+
       });
     } else {
+
+      // set defaults
       this.userId = '';
+      this.currentUser.roles = {
+        admin: false,
+        provider:true
+      }
     }
 
   }

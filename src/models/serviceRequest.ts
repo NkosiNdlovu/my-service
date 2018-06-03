@@ -6,6 +6,7 @@ export class ServiceRequest{
   id: string ;
   location?: Array<any>;
   service: IdName;
+  vehicleType: IdName;
   user: UserNameSurname;
   requestDate?:Date;
   bookingTimeRangeStart?: number;
