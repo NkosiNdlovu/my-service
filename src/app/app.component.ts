@@ -24,6 +24,7 @@ import { UserAccount } from "../models/account";
 import { ViewMyRequestsPage } from "../pages/view-my-requests/view-my-requests";
 import { UserCreatePage } from "../pages/user-create/user-create";
 import { UserListPage } from "../pages/user-list/user-list";
+import { MyJobCardsPage } from "../pages/my-job-cards/my-job-cards";
 
 @Component({
   templateUrl: "app.html",
@@ -54,13 +55,13 @@ export class MyApp {
       title: "Home",
       icon: "ios-home-outline",
       component: RequestServicePage,
-      roles: { user: true, provider: true, admin: true }
+      roles: { user: true, provider: false, admin: false }
     },
     {
       title: "Schedule",
       icon: "ios-alarm-outline",
       component: MySchedulePage,
-      roles: { user: true, provider: true, admin: true }
+      roles: { user: true, provider: false, admin: false }
     },
     {
       title: "Request History",
@@ -72,6 +73,11 @@ export class MyApp {
       icon: "ios-apps-outline",
       component: ViewMyRequestsPage,
       roles: { user: true, provider: false, admin: false }
+    },{
+      title: "My Job cards",
+      icon: "ios-card-outline",
+      component: MyJobCardsPage,
+      roles: { user: false, provider: true, admin: false }
     },
     {
       title: "Social",

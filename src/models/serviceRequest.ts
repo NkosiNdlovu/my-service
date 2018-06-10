@@ -11,6 +11,8 @@ export class ServiceRequest{
   requestDate?:Date;
   bookingTimeRangeStart?: number;
   bookingTimeRangeEnd?: number;
+  providerId?: string;
+  provider?: ServiceRequestProvider;
 
   constructor(){
     this.bookingDate = null;
@@ -21,6 +23,8 @@ export class ServiceRequest{
     this.requestDate = null;
     this.bookingTimeRangeEnd = null;
     this.bookingTimeRangeStart = null;
+    this.providerId = null;
+    this.provider = null;
   }
 }
 
@@ -35,6 +39,14 @@ export class UserNameSurname{
   surname?: string;
 }
 
+export class ServiceRequestProvider{
+  arrivalTime?: Date;
+  completionTime?: Date;
+  declineJob?: boolean;
+  id?: string;
+  name?: string;
+  acceptJob?: boolean;
+}
 
 export class Guid {
   static newGuid() {

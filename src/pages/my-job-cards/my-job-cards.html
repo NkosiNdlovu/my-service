@@ -1,0 +1,40 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>My Job Cards</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <div *ngFor="let job of jobs">
+      <ion-item *ngIf="(!job.provider || !job.provider.declineJob ) && !job.provider.completionTime" (click)="showActions(job)">
+
+        <h2>{{job.service?.name}}</h2>
+        <p>
+          <!-- <button ion-button icon-left clear item-right (click)="openMap(job)">
+          <ion-icon name="navigate"></ion-icon>
+          View Map
+        </button> -->
+          <!-- <button ion-button icon-left clear item-right *ngIf="!job.provider || !job.provider.acceptJob" (click)="acceptJob(job)">
+          <ion-icon style="color:green" name="checkmark"></ion-icon>
+          Accept job
+        </button> -->
+          <!-- <button ion-button icon-left clear item-right (click)="declineJob(job)">
+          <ion-icon style="color:red"  name="close"></ion-icon>
+          Decline job
+        </button> -->
+
+          <div item-right>
+            <ion-note>{{job.bookingDate | date}}</ion-note>
+            <p>
+              <ion-icon style="color:green" *ngIf="job.provider && job.provider.acceptJob" name="checkmark"></ion-icon>
+            </p>
+          </div>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>
