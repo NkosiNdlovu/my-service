@@ -1,9 +1,10 @@
-import { Component } from "@angular/core";
-import { AngularFirestore } from "angularfire2/firestore";
-import * as firebase from "firebase";
-import { ActionSheetController, NavController, NavParams } from "ionic-angular";
-import { UserService } from "../../providers/users-service/users-service";
-import { Schedule } from "../../models/schedule";
+import { Component } from '@angular/core';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { ActionSheetController, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
+
+import { Schedule } from '../../models/schedule';
+import { UserService } from '../../providers/users-service/users-service';
+import { MySchedulePage } from '../my-schedule/my-schedule';
 
 @Component({
   selector: "page-create-schedule",
@@ -21,7 +22,9 @@ export class CreateSchedulePage {
     public navParams: NavParams,
     public actionSheetCtrl: ActionSheetController,
     public db: AngularFirestore,
-    public userService: UserService
+    public userService: UserService,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController,
   ) {
     let context = this;
     this.userId = userService.currentUserId;
@@ -154,11 +157,32 @@ export class CreateSchedulePage {
     if (!this.userId) {
       return;
     }
+    let that = this;
+    var loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 3000
+    });
+    loader.present();
 
     this.db
       .collection("/schedules")
       .doc(this.userId)
       .set(JSON.parse(JSON.stringify(this.schedule)))
-      .then(res => {});
+      .then(res => {
+
+        // successful
+      loader.dismiss();
+      that.navCtrl.setRoot(MySchedulePage);
+      }, error => {
+        loader.dismiss();
+        // Unable to log in
+        let toast = this.toastCtrl.create({
+          message: "Error occurred",
+          duration: 3000,
+          position: 'top'
+        });
+        toast.present();
+
+      });
   }
 }

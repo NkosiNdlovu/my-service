@@ -11,21 +11,29 @@
 
 
 <ion-content padding>
-  <ion-card *ngIf="schedule">
+  <ion-card *ngIf="schedule" text-center padding>
     <ion-card-title text-center padding>
-      Occurs {{schedule.weeklyFrequency}} weeks on {{schedule.day}}
+      Occurs every
+      <span *ngIf="schedule.weeklyFrequency && schedule.weeklyFrequency != 1"> {{schedule.weeklyFrequency}} </span> week
+      <span *ngIf="schedule.weeklyFrequency && schedule.weeklyFrequency != 1">s</span> on {{schedule.day}}
     </ion-card-title>
     <span>
-      Schedule end date: {{schedule.validUntil}}
+      Schedule end date: {{schedule.validUntil | date}}
     </span>
     <ion-item>
       <div text-center>
         <button padding ion-button color="light" (click)="editSchedule()">
           <ion-icon name="ios-card-outline"></ion-icon> Edit</button>
         <button padding ion-button color="light" (click)="pauseSchedule()">
-          <ion-icon name="ios-pause-outline"></ion-icon>Pause</button>
-        <button padding ion-button color="light" (click)="cancelSchedule()">
-          <ion-icon name="ios-trash-outline"></ion-icon>Cancel</button>
+          <ion-icon *ngIf="schedule.isPaused" name="ios-play-outline"></ion-icon>
+
+          <ion-icon *ngIf="!schedule.isPaused" name="ios-pause-outline"></ion-icon>
+          <span *ngIf="!schedule.isPaused">Pause</span>
+
+          <span *ngIf="schedule.isPaused">Resume</span>
+        </button>
+        <!-- <button padding ion-button color="light" (click)="cancelSchedule()">
+          <ion-icon name="ios-trash-outline"></ion-icon>Cancel</button> -->
       </div>
     </ion-item>
 

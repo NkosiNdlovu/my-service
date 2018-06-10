@@ -74,9 +74,6 @@ export class LoginPage {
       that.password = ""//empty the password field
 
     });
-
-
-
   }
 
 

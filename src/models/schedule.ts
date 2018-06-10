@@ -1,4 +1,5 @@
 export class Schedule {
+  isPaused: boolean;
   weeklyFrequency: number;
   day: string;
   timeRangeStart: number;
