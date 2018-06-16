@@ -57,7 +57,7 @@ export class RequestHistoryPage {
     const that = this;
 
     let actionButtons = [];
-    if ( !serviceRequest.acknowledgeDBy) {
+    if (!serviceRequest.acknowledgeDBy) {
       actionButtons.push({
         text: "Acknowledge Request",
         role: "destructive",
@@ -111,13 +111,13 @@ export class RequestHistoryPage {
     this.saveRequest(serviceRequest);
   }
 
-  callCustomer(serviceRequest){
+  callCustomer(serviceRequest) {
     // Use the call API
   }
 
   assignToProvider(serviceRequest) {
     // open search bar
-    this.navCtrl.push(ProviderSearchPage);
+    this.navCtrl.push(ProviderSearchPage, { serviceRequest: serviceRequest });
   }
 
   saveRequest(serviceRequest) {
