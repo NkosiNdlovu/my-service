@@ -15,8 +15,6 @@
 
 
   <ion-list>
-
-
     <ion-item *ngFor="let request of serviceRequests" (click)="loadAction(request)">
 
       <h2>{{request.service?.name}}</h2>
@@ -25,6 +23,11 @@
           <ion-icon name="navigate"></ion-icon>
           View Map
         </button>
+        <button ion-button icon-left clear item-right (click)="ackRequest(request)">
+          <ion-icon name="ios-checkbox-outline"></ion-icon>
+
+        </button>
+
 
         <div item-right>
           <p>

@@ -1,19 +1,11 @@
-import { Component } from "@angular/core";
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  LoadingController,
-  ToastController,
-  ActionSheetController
-} from "ionic-angular";
-import { MapPage } from "../map/map";
-import { AngularFirestore } from "angularfire2/firestore";
-import { UserService } from "../../providers/users-service/users-service";
-import {
-  ServiceRequest,
-  ServiceRequestProvider
-} from "../../models/serviceRequest";
+import { Component } from '@angular/core';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { ActionSheetController, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
+
+import { ServiceProvider } from '../../models/serviceProvider';
+import { ServiceRequest } from '../../models/serviceRequest';
+import { UserService } from '../../providers/users-service/users-service';
+import { MapPage } from '../map/map';
 
 @Component({
   selector: "page-my-job-cards",
@@ -48,7 +40,7 @@ export class MyJobCardsPage {
 
   acceptJob(job: ServiceRequest) {
     if (!job.provider) {
-      job.provider = new ServiceRequestProvider();
+      job.provider = new ServiceProvider();
       job.provider.id = this.userId;
     }
 
@@ -59,7 +51,7 @@ export class MyJobCardsPage {
 
   declineJob(job: ServiceRequest) {
     if (!job.provider) {
-      job.provider = new ServiceRequestProvider();
+      job.provider = new ServiceProvider();
       job.provider.id = this.userId;
     }
 
@@ -138,7 +130,7 @@ export class MyJobCardsPage {
 
   confirmArrival(job: ServiceRequest) {
     if (!job.provider) {
-      job.provider = new ServiceRequestProvider();
+      job.provider = new ServiceProvider();
       job.provider.id = this.userId;
     }
 
@@ -148,7 +140,7 @@ export class MyJobCardsPage {
 
   confirmCompletion(job: ServiceRequest) {
     if (!job.provider) {
-      job.provider = new ServiceRequestProvider();
+      job.provider = new ServiceProvider();
       job.provider.id = this.userId;
     }
 

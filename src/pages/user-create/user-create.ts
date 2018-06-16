@@ -14,7 +14,7 @@ import { UserService } from "../../providers/users-service/users-service";
 import { UserViewPage } from "../user-view/user-view";
 import { UserListPage } from "../user-list/user-list";
 
-@IonicPage()
+// @IonicPage()
 @Component({
   selector: "page-user-create",
   templateUrl: "user-create.html"

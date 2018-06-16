@@ -46,6 +46,7 @@ import { MyApp } from './app.component';
 import { UserCreatePage } from '../pages/user-create/user-create';
 import { UserListPage } from '../pages/user-list/user-list';
 import { MyJobCardsPage } from '../pages/my-job-cards/my-job-cards';
+import { ProviderSearchPage } from '../pages/provider-search/provider-search';
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -89,6 +90,7 @@ let pages = [
   MyApp,
   MySchedulePage,
   CreateSchedulePage,
+  ProviderSearchPage,
   RequestServicePage,
   MyJobCardsPage,
   CardsPage,
@@ -117,6 +119,7 @@ let pages = [
 export function declarations() {
   return [
     MyApp,
+    ProviderSearchPage,
     RequestServicePage,
     MyJobCardsPage,
     CardsPage,

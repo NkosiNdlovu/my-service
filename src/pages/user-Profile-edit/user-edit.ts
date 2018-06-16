@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import * as firebase from 'firebase';
-import { AlertController, IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { AlertController, NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { UserAccount } from '../../models/account';
-import { PostsService } from '../../providers/posts-service/posts-service';
 import { UserService } from '../../providers/users-service/users-service';
 import { UserViewPage } from '../user-view/user-view';
 
-@IonicPage()
+// @IonicPage()
 @Component({
   selector: "page-user-edit",
   templateUrl: "user-edit.html"
@@ -36,7 +35,7 @@ export class UserEditPage {
   }
 
   updateProfile() {
-    
+
     this.userService.updateUserProfile(this.userId, this.currentUser).then(
       () => {
         //toast

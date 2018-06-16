@@ -1,8 +1,10 @@
 import { NULL_EXPR } from "@angular/compiler/src/output/output_ast";
+import { ServiceProvider } from "./serviceProvider";
 
 export class ServiceRequest{
   bookingDate?:Date;
   comment?: string ;
+  acknowledgedBy?: string;
   id: string ;
   location?: Array<any>;
   service: IdName;
@@ -12,7 +14,7 @@ export class ServiceRequest{
   bookingTimeRangeStart?: number;
   bookingTimeRangeEnd?: number;
   providerId?: string;
-  provider?: ServiceRequestProvider;
+  provider?: ServiceProvider;
 
   constructor(){
     this.bookingDate = null;
@@ -37,15 +39,6 @@ export class UserNameSurname{
   id: string;
   name: string  ;
   surname?: string;
-}
-
-export class ServiceRequestProvider{
-  arrivalTime?: Date;
-  completionTime?: Date;
-  declineJob?: boolean;
-  id?: string;
-  name?: string;
-  acceptJob?: boolean;
 }
 
 export class Guid {

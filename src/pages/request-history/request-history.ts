@@ -11,6 +11,7 @@ import { AngularFirestore } from "angularfire2/firestore";
 import { ServiceRequest } from "../../models/serviceRequest";
 import { MapPage } from "../map/map";
 import { UserService } from "../../providers/users-service/users-service";
+import { ProviderSearchPage } from "../provider-search/provider-search";
 
 @IonicPage()
 @Component({
@@ -56,7 +57,7 @@ export class RequestHistoryPage {
     const that = this;
 
     let actionButtons = [];
-    if (!serviceRequest.provider || !serviceRequest.provider.acceptJob) {
+    if ( !serviceRequest.acknowledgeDBy) {
       actionButtons.push({
         text: "Acknowledge Request",
         role: "destructive",
@@ -91,10 +92,10 @@ export class RequestHistoryPage {
     });
 
     actionButtons.push({
-      text: "Decline Request",
+      text: "Call Customer",
       role: "destructive",
       handler: () => {
-        that.declineJob(serviceRequest);
+        that.callCustomer(serviceRequest);
       }
     });
 
@@ -105,16 +106,19 @@ export class RequestHistoryPage {
     actionSheet.present();
   }
   ackRequest(serviceRequest) {
-    serviceRequest.acknowledgeDBy = this.userId;
-
-    serviceRequest.provider.acceptJob = true;
+    serviceRequest.acknowledgedBy = this.userId;
 
     this.saveRequest(serviceRequest);
   }
 
-  assignToProvider(serviceRequest) {}
+  callCustomer(serviceRequest){
+    // Use the call API
+  }
 
-  declineJob(serviceRequest) {}
+  assignToProvider(serviceRequest) {
+    // open search bar
+    this.navCtrl.push(ProviderSearchPage);
+  }
 
   saveRequest(serviceRequest) {
     let that = this;
