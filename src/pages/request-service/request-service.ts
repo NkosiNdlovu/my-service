@@ -30,7 +30,7 @@ export class RequestServicePage {
   test: Observable<any[]>;
   selectedCategory: any;
   selectedService: any;
-  selectedVehicleType:any;
+  selectedVehicleType: any;
   currentLocation: any;
   bookingDate: Date;
   bookingTimeRangeStart: number;
@@ -55,17 +55,14 @@ export class RequestServicePage {
     this.serviceCategories = [];
 
     // get service types
-    db
-      .collection("/serviceCategory")
+    db.collection("/serviceCategory")
       .valueChanges()
       .subscribe(data => {
         this.serviceCategories = data;
       });
 
-
     // get vehicle types
-    db
-      .collection("/carWashVehicleType")
+    db.collection("/carWashVehicleType")
       .valueChanges()
       .subscribe(data => {
         this.vehicleTypes = data;
@@ -132,19 +129,27 @@ export class RequestServicePage {
   selectVehicleType() {
     let context = this;
     let actionButtons = [];
+    let vehicleTypes = [
+      "SUV",
+      "Hatchback",
+      "Sedan",
+      "Small single cabe",
+      "Single cab",
+      "Double cab"
+    ];
 
-    this.serviceCategories.forEach(category => {
+    vehicleTypes.forEach(type => {
       actionButtons.push({
-        text: category.name,
+        text: type,
         role: "destructive",
         handler: () => {
-          context.selectedCategory = category;
+          context.selectedVehicleType = type;
         }
       });
     });
 
     let actionSheet = this.actionSheetCtrl.create({
-      title: "Select service category",
+      title: "Select Vehicle Type",
       buttons: actionButtons
     });
     actionSheet.present();
@@ -209,7 +214,7 @@ export class RequestServicePage {
     let actionButtons = [];
 
     this.allowedHours.forEach(hour => {
-      if (context.bookingTimeRangeStart > hour) {
+      if (context.bookingTimeRangeStart < hour) {
         actionButtons.push({
           text: hour + " 00h",
           role: "destructive",

@@ -12,7 +12,7 @@
   <ion-card>
     <ion-item>
       <div  text-center>
-        <button full outline padding ion-button color="primary" (click)="selectServiceCategory()">
+        <button full padding ion-button color="light" (click)="selectServiceCategory()">
           <span *ngIf="!selectedCategory">Select type of service</span>
           <span style="color:green" *ngIf="selectedCategory">Service type: {{selectedCategory.name}}</span>
         </button>
@@ -21,7 +21,7 @@
 
     <ion-item>
       <div  text-center>
-        <button full outline padding ion-button color="primary" (click)="selectService()">
+        <button full  padding ion-button color="light" (click)="selectService()">
           <span *ngIf="!selectedService">Select type of car wash</span>
           <span style="color:green" *ngIf="selectedService">Car wash: {{selectedService.name}}</span>
         </button>
@@ -31,9 +31,9 @@
 
     <ion-item>
         <div  text-center>
-          <button full outline padding ion-button color="primary" (click)="selectVehicleType()">
+          <button full padding ion-button color="light" (click)="selectVehicleType()">
             <span *ngIf="!selectedVehicleType">Select type of vehicle</span>
-            <span style="color:green" *ngIf="selectedVehicleType">Car wash: {{selectedVehicleType.name}}</span>
+            <span style="color:green" *ngIf="selectedVehicleType">Vehicle Type: {{selectedVehicleType}}</span>
           </button>
         </div>
       </ion-item>
@@ -41,7 +41,7 @@
 
     <ion-item>
       <div  text-center>
-        <button full outline padding ion-button color="primary" (click)="selectBookingDate()">
+        <button full padding ion-button color="light" (click)="selectBookingDate()">
           <span *ngIf="!bookingDate">Select booking date</span>
           <span style="color:green" *ngIf="bookingDate">Date: {{bookingDate}}</span>
         </button>
@@ -50,7 +50,7 @@
 
     <ion-item>
       <div  text-center>
-        <button full outline padding ion-button color="primary" (click)="selectStartTime()">
+        <button full padding ion-button color="light" (click)="selectStartTime()">
           <span *ngIf="!bookingTimeRangeStart">Select availability (start time)</span>
           <span style="color:green" *ngIf="bookingTimeRangeStart">Available from: {{bookingTimeRangeStart}}:00H</span>
         </button>
@@ -59,7 +59,7 @@
 
     <ion-item>
       <div  text-center>
-        <button full outline padding ion-button color="primary" (click)="selectEndTime()">
+        <button full secondary padding ion-button color="light" (click)="selectEndTime()">
           <span *ngIf="!bookingTimeRangeEnd">Select availability (end time</span>
           <span style="color:green" *ngIf="bookingTimeRangeEnd">Availability until: {{bookingTimeRangeEnd}}:00H </span>
         </button>
@@ -73,12 +73,11 @@
         <ion-icon item-right name="ios-mic-outline"></ion-icon>
         <ion-icon item-right name="ios-camera-outline"></ion-icon>
     </ion-item> -->
-
-    <ion-item>
-      <div  text-center>
-        <button [disabled]="!selectedService || !selectedCategory" padding ion-button color="gray" (click)="requestService()">Request service</button>
-      </div>
-    </ion-item>
   </ion-card>
+  <ion-item>
+    <div  text-center>
+      <button [disabled]="!selectedService || !selectedCategory" padding ion-button color="gray" (click)="requestService()">Request service</button>
+    </div>
+  </ion-item>
 </ion-content>
 

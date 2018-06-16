@@ -1,8 +1,6 @@
 <ion-menu [content]="content" >
-  {{loading | json}}
-  <ion-content *ngIf="!loading">
-
-    <ion-list>
+  <ion-content>
+    <ion-list *ngIf="!loading">
       <ion-item>
         <ion-icon margin style="color:red" menuClose name="close"></ion-icon>
       </ion-item>

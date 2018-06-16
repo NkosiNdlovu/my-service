@@ -17,7 +17,7 @@
   <ion-list>
 
 
-    <ion-item *ngFor="let request of serviceRequests" (click)="loadAction()">
+    <ion-item *ngFor="let request of serviceRequests" (click)="loadAction(request)">
 
       <h2>{{request.service?.name}}</h2>
       <p>
