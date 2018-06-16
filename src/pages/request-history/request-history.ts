@@ -11,21 +11,21 @@ import { MapPage } from '../map/map';
 })
 export class RequestHistoryPage {
 
-  serviceRequests = [];
+  serviceRequests : Array<ServiceRequest>;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
 
     public db: AngularFirestore,) {
 
-    db.collection('/serviceRequests').valueChanges().subscribe((data) => {
-      this.serviceRequests = data;
-      console.log(data);
-    });
+      this.serviceRequests = [];
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RequestHistoryPage');
+    this.db.collection('/serviceRequests').valueChanges().subscribe((data: Array<ServiceRequest>) => {
+      this.serviceRequests = data;
+      console.log(data);
+    });
   }
 
   openMap(serviceRequest){

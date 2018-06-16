@@ -17,7 +17,7 @@
   <ion-list>
 
 
-    <ion-item *ngFor="let request of serviceRequests">
+    <ion-item *ngFor="let request of serviceRequests" (click)="loadAction()">
 
       <h2>{{request.service?.name}}</h2>
       <p>
@@ -31,6 +31,10 @@
             <ion-note>{{request.requestDate | timeAgo }}</ion-note>
           </p>
           <ion-note>Booking: {{request.bookingDate | date}}</ion-note>
+          <p *ngIf="request">
+              <!-- <ion-icon style="color:green" *ngIf="request.provider && job.provider.acceptJob" name="checkmark"></ion-icon> -->
+              <!-- <ion-icon style="color:orange" *ngIf="request && request.provider && !job.provider.acceptJob" name="checkmark"></ion-icon> -->
+            </p>
         </div>
     </ion-item>
   </ion-list>
