@@ -27,13 +27,17 @@ import { ListMasterPage } from '../pages/list-master/list-master';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
 import { MenuPage } from '../pages/menu/menu';
+import { MyJobCardsPage } from '../pages/my-job-cards/my-job-cards';
 import { MySchedulePage } from '../pages/my-schedule/my-schedule';
+import { ProviderSearchPage } from '../pages/provider-search/provider-search';
 import { RequestHistoryPage } from '../pages/request-history/request-history';
 import { RequestServicePage } from '../pages/request-service/request-service';
 import { SearchPage } from '../pages/search/search';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignupPage } from '../pages/signup/signup';
 import { TutorialPage } from '../pages/tutorial/tutorial';
+import { UserCreatePage } from '../pages/user-create/user-create';
+import { UserListPage } from '../pages/user-list/user-list';
 import { UserEditPage } from '../pages/user-profile-edit/user-edit';
 import { UserViewPage } from '../pages/user-view/user-view';
 import { WelcomePage } from '../pages/welcome/welcome';
@@ -43,10 +47,8 @@ import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
 import { UserService } from '../providers/users-service/users-service';
 import { MyApp } from './app.component';
-import { UserCreatePage } from '../pages/user-create/user-create';
-import { UserListPage } from '../pages/user-list/user-list';
-import { MyJobCardsPage } from '../pages/my-job-cards/my-job-cards';
-import { ProviderSearchPage } from '../pages/provider-search/provider-search';
+import { RequestProvider } from '../providers/request/request-provider';
+import { ViewMyRequestsPage } from '../pages/view-my-requests/view-my-requests';
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -93,6 +95,7 @@ let pages = [
   CreateSchedulePage,
   ProviderSearchPage,
   RequestServicePage,
+  ViewMyRequestsPage,
   MyJobCardsPage,
   CardsPage,
   UserViewPage,
@@ -124,6 +127,7 @@ export function declarations() {
     ProviderSearchPage,
     RequestServicePage,
     MyJobCardsPage,
+    ViewMyRequestsPage,
     CardsPage,
     UserViewPage,
     UserEditPage,
@@ -162,6 +166,7 @@ export function providers() {
     LocationTracker,
     User,
     UserService,
+    RequestProvider,
     Api,
     DatePicker,
     Items,

@@ -1,23 +1,18 @@
-import { Component } from "@angular/core";
-import { DatePicker } from "@ionic-native/date-picker";
-import { Geolocation } from "@ionic-native/geolocation";
-import { AngularFirestore } from "angularfire2/firestore";
-import * as firebase from "firebase";
-import {
-  ActionSheetController,
-  AlertController,
-  NavController,
-  NavParams,
-  ToastController
-} from "ionic-angular";
-import { Observable } from "rxjs/Observable";
+import { Component } from '@angular/core';
+import { DatePicker } from '@ionic-native/date-picker';
+import { Geolocation } from '@ionic-native/geolocation';
+import { AngularFirestore } from 'angularfire2/firestore';
+import * as firebase from 'firebase';
+import { ActionSheetController, AlertController, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 
-import { Guid, ServiceRequest } from "../../models/serviceRequest";
-import { PostsService } from "../../providers/posts-service/posts-service";
-import { Items } from "../../providers/providers";
-import { RequestHistoryPage } from "../request-history/request-history";
-import { UserEditPage } from "../user-profile-edit/user-edit";
-import { WelcomePage } from "../welcome/welcome";
+import { Guid, ServiceRequest } from '../../models/serviceRequest';
+import { PostsService } from '../../providers/posts-service/posts-service';
+import { Items } from '../../providers/providers';
+import { RequestProvider } from '../../providers/request/request-provider';
+import { RequestHistoryPage } from '../request-history/request-history';
+import { WelcomePage } from '../welcome/welcome';
+import { ViewMyRequestsPage } from '../view-my-requests/view-my-requests';
 
 @Component({
   selector: "page-request-service",
@@ -39,6 +34,7 @@ export class RequestServicePage {
   allowedHoursSelectionButtons: Array<any>;
   allowedHours = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
   serviceRequest: ServiceRequest = new ServiceRequest();
+  unsubscribe: firebase.Unsubscribe;
 
   constructor(
     private datePicker: DatePicker,
@@ -50,7 +46,8 @@ export class RequestServicePage {
     public navParams: NavParams,
     public items: Items,
     public actionSheetCtrl: ActionSheetController,
-    public geolocation: Geolocation
+    public geolocation: Geolocation,
+    public requestProvider: RequestProvider
   ) {
     let context = this;
     this.serviceCategories = [];
@@ -267,7 +264,8 @@ export class RequestServicePage {
 
   submitRequest() {
     // check if the user is logged in
-    firebase.auth().onAuthStateChanged(user => {
+    this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
+      this.unsubscribe();
       if (user) {
         // set user name and id
         this.serviceRequest.user = { id: user.uid, name: user.email };
@@ -285,7 +283,7 @@ export class RequestServicePage {
               text: "OK",
               role: "cancel",
               handler: () => {
-                this.serviceRequest.service = this.selectedService;
+                this.requestProvider.currentServiceRequest = this.selectedService;
                 this.navCtrl.setRoot(
                   WelcomePage,
                   {},
@@ -321,11 +319,14 @@ export class RequestServicePage {
         let alert = this.alertCtrl.create({
           title: "Success!",
           subTitle:
-            "Your request was saved successfully. Go to the request history view to check for progress",
+            `Your request was saved successfully.
+             Go to the 'MY Request History' screen to
+             check for progress`,
           buttons: ["Dismiss"]
         });
         alert.present().then(res => {
-          this.navCtrl.push(RequestHistoryPage);
+          console.log('xxxxxxxxxxxxxxxxxxxxxx')
+          this.navCtrl.setRoot(ViewMyRequestsPage);
         });
       })
       .catch(error => {
