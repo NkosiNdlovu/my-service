@@ -3,7 +3,7 @@ import { DatePicker } from '@ionic-native/date-picker';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
-import { ActionSheetController, AlertController, NavController, NavParams, ToastController } from 'ionic-angular';
+import { ActionSheetController, AlertController, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 import { Guid, ServiceRequest } from '../../models/serviceRequest';
@@ -12,7 +12,8 @@ import { Items } from '../../providers/providers';
 import { RequestProvider } from '../../providers/request/request-provider';
 import { RequestHistoryPage } from '../request-history/request-history';
 import { WelcomePage } from '../welcome/welcome';
-import { ViewMyRequestsPage } from '../view-my-requests/view-my-requests';
+import { TrackProgressPage } from '../track-progress/track-progress';
+import { AddressSearchPage } from '../address-search/address-search';
 
 @Component({
   selector: "page-request-service",
@@ -47,7 +48,8 @@ export class RequestServicePage {
     public items: Items,
     public actionSheetCtrl: ActionSheetController,
     public geolocation: Geolocation,
-    public requestProvider: RequestProvider
+    public requestProvider: RequestProvider,
+    private modalCtrl:ModalController
   ) {
     let context = this;
     this.serviceCategories = [];
@@ -106,6 +108,17 @@ export class RequestServicePage {
     });
   }
 
+  selectLocation(){
+    let modal = this.modalCtrl.create(AddressSearchPage);
+    let context = this;
+    modal.onDidDismiss(data => {
+      context.currentLocation = {
+        latitude: data.latitude,
+        longitude: data.longitude
+      };
+    });
+    modal.present();
+  }
   selectServiceCategory() {
     let context = this;
     let actionButtons = [];
@@ -320,13 +333,12 @@ export class RequestServicePage {
           title: "Success!",
           subTitle:
             `Your request was saved successfully.
-             Go to the 'MY Request History' screen to
+             Go to the 'Track Progress' screen to
              check for progress`,
           buttons: ["Dismiss"]
         });
         alert.present().then(res => {
-          console.log('xxxxxxxxxxxxxxxxxxxxxx')
-          this.navCtrl.setRoot(ViewMyRequestsPage);
+          this.navCtrl.setRoot(TrackProgressPage);
         });
       })
       .catch(error => {

@@ -1,0 +1,40 @@
+<ion-header>
+
+    <ion-navbar>
+      <ion-title>Track Progress</ion-title>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content padding>
+    <ion-list>
+      <div *ngFor="let serviceRequest of serviceRequests | async">
+        <ion-item>
+
+          <h2>{{serviceRequest.service?.name}}</h2>
+          <p>
+            <!-- <button ion-button icon-left clear item-right (click)="openMap(serviceRequest)">
+            <ion-icon name="navigate"></ion-icon>
+            View Map
+          </button> -->
+            <!-- <button ion-button icon-left clear item-right *ngIf="!serviceRequest.provider || !serviceRequest.provider.acceptserviceRequest" (click)="acceptserviceRequest(serviceRequest)">
+            <ion-icon style="color:green" name="checkmark"></ion-icon>
+            Accept serviceRequest
+          </button> -->
+            <!-- <button ion-button icon-left clear item-right (click)="declineserviceRequest(serviceRequest)">
+            <ion-icon style="color:red"  name="close"></ion-icon>
+            Decline serviceRequest
+          </button> -->
+
+            <div item-right>
+              <ion-note>{{serviceRequest.bookingDate | date}}</ion-note>
+              <p>
+                <ion-icon style="color:green" *ngIf="serviceRequest.provider && serviceRequest.provider.acceptserviceRequest" name="checkmark"></ion-icon>
+              </p>
+            </div>
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-content>

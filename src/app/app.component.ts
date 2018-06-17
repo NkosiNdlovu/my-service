@@ -19,11 +19,11 @@ import { RequestServicePage } from '../pages/request-service/request-service';
 import { SettingsPage } from '../pages/settings/settings';
 import { UserListPage } from '../pages/user-list/user-list';
 import { UserViewPage } from '../pages/user-view/user-view';
-import { ViewMyRequestsPage } from '../pages/view-my-requests/view-my-requests';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { PostsService } from '../providers/posts-service/posts-service';
 import { Settings } from '../providers/providers';
 import { UserService } from '../providers/users-service/users-service';
+import { TrackProgressPage } from '../pages/track-progress/track-progress';
 
 @Component({
   templateUrl: "app.html",
@@ -69,9 +69,9 @@ export class MyApp {
       roles: { user: false, provider: false, admin: true }
     },
     {
-      title: "My Wash",
+      title: "Track progress",
       icon: "ios-apps-outline",
-      component: ViewMyRequestsPage,
+      component: TrackProgressPage,
       roles: { user: true, provider: false, admin: false }
     },
     {

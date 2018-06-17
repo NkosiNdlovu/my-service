@@ -35,6 +35,7 @@ import { RequestServicePage } from '../pages/request-service/request-service';
 import { SearchPage } from '../pages/search/search';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignupPage } from '../pages/signup/signup';
+import { TrackProgressPage } from '../pages/track-progress/track-progress';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { UserCreatePage } from '../pages/user-create/user-create';
 import { UserListPage } from '../pages/user-list/user-list';
@@ -43,12 +44,12 @@ import { UserViewPage } from '../pages/user-view/user-view';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { Api } from '../providers/api';
 import { LocationTracker } from '../providers/location-tracker';
+import { RequestProvider } from '../providers/request/request-provider';
 import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
 import { UserService } from '../providers/users-service/users-service';
 import { MyApp } from './app.component';
-import { RequestProvider } from '../providers/request/request-provider';
-import { ViewMyRequestsPage } from '../pages/view-my-requests/view-my-requests';
+import { AddressSearchPage } from '../pages/address-search/address-search';
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -95,7 +96,8 @@ let pages = [
   CreateSchedulePage,
   ProviderSearchPage,
   RequestServicePage,
-  ViewMyRequestsPage,
+  AddressSearchPage,
+  TrackProgressPage,
   MyJobCardsPage,
   CardsPage,
   UserViewPage,
@@ -127,7 +129,8 @@ export function declarations() {
     ProviderSearchPage,
     RequestServicePage,
     MyJobCardsPage,
-    ViewMyRequestsPage,
+    AddressSearchPage,
+    TrackProgressPage,
     CardsPage,
     UserViewPage,
     UserEditPage,
