@@ -16,8 +16,8 @@
     </ion-item> -->
       <ion-item (click)="selectLocation()">
         <ion-icon margin color="primary" name="ios-locate-outline"></ion-icon>
-        <span *ngIf="!selectedService">Current location</span>
-        <span style="color:green" *ngIf="selectedService">Car wash: {{selectedService.name}}</span>
+        <span *ngIf="!currentLocation.address">Current location</span>
+        <span style="color:green" *ngIf="currentLocation.address">{{currentLocation.address}}</span>
         <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
       </ion-item>
 

@@ -51,12 +51,16 @@ export class RequestServicePage {
     public requestProvider: RequestProvider,
     private modalCtrl:ModalController
   ) {
+
     let context = this;
     this.serviceCategories = [];
+    this.currentLocation = {};
+
     this.selectedCategory = {
       name: "Car wash",
       id: "lcsWsBnfsmhm3iaFQIG4"
     };
+    
     // get service types
     db.collection("/serviceCategory")
       .valueChanges()
@@ -114,7 +118,8 @@ export class RequestServicePage {
     modal.onDidDismiss(data => {
       context.currentLocation = {
         latitude: data.latitude,
-        longitude: data.longitude
+        longitude: data.longitude,
+        address: data.address
       };
     });
     modal.present();
