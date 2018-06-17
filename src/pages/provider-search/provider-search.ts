@@ -10,6 +10,7 @@ import {
 import { ServiceProvider } from "../../models/serviceProvider";
 import { ServiceRequest } from "../../models/serviceRequest";
 import { MapPage } from "../map/map";
+import { RequestHistoryPage } from "../request-history/request-history";
 
 // @IonicPage()
 @Component({
@@ -29,7 +30,6 @@ export class ProviderSearchPage {
     public toastCtrl: ToastController
   ) {
     this.serviceRequest = navParams.get("serviceRequest");
-    console.log(this.serviceRequest);
   }
 
   ionViewDidLoad() {
@@ -40,7 +40,6 @@ export class ProviderSearchPage {
     this.serviceRequest.provider = new ServiceProvider();
     this.serviceRequest.provider.id = provider.id;
     this.serviceRequest.provider.name = provider.name;
-    console.log(this.serviceRequest);
     this.saveRequest(this.serviceRequest);
   }
 
@@ -54,11 +53,46 @@ export class ProviderSearchPage {
     this.providers = this.db
       .collection("/serviceProviders", ref =>
         ref
-          .orderBy('name')
+          .orderBy("name")
           .startAt(this.searchText)
           .endAt(this.searchText + "\uf8ff")
       )
       .valueChanges();
+  }
+
+  getStraightLineDistance(provider) {
+
+    if (provider.workingLocation && this.serviceRequest.location) {
+      return this.calcCrow(
+        provider.workingLocation.latitude,
+        provider.workingLocation.longitude,
+        this.serviceRequest.location.latitude,
+        this.serviceRequest.location.longitude
+      );
+    } else {
+      return -1;
+    }
+  }
+
+  //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
+  calcCrow(lat1, lon1, lat2, lon2) {
+    var R = 6371; // km
+    var dLat = this.toRad(lat2 - lat1);
+    var dLon = this.toRad(lon2 - lon1);
+    lat1 = this.toRad(lat1);
+    lat2 = this.toRad(lat2);
+
+    var a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    return d;
+  }
+
+  // Converts numeric degrees to radians
+  toRad(Value) {
+    return (Value * Math.PI) / 180;
   }
 
   onSearchCancel(event) {}
@@ -79,6 +113,7 @@ export class ProviderSearchPage {
         res => {
           // successful
           loader.dismiss();
+          this.navCtrl.setRoot(RequestHistoryPage);
         },
         error => {
           loader.dismiss();

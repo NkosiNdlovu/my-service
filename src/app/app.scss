@@ -13,14 +13,14 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-ion-menu ion-content{
-  background-image: url(../../assets/img/background_orange_car.jpg);
+// ion-menu ion-content{
+//   background-image: url(../../assets/img/background_orange_car.jpg);
 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
+//   -webkit-background-size: cover;
+//   -moz-background-size: cover;
+//   background-size: cover;
+//   background-repeat: no-repeat;
+// }
 
 ion-menu ion-content button, ion-menu ion-content ion-item{
   opacity: 0.9;

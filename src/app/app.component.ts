@@ -1,30 +1,29 @@
-import { Component, ViewChild, ApplicationRef } from "@angular/core";
-import { Push, PushObject, PushOptions } from "@ionic-native/push";
-import { SplashScreen } from "@ionic-native/splash-screen";
-import { StatusBar } from "@ionic-native/status-bar";
-import * as firebase from "firebase";
-import { AlertController, Config, Nav, Platform } from "ionic-angular";
-import { TranslateService } from "ng2-translate/ng2-translate";
+import { ApplicationRef, Component, ViewChild } from '@angular/core';
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import * as firebase from 'firebase';
+import { AlertController, Config, Nav, Platform } from 'ionic-angular';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { CardsPage } from "../pages/cards/cards";
-import { LoginPage } from "../pages/login/login";
-import { MapPage } from "../pages/map/map";
-import { MySchedulePage } from "../pages/my-schedule/my-schedule";
-import { FirstRunPage } from "../pages/pages";
-import { RequestHistoryPage } from "../pages/request-history/request-history";
-import { RequestServicePage } from "../pages/request-service/request-service";
-import { SearchPage } from "../pages/search/search";
-import { SettingsPage } from "../pages/settings/settings";
-import { UserViewPage } from "../pages/user-view/user-view";
-import { PostsService } from "../providers/posts-service/posts-service";
-import { Settings } from "../providers/providers";
-import { UserService } from "../providers/users-service/users-service";
-import { PageModel } from "../models/page";
-import { UserAccount } from "../models/account";
-import { ViewMyRequestsPage } from "../pages/view-my-requests/view-my-requests";
-import { UserCreatePage } from "../pages/user-create/user-create";
-import { UserListPage } from "../pages/user-list/user-list";
-import { MyJobCardsPage } from "../pages/my-job-cards/my-job-cards";
+import { UserAccount } from '../models/account';
+import { PageModel } from '../models/page';
+import { CardsPage } from '../pages/cards/cards';
+import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
+import { MapPage } from '../pages/map/map';
+import { MyJobCardsPage } from '../pages/my-job-cards/my-job-cards';
+import { MySchedulePage } from '../pages/my-schedule/my-schedule';
+import { RequestHistoryPage } from '../pages/request-history/request-history';
+import { RequestServicePage } from '../pages/request-service/request-service';
+import { SettingsPage } from '../pages/settings/settings';
+import { UserListPage } from '../pages/user-list/user-list';
+import { UserViewPage } from '../pages/user-view/user-view';
+import { ViewMyRequestsPage } from '../pages/view-my-requests/view-my-requests';
+import { WelcomePage } from '../pages/welcome/welcome';
+import { PostsService } from '../providers/posts-service/posts-service';
+import { Settings } from '../providers/providers';
+import { UserService } from '../providers/users-service/users-service';
 
 @Component({
   templateUrl: "app.html",
@@ -68,12 +67,14 @@ export class MyApp {
       icon: "ios-apps-outline",
       component: RequestHistoryPage,
       roles: { user: false, provider: false, admin: true }
-    },{
+    },
+    {
       title: "My Wash",
       icon: "ios-apps-outline",
       component: ViewMyRequestsPage,
       roles: { user: true, provider: false, admin: false }
-    },{
+    },
+    {
       title: "My Job cards",
       icon: "ios-card-outline",
       component: MyJobCardsPage,
@@ -112,6 +113,7 @@ export class MyApp {
   ];
 
   loading = true;
+  userLoggedIn = false;
 
   constructor(
     private push: Push,
@@ -142,9 +144,10 @@ export class MyApp {
     firebase.auth().onAuthStateChanged((user: any) => {
       if (user) {
         this.userService.currentUserId = user.uid;
+        this.userLoggedIn = true;
         that.nav.setRoot(RequestServicePage);
       } else {
-        that.nav.setRoot(FirstRunPage);
+        that.nav.setRoot(HomePage);
       }
     });
 
@@ -212,6 +215,22 @@ export class MyApp {
     this.push
       .listChannels()
       .then(channels => console.log("List of channels", channels));
+  }
+
+  login() {
+    //show toast before redirecting
+    this.nav.push(LoginPage);
+  }
+
+  signUp() {
+    this.nav.setRoot(
+      WelcomePage,
+      {},
+      {
+        animate: true,
+        direction: "forward"
+      }
+    );
   }
 
   logUserOut() {

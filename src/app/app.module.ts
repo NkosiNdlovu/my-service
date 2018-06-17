@@ -88,6 +88,7 @@ export function provideSettings(storage: Storage) {
  */
 let pages = [
   MyApp,
+  HomePage,
   MySchedulePage,
   CreateSchedulePage,
   ProviderSearchPage,
@@ -119,6 +120,7 @@ let pages = [
 export function declarations() {
   return [
     MyApp,
+    HomePage,
     ProviderSearchPage,
     RequestServicePage,
     MyJobCardsPage,

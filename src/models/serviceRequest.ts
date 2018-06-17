@@ -6,7 +6,7 @@ export class ServiceRequest{
   comment?: string ;
   acknowledgedBy?: string;
   id: string ;
-  location?: Array<any>;
+  location?: any;
   service: IdName;
   vehicleType: IdName;
   user: UserNameSurname;

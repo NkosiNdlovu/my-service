@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { RequestServicePage } from '../request-service/request-service';
 
 @Component({
   selector: 'page-home',
@@ -11,4 +12,7 @@ export class HomePage {
 
   }
 
+  requestCarWash(){
+    this.navCtrl.setRoot(RequestServicePage);
+  }
 }

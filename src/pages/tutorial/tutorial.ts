@@ -34,17 +34,17 @@ export class TutorialPage {
       console.log('Loaded values', values);
       this.slides = [
         {
-          title: 'Welcome to MY CAR WASH!',
-          description: 'MY CAR WASH helps you discover mobile car wash services around you.',
+          title: 'Welcome to GREEN AUTOCARE!',
+          description: 'GREEN AUTOCARE helps you discover mobile car wash services around you.',
           image: 'assets/img/orange-car-white.png',
         },
         {
           title: 'Search and discover service providers around you!' ,
-          description: 'MY CAR WASH uses informative maps to inform you of mobile car wash services around',
+          description: 'GREEN AUTOCARE uses informative maps to inform you of mobile car wash services around',
           image: 'assets/img/auto-1822415_960_720.jpg',
         },
         {
-          title: 'MY CAR WASH connects you',
+          title: 'GREEN AUTOCARE connects you',
           description: 'This is one of the best apps in the world in the car wash industry',
           image: 'assets/img/car-2220059_960_720.jpg',
         }
