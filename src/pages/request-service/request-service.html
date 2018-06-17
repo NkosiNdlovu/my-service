@@ -9,63 +9,44 @@
 
 
 <ion-content>
-  <ion-card>
-    <ion-item>
-      <div  text-center>
-        <button full padding ion-button color="light" (click)="selectServiceCategory()">
+    <ion-list>
+      <!-- <ion-item (click)="selectServiceCategory()">
           <span *ngIf="!selectedCategory">Select type of service</span>
           <span style="color:green" *ngIf="selectedCategory">Service type: {{selectedCategory.name}}</span>
-        </button>
-      </div>
-    </ion-item>
-
-    <ion-item>
-      <div  text-center>
-        <button full  padding ion-button color="light" (click)="selectService()">
-          <span *ngIf="!selectedService">Select type of car wash</span>
-          <span style="color:green" *ngIf="selectedService">Car wash: {{selectedService.name}}</span>
-        </button>
-      </div>
-    </ion-item>
-
-
-    <ion-item>
-        <div  text-center>
-          <button full padding ion-button color="light" (click)="selectVehicleType()">
-            <span *ngIf="!selectedVehicleType">Select type of vehicle</span>
-            <span style="color:green" *ngIf="selectedVehicleType">Vehicle Type: {{selectedVehicleType}}</span>
-          </button>
-        </div>
+    </ion-item> -->
+      <ion-item (click)="selectService()">
+        <span *ngIf="!selectedService">Select type of car wash</span>
+        <span style="color:green" *ngIf="selectedService">Car wash: {{selectedService.name}}</span>
+        <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
       </ion-item>
 
+      <ion-item  (click)="selectVehicleType()">
+          <span *ngIf="!selectedVehicleType">Select type of vehicle</span>
+          <span style="color:green" *ngIf="selectedVehicleType">Vehicle Type: {{selectedVehicleType}}</span>
+          <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+        </ion-item>
 
-    <ion-item>
-      <div  text-center>
-        <button full padding ion-button color="light" (click)="selectBookingDate()">
+
+      <ion-item (click)="selectBookingDate()">
           <span *ngIf="!bookingDate">Select booking date</span>
           <span style="color:green" *ngIf="bookingDate">Date: {{bookingDate}}</span>
-        </button>
-      </div>
-    </ion-item>
+          <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+        </ion-item>
 
-    <ion-item>
-      <div  text-center>
-        <button full padding ion-button color="light" (click)="selectStartTime()">
+      <ion-item (click)="selectStartTime()">
           <span *ngIf="!bookingTimeRangeStart">Select availability (start time)</span>
           <span style="color:green" *ngIf="bookingTimeRangeStart">Available from: {{bookingTimeRangeStart}}:00H</span>
-        </button>
-      </div>
-    </ion-item>
+          <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+        </ion-item>
 
-    <ion-item>
-      <div  text-center>
-        <button full secondary padding ion-button color="light" (click)="selectEndTime()">
+      <ion-item (click)="selectEndTime()">
           <span *ngIf="!bookingTimeRangeEnd">Select availability (end time</span>
           <span style="color:green" *ngIf="bookingTimeRangeEnd">Availability until: {{bookingTimeRangeEnd}}:00H </span>
-        </button>
-      </div>
-    </ion-item>
-<!--
+          <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+      </ion-item>
+
+    </ion-list>
+    <!--
     <ion-item>
 
         <input style="width: 100%;" [ngModel]="serviceRequest.comment" type="text" placeholder="Comment"/>
@@ -73,11 +54,9 @@
         <ion-icon item-right name="ios-mic-outline"></ion-icon>
         <ion-icon item-right name="ios-camera-outline"></ion-icon>
     </ion-item> -->
-  </ion-card>
   <ion-item>
-    <div  text-center>
+    <div text-center>
       <button [disabled]="!selectedService || !selectedCategory" padding ion-button color="gray" (click)="requestService()">Request service</button>
     </div>
   </ion-item>
 </ion-content>
-

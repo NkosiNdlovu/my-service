@@ -17,6 +17,7 @@ import { PostsService } from "../../providers/posts-service/posts-service";
 import { Items } from "../../providers/providers";
 import { RequestHistoryPage } from "../request-history/request-history";
 import { UserEditPage } from "../user-profile-edit/user-edit";
+import { WelcomePage } from "../welcome/welcome";
 
 @Component({
   selector: "page-request-service",
@@ -53,7 +54,10 @@ export class RequestServicePage {
   ) {
     let context = this;
     this.serviceCategories = [];
-
+    this.selectedCategory = {
+      name: "Car wash",
+      id: "lcsWsBnfsmhm3iaFQIG4"
+    };
     // get service types
     db.collection("/serviceCategory")
       .valueChanges()
@@ -245,22 +249,28 @@ export class RequestServicePage {
   }
 
   requestService() {
-    this.submitRequest();
-    // let context = this;
+    // remove fields that are for display purposes
+    delete this.selectedService.isActive;
 
-    // this.datePicker
-    //   .show({
-    //     date: new Date(),
-    //     mode: "date",
-    //     androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-    //   })
-    //   .then(date => context.submitRequest());
+    // set defaults
+    this.serviceRequest.requestDate = new Date();
+    this.serviceRequest.bookingDate = new Date();
+    this.serviceRequest.id = Guid.newGuid();
+    this.serviceRequest.service = this.selectedService;
+    this.serviceRequest.location = this.currentLocation;
+    this.serviceRequest.bookingTimeRangeStart = this.bookingTimeRangeStart;
+    this.serviceRequest.bookingTimeRangeEnd = this.bookingTimeRangeEnd;
+    this.serviceRequest.vehicleType = this.selectedVehicleType;
+
+    this.submitRequest();
   }
 
   submitRequest() {
     // check if the user is logged in
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        // set user name and id
+        this.serviceRequest.user = { id: user.uid, name: user.email };
         // User is logged in- go to the confirmation page
         this.saveRequest(user);
       } else {
@@ -272,11 +282,18 @@ export class RequestServicePage {
             "Creating service request requires authentication. Please login or create a profile",
           buttons: [
             {
-              text: "Cancel",
+              text: "OK",
               role: "cancel",
               handler: () => {
                 this.serviceRequest.service = this.selectedService;
-                this.navCtrl.push(UserEditPage, this.serviceRequest.service);
+                this.navCtrl.setRoot(
+                  WelcomePage,
+                  {},
+                  {
+                    animate: true,
+                    direction: "forward"
+                  }
+                );
               }
             }
           ]
@@ -295,19 +312,6 @@ export class RequestServicePage {
   }
 
   saveRequest(user) {
-    // remove fields that are for display purposes
-    delete this.selectedService.isActive;
-
-    // set defaults
-    this.serviceRequest.requestDate = new Date();
-    this.serviceRequest.bookingDate = new Date();
-    this.serviceRequest.id = Guid.newGuid();
-    this.serviceRequest.service = this.selectedService;
-    this.serviceRequest.location = this.currentLocation;
-    this.serviceRequest.user = { id: user.uid, name: user.email };
-    this.serviceRequest.bookingTimeRangeStart = this.bookingTimeRangeStart;
-    this.serviceRequest.bookingTimeRangeEnd = this.bookingTimeRangeEnd;
-    this.serviceRequest.vehicleType = this.selectedVehicleType;
     this.db
       .collection("/serviceRequests")
       .doc(this.serviceRequest.id)
