@@ -1,8 +1,15 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, LoadingController, ToastController } from "ionic-angular";
 import { AngularFirestore } from "angularfire2/firestore";
+import {
+  LoadingController,
+  NavController,
+  NavParams,
+  ToastController
+} from "ionic-angular";
+
 import { ServiceProvider } from "../../models/serviceProvider";
 import { ServiceRequest } from "../../models/serviceRequest";
+import { MapPage } from "../map/map";
 
 // @IonicPage()
 @Component({
@@ -12,55 +19,49 @@ import { ServiceRequest } from "../../models/serviceRequest";
 export class ProviderSearchPage {
   searchText: string;
   serviceRequest: ServiceRequest;
-  providers: Array<ServiceProvider>;
+  providers: any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public db: AngularFirestore,
     public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController,
+    public toastCtrl: ToastController
   ) {
-    this.serviceRequest = navParams.get("serviceRequest")
+    this.serviceRequest = navParams.get("serviceRequest");
     console.log(this.serviceRequest);
   }
 
   ionViewDidLoad() {
-    this.db
-    .collection("/serviceProviders")
-    .valueChanges()
-    .subscribe((data: Array<ServiceProvider>) => {
-      this.providers = data;
-    });
+    this.providers = this.db.collection("/serviceProviders").valueChanges();
   }
 
-  selectProvider(provider){
+  selectProvider(provider) {
     this.serviceRequest.provider = new ServiceProvider();
     this.serviceRequest.provider.id = provider.id;
     this.serviceRequest.provider.name = provider.name;
-    console.log(this.serviceRequest)
+    console.log(this.serviceRequest);
     this.saveRequest(this.serviceRequest);
   }
 
-  openMap(provider){
-
-
+  openMap(provider) {
+    this.navCtrl.push(MapPage, {
+      serviceRequests: [provider]
+    });
   }
 
   onSearchInput(event) {
-
-    this.db
+    this.providers = this.db
       .collection("/serviceProviders", ref =>
-        ref.where("name", "==", this.searchText)
+        ref
+          .orderBy('name')
+          .startAt(this.searchText)
+          .endAt(this.searchText + "\uf8ff")
       )
-      .valueChanges()
-      .subscribe((data: Array<ServiceProvider>) => {
-        this.providers = data;
-      });
+      .valueChanges();
   }
 
   onSearchCancel(event) {}
-
 
   saveRequest(serviceRequest) {
     let that = this;
