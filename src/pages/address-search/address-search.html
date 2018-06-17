@@ -11,9 +11,9 @@
 <ion-content padding>
 
   <ion-searchbar [(ngModel)]="autocomplete.query" [showCancelButton]="true" (ionInput)="updateSearch()" (ionCancel)="dismiss()"></ion-searchbar>
-  <button ion-button>
-  <ion-icon margin color="primary" name="ios-locate-outline"></ion-icon>
-        Use current location
+  <button ion-button (click)="useCurrentLocation()">
+    <ion-icon margin color="primary" name="ios-locate-outline"></ion-icon>
+    Use current location
   </button>
   <ion-list>
     <ion-item *ngFor="let item of autocompleteItems" tappable (click)="chooseItem(item)">

@@ -29,6 +29,8 @@ export class RequestServicePage {
   selectedService: any;
   selectedVehicleType: any;
   currentLocation: any;
+
+  gpsLocation: any;
   bookingDate: Date;
   bookingTimeRangeStart: number;
   bookingTimeRangeEnd: number;
@@ -60,7 +62,7 @@ export class RequestServicePage {
       name: "Car wash",
       id: "lcsWsBnfsmhm3iaFQIG4"
     };
-    
+
     // get service types
     db.collection("/serviceCategory")
       .valueChanges()
@@ -78,10 +80,17 @@ export class RequestServicePage {
     this.geolocation
       .getCurrentPosition()
       .then(resp => {
+
         context.currentLocation = {
           latitude: resp.coords.latitude,
           longitude: resp.coords.longitude
         };
+
+        context.gpsLocation = {
+          latitude: resp.coords.latitude,
+          longitude: resp.coords.longitude
+        };
+
       })
       .catch(error => {
         let alert = this.alertCtrl.create({
@@ -116,6 +125,20 @@ export class RequestServicePage {
     let modal = this.modalCtrl.create(AddressSearchPage);
     let context = this;
     modal.onDidDismiss(data => {
+
+      if(!data){
+        return;
+      }
+
+      if(data.useCurrentLocation){
+
+        context.currentLocation = {
+          latitude: this.gpsLocation.latitude,
+          longitude: this.gpsLocation.longitude,
+        }
+        return;
+      }
+
       context.currentLocation = {
         latitude: data.latitude,
         longitude: data.longitude,

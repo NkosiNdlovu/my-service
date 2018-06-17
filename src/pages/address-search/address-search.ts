@@ -78,4 +78,10 @@ export class AddressSearchPage {
       });
     });
   }
+
+  useCurrentLocation(){
+    this.viewCtrl.dismiss({
+      useCurrentLocation: false
+    });
+  }
 }
