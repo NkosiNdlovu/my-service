@@ -1,15 +1,11 @@
-import "rxjs/add/operator/map";
+import 'rxjs/add/operator/map';
 
-import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from "angularfire2/firestore";
-import * as firebase from "firebase";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import * as firebase from 'firebase';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { UserAccount } from "../../models/account";
+import { UserAccount } from '../../models/account';
 
 @Injectable()
 export class UserService {
@@ -27,7 +23,7 @@ export class UserService {
   }
   currentUser$: BehaviorSubject<UserAccount>;
 
-  constructor(private http: Http, public db: AngularFirestore) {
+  constructor(public db: AngularFirestore) {
     this.fireAuth = firebase.auth();
     this.userProfileCol = db.collection("profiles");
     this.currentUser$ = new BehaviorSubject<UserAccount>(null);

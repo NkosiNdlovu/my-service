@@ -5,6 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import * as firebase from 'firebase';
 import { AlertController, Config, Nav, Platform } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification';
 
 import { UserAccount } from '../models/account';
 import { PageModel } from '../models/page';
@@ -117,6 +118,7 @@ export class MyApp {
 
   constructor(
     private push: Push,
+    private localNotification: PhonegapLocalNotification,
     translate: TranslateService,
     platform: Platform,
     settings: Settings,
@@ -236,6 +238,21 @@ export class MyApp {
   logUserOut() {
     //pop to confirm if user really wishes to logout
     let context = this;
+
+    this.localNotification.requestPermission().then(
+      (permission) => {
+        if (permission === 'granted') {
+
+          // Create the notification
+          this.localNotification.create('My Title', {
+            tag: 'message1',
+            body: 'My body',
+            icon: 'assets/icon/favicon.ico'
+          });
+
+        }
+      }
+    );
 
     let confirm = this.alertCtrl.create({
       title: "Are you sure you want to logout?",

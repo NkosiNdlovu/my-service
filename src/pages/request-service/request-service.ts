@@ -3,17 +3,23 @@ import { DatePicker } from '@ionic-native/date-picker';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
-import { ActionSheetController, AlertController, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
+import {
+  ActionSheetController,
+  AlertController,
+  ModalController,
+  NavController,
+  NavParams,
+  ToastController,
+} from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 import { Guid, ServiceRequest } from '../../models/serviceRequest';
 import { PostsService } from '../../providers/posts-service/posts-service';
 import { Items } from '../../providers/providers';
 import { RequestProvider } from '../../providers/request/request-provider';
-import { RequestHistoryPage } from '../request-history/request-history';
-import { WelcomePage } from '../welcome/welcome';
-import { TrackProgressPage } from '../track-progress/track-progress';
 import { AddressSearchPage } from '../address-search/address-search';
+import { TrackProgressPage } from '../track-progress/track-progress';
+import { WelcomePage } from '../welcome/welcome';
 
 @Component({
   selector: "page-request-service",

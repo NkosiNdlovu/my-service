@@ -16,6 +16,7 @@ import { TimeAgoPipe } from 'time-ago-pipe';
 
 import { Items } from '../mocks/providers/items';
 import { AboutPage } from '../pages/about/about';
+import { AddressSearchPage } from '../pages/address-search/address-search';
 import { CardsPage } from '../pages/cards/cards';
 import { ContactPage } from '../pages/contact/contact';
 import { ContentPage } from '../pages/content/content';
@@ -49,7 +50,6 @@ import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
 import { UserService } from '../providers/users-service/users-service';
 import { MyApp } from './app.component';
-import { AddressSearchPage } from '../pages/address-search/address-search';
 
 // Initialize Firebase
 export const firebaseConfig = {

@@ -1,19 +1,12 @@
-import { Component } from "@angular/core";
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  ActionSheetController,
-  LoadingController,
-  ToastController
-} from "ionic-angular";
-import { AngularFirestore } from "angularfire2/firestore";
-import { ServiceRequest } from "../../models/serviceRequest";
-import { MapPage } from "../map/map";
-import { UserService } from "../../providers/users-service/users-service";
-import { ProviderSearchPage } from "../provider-search/provider-search";
+import { Component } from '@angular/core';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { ActionSheetController, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
 
-@IonicPage()
+import { ServiceRequest } from '../../models/serviceRequest';
+import { UserService } from '../../providers/users-service/users-service';
+import { MapPage } from '../map/map';
+import { ProviderSearchPage } from '../provider-search/provider-search';
+
 @Component({
   selector: "page-request-history",
   templateUrl: "request-history.html"

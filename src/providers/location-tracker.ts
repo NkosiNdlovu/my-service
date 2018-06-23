@@ -1,12 +1,11 @@
 import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 
 @Injectable()
 export class LocationTracker {
 
-  constructor(public http: Http) {
+  constructor() {
     console.log('Hello LocationTracker Provider');
   }
 

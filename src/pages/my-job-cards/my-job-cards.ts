@@ -149,7 +149,6 @@ export class MyJobCardsPage {
   }
 
   saveJob(job) {
-    let that = this;
     var loader = this.loadingCtrl.create({
       content: "Please wait...",
       duration: 3000

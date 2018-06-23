@@ -1,7 +1,6 @@
 import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import * as firebase from 'firebase';
 
 @Injectable()
@@ -17,7 +16,7 @@ export class PostsService {
   public userId: any;
   public progress: any;
 
-  constructor(private http: Http) {
+  constructor() {
     this.userNode = firebase.database().ref('users');
     this.postsNode = firebase.database().ref('posts');
     this.usersPostsNode = firebase.database().ref('user-posts');

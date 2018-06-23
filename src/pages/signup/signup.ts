@@ -1,16 +1,10 @@
-import { Component } from "@angular/core";
-import {
-  NavController,
-  ToastController,
-  LoadingController
-} from "ionic-angular";
+import { Component } from '@angular/core';
+import { LoadingController, NavController, ToastController } from 'ionic-angular';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { TranslateService } from "ng2-translate/ng2-translate";
-
-import { MainPage } from "../../pages/pages";
-import { UserService } from "../../providers/users-service/users-service";
-import * as firebase from "firebase";
-import { UserAccount } from "../../models/account";
+import { UserAccount } from '../../models/account';
+import { MainPage } from '../../pages/pages';
+import { UserService } from '../../providers/users-service/users-service';
 
 /*
   Generated class for the Signup page.

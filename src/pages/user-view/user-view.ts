@@ -1,16 +1,11 @@
-import { Component } from "@angular/core";
-import {
-  NavController,
-  NavParams,
-  AlertController,
-  ToastController
-} from "ionic-angular";
-import { LoginPage } from "../login/login";
-import { UserEditPage } from "../user-profile-edit/user-edit";
-import { UserService } from "../../providers/users-service/users-service";
-import * as firebase from "firebase";
-import { UserAccount } from "../../models/account";
-//import { Items } from '../../providers/providers';
+import { Component } from '@angular/core';
+import * as firebase from 'firebase';
+import { AlertController, NavController, NavParams, ToastController } from 'ionic-angular';
+
+import { UserAccount } from '../../models/account';
+import { UserService } from '../../providers/users-service/users-service';
+import { LoginPage } from '../login/login';
+import { UserEditPage } from '../user-profile-edit/user-edit';
 
 @Component({
   selector: "page-user-view",

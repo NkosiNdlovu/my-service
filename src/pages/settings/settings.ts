@@ -33,8 +33,7 @@ export class SettingsPage {
 
   subSettings: any = SettingsPage;
 
-  constructor(public navCtrl: NavController,
-              public settings: Settings,
+  constructor(public settings: Settings,
               public formBuilder: FormBuilder,
               public navParams: NavParams,
               public translate: TranslateService) {

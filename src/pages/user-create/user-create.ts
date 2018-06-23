@@ -1,18 +1,9 @@
-import { Component } from "@angular/core";
-import * as firebase from "firebase";
-import {
-  AlertController,
-  IonicPage,
-  NavController,
-  NavParams,
-  ToastController
-} from "ionic-angular";
+import { Component } from '@angular/core';
+import { AlertController, NavController, NavParams, ToastController } from 'ionic-angular';
 
-import { UserAccount } from "../../models/account";
-import { PostsService } from "../../providers/posts-service/posts-service";
-import { UserService } from "../../providers/users-service/users-service";
-import { UserViewPage } from "../user-view/user-view";
-import { UserListPage } from "../user-list/user-list";
+import { UserAccount } from '../../models/account';
+import { UserService } from '../../providers/users-service/users-service';
+import { UserListPage } from '../user-list/user-list';
 
 // @IonicPage()
 @Component({
