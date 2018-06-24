@@ -5,11 +5,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import * as firebase from 'firebase';
 import { AlertController, Config, Nav, Platform } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification';
 
 import { UserAccount } from '../models/account';
 import { PageModel } from '../models/page';
-import { CardsPage } from '../pages/cards/cards';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
@@ -17,15 +15,14 @@ import { MyJobCardsPage } from '../pages/my-job-cards/my-job-cards';
 import { MySchedulePage } from '../pages/my-schedule/my-schedule';
 import { RequestHistoryPage } from '../pages/request-history/request-history';
 import { RequestServicePage } from '../pages/request-service/request-service';
-import { SettingsPage } from '../pages/settings/settings';
+import { TrackProgressPage } from '../pages/track-progress/track-progress';
 import { UserListPage } from '../pages/user-list/user-list';
 import { UserViewPage } from '../pages/user-view/user-view';
 import { WelcomePage } from '../pages/welcome/welcome';
-import { PostsService } from '../providers/posts-service/posts-service';
-import { Settings } from '../providers/providers';
-import { UserService } from '../providers/users-service/users-service';
-import { TrackProgressPage } from '../pages/track-progress/track-progress';
 import { Notifications } from '../providers/notifications';
+import { PostsService } from '../providers/posts-service/posts-service';
+import { UserService } from '../providers/users-service/users-service';
+
 @Component({
   templateUrl: "app.html",
   providers: [PostsService]
@@ -54,7 +51,7 @@ export class MyApp {
     {
       title: "Home",
       icon: "ios-home-outline",
-      component: RequestServicePage,
+      component: HomePage,
       roles: { user: true, provider: false, admin: false }
     },
     {
@@ -143,7 +140,8 @@ export class MyApp {
       }
     });
 
-    firebase.auth().onAuthStateChanged((user: any) => {
+    let unsubscribe = firebase.auth().onAuthStateChanged((user: any) => {
+
       if (user) {
         this.userService.currentUserId = user.uid;
         this.userLoggedIn = true;
@@ -152,6 +150,9 @@ export class MyApp {
       } else {
         that.nav.setRoot(HomePage);
       }
+
+      unsubscribe();
+
     });
 
     translate.setDefaultLang("en");

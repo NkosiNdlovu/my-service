@@ -28,7 +28,6 @@ export class SearchPage {
 
   constructor(
     public db: AngularFirestore,
-    public toastCtrl: ToastController,
     private alertCtrl: AlertController,
     public postsService: PostsService,
     public navCtrl: NavController,

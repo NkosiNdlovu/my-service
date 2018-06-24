@@ -46,12 +46,12 @@ import { UserViewPage } from '../pages/user-view/user-view';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { Api } from '../providers/api';
 import { LocationTracker } from '../providers/location-tracker';
+import { Notifications } from '../providers/notifications';
 import { RequestProvider } from '../providers/request/request-provider';
 import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
 import { UserService } from '../providers/users-service/users-service';
 import { MyApp } from './app.component';
-import { Notifications } from '../providers/notifications';
 
 // Initialize Firebase
 export const firebaseConfig = {
