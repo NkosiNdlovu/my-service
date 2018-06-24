@@ -1,5 +1,4 @@
-import { NULL_EXPR } from "@angular/compiler/src/output/output_ast";
-import { ServiceProvider } from "./serviceProvider";
+import { ServiceProvider } from './serviceProvider';
 
 export class ServiceRequest{
   bookingDate?:Date;
@@ -39,13 +38,4 @@ export class UserNameSurname{
   id: string;
   name: string  ;
   surname?: string;
-}
-
-export class Guid {
-  static newGuid() {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-          var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-          return v.toString(16);
-      });
-  }
 }

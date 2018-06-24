@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { DatePicker } from '@ionic-native/date-picker';
 import { Geolocation } from '@ionic-native/geolocation';
+import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification';
 import { Push } from '@ionic-native/push';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -50,6 +51,7 @@ import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
 import { UserService } from '../providers/users-service/users-service';
 import { MyApp } from './app.component';
+import { Notifications } from '../providers/notifications';
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -166,6 +168,8 @@ export function providers() {
   return [
     Push,
     Geolocation,
+    PhonegapLocalNotification,
+    Notifications,
     LocationTracker,
     User,
     UserService,

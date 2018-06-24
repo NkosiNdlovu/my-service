@@ -6,6 +6,8 @@ import { ServiceProvider } from '../../models/serviceProvider';
 import { ServiceRequest } from '../../models/serviceRequest';
 import { UserService } from '../../providers/users-service/users-service';
 import { MapPage } from '../map/map';
+import { Notifications } from '../../providers/notifications';
+import { UserNotification, NOTIFICATION_MESSAGES } from '../../models/user-notification';
 
 @Component({
   selector: "page-my-job-cards",
@@ -21,7 +23,8 @@ export class MyJobCardsPage {
     public userService: UserService,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    public notifications: Notifications
   ) {
     this.jobs = [];
     this.userId = userService.currentUserId;
@@ -46,6 +49,7 @@ export class MyJobCardsPage {
 
     job.provider.acceptJob = true;
 
+    this.notifyUser('command-center', NOTIFICATION_MESSAGES.job_accepted);
     this.saveJob(job);
   }
 
@@ -57,8 +61,9 @@ export class MyJobCardsPage {
 
     job.provider.declineJob = true;
     job.provider.acceptJob = false;
-    console.log(job)
+
     this.saveJob(job);
+    this.notifyUser(job.user.id, NOTIFICATION_MESSAGES.job_decline)
   }
 
   showActions(job) {
@@ -133,8 +138,10 @@ export class MyJobCardsPage {
       job.provider = new ServiceProvider();
       job.provider.id = this.userId;
     }
-
+    this.notifyUser(job.user.id , '')
     job.provider.arrivalTime = new Date();
+
+    this.notifyUser(job.user.id, NOTIFICATION_MESSAGES.job_arrival);
     this.saveJob(job);
   }
 
@@ -145,7 +152,18 @@ export class MyJobCardsPage {
     }
 
     job.provider.completionTime = new Date();
+
+    this.notifyUser(job.user.id, NOTIFICATION_MESSAGES.job_complete);
     this.saveJob(job);
+  }
+
+  notifyUser(userId:string, message:string){
+    let note = new UserNotification();
+    note.body = message;
+    note.tag = 'My tag';
+    note.title = 'GREEN CARWASH'
+    note.userId = userId;
+    this.notifications.notifyUser(note)
   }
 
   saveJob(job) {

@@ -25,7 +25,7 @@ import { PostsService } from '../providers/posts-service/posts-service';
 import { Settings } from '../providers/providers';
 import { UserService } from '../providers/users-service/users-service';
 import { TrackProgressPage } from '../pages/track-progress/track-progress';
-
+import { Notifications } from '../providers/notifications';
 @Component({
   templateUrl: "app.html",
   providers: [PostsService]
@@ -118,16 +118,16 @@ export class MyApp {
 
   constructor(
     private push: Push,
-    private localNotification: PhonegapLocalNotification,
+
     translate: TranslateService,
     platform: Platform,
-    settings: Settings,
     config: Config,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     public userService: UserService,
     public alertCtrl: AlertController,
-    private ref: ApplicationRef
+    private ref: ApplicationRef,
+    private notifications: Notifications
   ) {
     // Set the default language for translation strings, and the current language.
 
@@ -147,6 +147,7 @@ export class MyApp {
       if (user) {
         this.userService.currentUserId = user.uid;
         this.userLoggedIn = true;
+        this.notifications.trackNotifications(user.uid);
         that.nav.setRoot(RequestServicePage);
       } else {
         that.nav.setRoot(HomePage);
@@ -238,21 +239,6 @@ export class MyApp {
   logUserOut() {
     //pop to confirm if user really wishes to logout
     let context = this;
-
-    this.localNotification.requestPermission().then(
-      (permission) => {
-        if (permission === 'granted') {
-
-          // Create the notification
-          this.localNotification.create('My Title', {
-            tag: 'message1',
-            body: 'My body',
-            icon: 'assets/icon/favicon.ico'
-          });
-
-        }
-      }
-    );
 
     let confirm = this.alertCtrl.create({
       title: "Are you sure you want to logout?",

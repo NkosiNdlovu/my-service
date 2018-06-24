@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { ActionSheetController, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
-import { ServiceRequest } from '../../models/serviceRequest';
 import { UserService } from '../../providers/users-service/users-service';
 
 
@@ -15,12 +14,8 @@ export class TrackProgressPage {
   userId: string;
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     public db: AngularFirestore,
-    public userService: UserService,
-    public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController,
-    public actionSheetCtrl: ActionSheetController
+    public userService: UserService
   ) {
 
     this.userId = userService.currentUserId;
