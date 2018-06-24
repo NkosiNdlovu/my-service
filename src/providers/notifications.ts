@@ -31,11 +31,14 @@ export class Notifications {
       .valueChanges()
       .subscribe((data: any) => {
         // send Notification
-        this.showNotification(data);
+        if(data.length != 0)
+          this.showNotification(data);
       });
   }
 
   private showNotification(notification: UserNotification) {
+    console.log(notification);
+    alert('ssssssssssssss')
     this.localNotification.requestPermission().then(permission => {
       if (permission === "granted") {
         // Create the notification

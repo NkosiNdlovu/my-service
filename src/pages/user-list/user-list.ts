@@ -1,15 +1,10 @@
-import { Component } from "@angular/core";
-import {
-  AlertController,
-  NavController,
-  NavParams,
-  ToastController
-} from "ionic-angular";
+import { Component } from '@angular/core';
+import { AlertController, NavController, NavParams, ToastController } from 'ionic-angular';
 
-import { UserAccount } from "../../models/account";
-import { PostsService } from "../../providers/posts-service/posts-service";
-import { UserService } from "../../providers/users-service/users-service";
-import { UserCreatePage } from "../user-create/user-create";
+import { UserAccount } from '../../models/account';
+import { PostsService } from '../../providers/posts-service/posts-service';
+import { UserService } from '../../providers/users-service/users-service';
+import { UserCreatePage } from '../user-create/user-create';
 
 @Component({
   selector: "page-user-list",
@@ -26,19 +21,25 @@ export class UserListPage {
     public toastCtrl: ToastController,
     public userService: UserService
   ) {
-    let that = this;
 
     this.users = [];
+
+  }
+
+  ionViewDidLoad() {
+    let that = this;
 
     this.userService.getUsers().subscribe((users: any) => {
       console.log(users);
       that.users = users;
     });
+
   }
 
   editUser(userId) {
     this.navCtrl.push(UserCreatePage, { userId: userId });
   }
+
   createNew() {
     this.navCtrl.push(UserCreatePage, { userId: '' });
   }

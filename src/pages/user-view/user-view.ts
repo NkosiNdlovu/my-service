@@ -13,9 +13,7 @@ import { UserEditPage } from '../user-profile-edit/user-edit';
   providers: [UserService]
 })
 export class UserViewPage {
-  item: any;
   public userDisplayName: any;
-  public userPhotoUrl: any;
   public userCity: any;
   public userState: any;
   public userSkills: any;
@@ -23,6 +21,7 @@ export class UserViewPage {
   public myUserId: any;
   public userCountry: any;
   public userAbout: any;
+  userEmail: string;
 
   constructor(
     public alertCtrl: AlertController,
@@ -46,15 +45,13 @@ export class UserViewPage {
     this.usersService.getUser(theUserId).subscribe((user: UserAccount) => {
       // get user photo
       if (user) {
-        // that.userPhotoUrl = user.photo || ''; //get user photo
+
         that.userDisplayName = user.firstName + " " + user.lastName;
-        that.userSkills = user.skills || "";
         that.userCity = user.city || "";
         that.userState = user.state || "";
         that.userPhone = user.phone || "";
         that.userCountry = user.country || "";
-
-        console.log("This is the user name: " + that.userDisplayName);
+        that.userEmail = user.email || ""
       }
     });
   }

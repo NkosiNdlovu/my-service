@@ -6,12 +6,6 @@ import { UserAccount } from '../../models/account';
 import { MainPage } from '../../pages/pages';
 import { UserService } from '../../providers/users-service/users-service';
 
-/*
-  Generated class for the Signup page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: "page-signup",
   templateUrl: "signup.html",
@@ -67,8 +61,6 @@ export class SignupPage {
       duration: 3000
     });
     loader.present();
-
-    console.log(account);
 
     this.usersService.signUpUser(account).then(
       authData => {

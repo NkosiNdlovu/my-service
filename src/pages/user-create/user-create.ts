@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { AlertController, NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { UserAccount } from '../../models/account';
 import { UserService } from '../../providers/users-service/users-service';
 import { UserListPage } from '../user-list/user-list';
 
-// @IonicPage()
 @Component({
   selector: "page-user-create",
   templateUrl: "user-create.html"
@@ -19,7 +18,6 @@ export class UserCreatePage {
 
   constructor(
     public navCtrl: NavController,
-    public alertCtrl: AlertController,
     public navParams: NavParams,
     public toastCtrl: ToastController,
     public userService: UserService
@@ -40,9 +38,6 @@ export class UserCreatePage {
             provider:true
           }
         }
-
-        console.log(that.currentUser)
-
       });
     } else {
 
@@ -53,6 +48,9 @@ export class UserCreatePage {
         provider:true
       }
     }
+  }
+
+  ionViewDidLoad() {
 
   }
 

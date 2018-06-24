@@ -52,27 +52,36 @@ export class UserService {
     return this.fireAuth
       .createUserWithEmailAndPassword(account["email"], account["password"])
       .then(newUser => {
-        //sign in the user
-        var userRef = firebase
-          .firestore()
-          .collection("users")
-          .doc(newUser.uid);
-        userRef
-          .set({
-            name: name,
-            email: account["email"],
-            user: newUser.uid,
-            adminEmail: ""
-          })
-          .then(function() {
-            context.fireAuth
-              .signInWithEmailAndPassword(account["email"], account["password"])
-              .then(authenticatedUser => {
-                // successful login, create user profile
-                account['id'] = authenticatedUser.uid;
-                context.userProfileCol.doc(authenticatedUser.uid).set(account);
-              });
+
+        context.fireAuth
+          .signInWithEmailAndPassword(account["email"], account["password"])
+          .then(authenticatedUser => {
+            // successful login, create user profile
+            account['id'] = authenticatedUser.uid;
+            context.userProfileCol.doc(authenticatedUser.uid).set(account);
           });
+
+        // //sign in the user
+        // var userRef = firebase
+        //   .firestore()
+        //   .collection("users")
+        //   .doc(newUser.uid);
+        // userRef
+        //   .set({
+        //     name: name,
+        //     email: account["email"],
+        //     user: newUser.uid,
+        //     adminEmail: ""
+        //   })
+        //   .then(function() {
+        //     context.fireAuth
+        //       .signInWithEmailAndPassword(account["email"], account["password"])
+        //       .then(authenticatedUser => {
+        //         // successful login, create user profile
+        //         account['id'] = authenticatedUser.uid;
+        //         context.userProfileCol.doc(authenticatedUser.uid).set(account);
+        //       });
+        //   });
       });
   }
 

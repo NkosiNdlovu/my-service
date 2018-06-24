@@ -81,12 +81,12 @@ export class MyApp {
       component: MyJobCardsPage,
       roles: { user: false, provider: true, admin: false }
     },
-    {
-      title: "Social",
-      icon: "logo-twitter",
-      component: CardsPage,
-      roles: { user: true, provider: true, admin: true }
-    },
+    // {
+    //   title: "Social",
+    //   icon: "logo-twitter",
+    //   component: CardsPage,
+    //   roles: { user: true, provider: true, admin: true }
+    // },
     {
       title: "Admin Map",
       icon: "ios-navigate-outline",
@@ -100,17 +100,17 @@ export class MyApp {
       roles: { user: false, provider: false, admin: true }
     },
     {
-      title: "Profile",
+      title: "My Profile",
       icon: "ios-contact-outline",
       component: UserViewPage,
       roles: { user: true, provider: true, admin: true }
     },
-    {
-      title: "Settings",
-      icon: "ios-settings-outline",
-      component: SettingsPage,
-      roles: { user: false, provider: false, admin: true }
-    }
+    // {
+    //   title: "Settings",
+    //   icon: "ios-settings-outline",
+    //   component: SettingsPage,
+    //   roles: { user: false, provider: false, admin: true }
+    // }
   ];
 
   loading = true;

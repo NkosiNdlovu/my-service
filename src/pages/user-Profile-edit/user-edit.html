@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Edit Your Profile</ion-title>
+    <ion-title>Edit My Profile</ion-title>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -33,6 +33,11 @@
       </ion-item>
 
       <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input type="text" [disabled]="true" [(ngModel)]="currentUser.email" name="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
         <ion-label stacked>City</ion-label>
         <ion-input type="text" [(ngModel)]="currentUser.city" name="city"></ion-input>
       </ion-item>
@@ -40,7 +45,6 @@
         <ion-label stacked>State/Province</ion-label>
         <ion-input type="text" [(ngModel)]="currentUser.state" name="state"></ion-input>
       </ion-item>
-
 
       <ion-item>
         <ion-label stacked>Phone</ion-label>
