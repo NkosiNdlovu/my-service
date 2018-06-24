@@ -21,6 +21,9 @@ export class WelcomePage {
   login() {
     this.navCtrl.push(LoginPage);
   }
+  forgotPass(){
+
+  }
 
   signup() {
     this.navCtrl.push(SignupPage);

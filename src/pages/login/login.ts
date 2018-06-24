@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, LoadingController, AlertController } from 'ionic-angular';
-
+import { AlertController, LoadingController, NavController, ToastController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { MainPage } from '../../pages/pages';
-import { SignupPage } from '../signup/signup';
-//import { User } from '../../providers/user';
 import { UserService } from '../../providers/users-service/users-service';
-import * as firebase from 'firebase';
+import { HomePage } from '../home/home';
+import { SignupPage } from '../signup/signup';
 
+//import { User } from '../../providers/user';
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -26,8 +24,6 @@ export class LoginPage {
     password: this.password
   };
 
-  // Our translated text strings
-  private loginErrorString: string;
 
   constructor(public navCtrl: NavController,
     public alertCtrl: AlertController,
@@ -36,9 +32,6 @@ export class LoginPage {
     public usersService: UserService,
     public loadingCtrl: LoadingController) {
 
-    this.translateService.get('LOGIN_ERROR').subscribe((value) => {
-      this.loginErrorString = value;
-    })
   }
 
   redirectToSignup() {
@@ -59,7 +52,7 @@ export class LoginPage {
     this.usersService.loginUser(this.email, this.password).then(authData => {
       //successful
       loader.dismiss();
-      that.navCtrl.setRoot(MainPage);
+      that.navCtrl.setRoot(HomePage);
 
     }, error => {
       loader.dismiss();

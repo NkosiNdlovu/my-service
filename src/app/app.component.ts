@@ -91,7 +91,7 @@ export class MyApp {
       roles: { user: false, provider: false, admin: true }
     },
     {
-      title: "Create Users",
+      title: "Users",
       icon: "ios-contact-outline",
       component: UserListPage,
       roles: { user: false, provider: false, admin: true }
@@ -131,7 +131,7 @@ export class MyApp {
     //check logged in status
     var that = this;
 
-    let subscription = this.userService.currentUser$.subscribe(user => {
+    this.userService.currentUser$.subscribe(user => {
       if (user) {
         that.currentUser = user;
         that.loading = false;
