@@ -26,7 +26,6 @@ export class SignupPage {
   public country: any;
 
   // Our translated text strings
-  private signupErrorString: string;
 
   constructor(
     public navCtrl: NavController,
@@ -35,9 +34,7 @@ export class SignupPage {
     public translateService: TranslateService,
     public usersService: UserService
   ) {
-    this.translateService.get("SIGNUP_ERROR").subscribe(value => {
-      this.signupErrorString = value;
-    });
+   
   }
 
   doSignup() {

@@ -13,6 +13,7 @@ import {
 } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
+import { Guid } from '../../models/guid';
 import { ServiceRequest } from '../../models/serviceRequest';
 import { PostsService } from '../../providers/posts-service/posts-service';
 import { Items } from '../../providers/providers';
@@ -20,7 +21,6 @@ import { RequestProvider } from '../../providers/request/request-provider';
 import { AddressSearchPage } from '../address-search/address-search';
 import { TrackProgressPage } from '../track-progress/track-progress';
 import { WelcomePage } from '../welcome/welcome';
-import { Guid } from '../../models/guid';
 
 @Component({
   selector: "page-request-service",

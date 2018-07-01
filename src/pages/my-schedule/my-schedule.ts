@@ -24,7 +24,7 @@ export class MySchedulePage {
     public toastCtrl: ToastController,
 
   ) {
-    let context = this;
+    
     this.userId = userService.currentUserId;
 
   }

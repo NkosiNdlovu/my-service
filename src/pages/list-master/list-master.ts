@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import * as firebase from 'firebase';
 import GeoFire from 'geofire';
-import { ActionSheetController, AlertController, ModalController, NavController, ToastController } from 'ionic-angular';
+import { ActionSheetController, AlertController, ModalController, ToastController } from 'ionic-angular';
 
 import { PostsService } from '../../providers/posts-service/posts-service';
 
@@ -23,7 +23,6 @@ export class ListMasterPage {
     public postsService: PostsService,
     public alertCtrl: AlertController,
     public toastCtrl: ToastController,
-    public navCtrl: NavController,
     public actionSheetCtrl: ActionSheetController,
     public modalCtrl: ModalController,
     private geolocation: Geolocation) {

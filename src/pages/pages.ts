@@ -2,7 +2,6 @@ import { HomePage } from './home/home';
 import { ListMasterPage } from './list-master/list-master';
 import { SearchPage } from './search/search';
 import { UserViewPage } from './user-view/user-view';
-import { RequestServicePage } from './request-service/request-service';
 
 // The page the user lands on after opening the app and without a session
 export const FirstRunPage = HomePage;

@@ -37,7 +37,7 @@ export class PostsService {
 
   addAnythingService(path: any, data: {}) {
     // Get a key for a new path.
-    var newPostKey = firebase.database().ref('/categories').push().key;
+    const newPostKey = firebase.database().ref('/categories').push().key;
 
     // Write the new post's data simultaneously in the posts list and the user's post list.
     var updatePath = {};
