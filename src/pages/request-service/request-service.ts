@@ -3,20 +3,11 @@ import { DatePicker } from '@ionic-native/date-picker';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
-import {
-  ActionSheetController,
-  AlertController,
-  ModalController,
-  NavController,
-  NavParams,
-  ToastController,
-} from 'ionic-angular';
+import { ActionSheetController, AlertController, ModalController, NavController, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 import { Guid } from '../../models/guid';
 import { ServiceRequest } from '../../models/serviceRequest';
-import { PostsService } from '../../providers/posts-service/posts-service';
-import { Items } from '../../providers/providers';
 import { RequestProvider } from '../../providers/request/request-provider';
 import { AddressSearchPage } from '../address-search/address-search';
 import { TrackProgressPage } from '../track-progress/track-progress';
@@ -51,10 +42,8 @@ export class RequestServicePage {
     public db: AngularFirestore,
     public toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    public postsService: PostsService,
     public navCtrl: NavController,
-    public navParams: NavParams,
-    public items: Items,
+    // public items: Items,
     public actionSheetCtrl: ActionSheetController,
     public geolocation: Geolocation,
     public requestProvider: RequestProvider,
@@ -123,9 +112,9 @@ export class RequestServicePage {
       this.currentItems = [];
       return;
     }
-    this.currentItems = this.items.query({
-      name: val
-    });
+    // this.currentItems = this.items.query({
+    //   name: val
+    // });
   }
 
   selectLocation(){

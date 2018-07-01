@@ -15,7 +15,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { TranslateLoader, TranslateModule, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { TimeAgoPipe } from 'time-ago-pipe';
 
-import { Items } from '../mocks/providers/items';
 import { AboutPage } from '../pages/about/about';
 import { AddressSearchPage } from '../pages/address-search/address-search';
 import { CardsPage } from '../pages/cards/cards';
@@ -176,7 +175,6 @@ export function providers() {
     RequestProvider,
     Api,
     DatePicker,
-    Items,
     StatusBar,
     SplashScreen,
     AngularFirestoreModule,

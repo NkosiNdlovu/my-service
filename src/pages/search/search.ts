@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Observable';
 import { Guid } from '../../models/guid';
 import { ServiceRequest } from '../../models/serviceRequest';
 import { PostsService } from '../../providers/posts-service/posts-service';
-import { Items } from '../../providers/providers';
 import { RequestHistoryPage } from '../request-history/request-history';
 import { UserEditPage } from '../user-profile-edit/user-edit';
 
@@ -32,7 +31,7 @@ export class SearchPage {
     public postsService: PostsService,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public items: Items,
+    // public items: Items,
     public actionSheetCtrl: ActionSheetController) {
 
     // db.firestore.settings({ timestampsInSnapshots: true });
@@ -50,9 +49,9 @@ export class SearchPage {
       this.currentItems = [];
       return;
     }
-    this.currentItems = this.items.query({
-      name: val
-    });
+    // this.currentItems = this.items.query({
+    //   name: val
+    // });
   }
 
   selectServiceCategory() {
