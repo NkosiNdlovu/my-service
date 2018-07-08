@@ -8,8 +8,8 @@
 <ion-content padding>
 
   <ion-searchbar [(ngModel)]="autocomplete.query" [showCancelButton]="true" (ionInput)="updateSearch()" (ionCancel)="dismiss()"></ion-searchbar>
-  <button ion-button (click)="useCurrentLocation()">
-    <ion-icon margin color="primary" name="ios-locate-outline"></ion-icon>
+  <button round block ion-button (click)="useCurrentLocation()">
+    <ion-icon margin name="ios-locate-outline"></ion-icon>
     Use current location
   </button>
   <ion-list>

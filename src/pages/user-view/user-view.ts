@@ -35,7 +35,9 @@ export class UserViewPage {
     if (navParams.get("key")) {
       this.myUserId = this.navParams.get("key"); //
     }
+  }
 
+  ionViewDidLoad(){
     this.displayUser(this.myUserId);
   }
 
