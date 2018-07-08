@@ -3,8 +3,8 @@ import { LoadingController, NavController, ToastController } from 'ionic-angular
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { UserAccount } from '../../models/account';
-import { MainPage } from '../../pages/pages';
 import { UserService } from '../../providers/users-service/users-service';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: "page-signup",
@@ -63,7 +63,7 @@ export class SignupPage {
       authData => {
         //successful
         loader.dismiss();
-        that.navCtrl.setRoot(MainPage);
+        that.navCtrl.setRoot(HomePage);
       },
       error => {
         loader.dismiss();

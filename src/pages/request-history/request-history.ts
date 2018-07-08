@@ -41,9 +41,11 @@ export class RequestHistoryPage {
   }
 
   openMap(serviceRequest, event) {
-
-    event.stopPropagation();
-
+    
+    if(event){
+      event.stopPropagation();
+    }
+    
     this.navCtrl.push(MapPage, {
       serviceRequests: [serviceRequest]
     });
@@ -58,7 +60,7 @@ export class RequestHistoryPage {
       text: "View on map",
       role: "destructive",
       handler: () => {
-        that.openMap(serviceRequest);
+        that.openMap(serviceRequest, null);
       }
     });
 
@@ -67,7 +69,7 @@ export class RequestHistoryPage {
         text: "Acknowledge Request",
         role: "destructive",
         handler: () => {
-          that.ackRequest(serviceRequest);
+          that.ackRequest(serviceRequest, null);
         }
       });
     }
@@ -105,8 +107,13 @@ export class RequestHistoryPage {
     actionSheet.present();
   }
   ackRequest(serviceRequest, event) {
+    
+    if(event){
+      event.stopPropagation();
+    }
+
     serviceRequest.acknowledgedBy = this.userId;
-    event.stopPropagation();
+    
     this.saveRequest(serviceRequest);
   }
 
