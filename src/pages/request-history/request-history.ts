@@ -106,6 +106,7 @@ export class RequestHistoryPage {
     });
     actionSheet.present();
   }
+  
   ackRequest(serviceRequest, event) {
     
     if(event){
