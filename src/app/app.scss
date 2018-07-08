@@ -28,12 +28,17 @@ ion-menu ion-content button, ion-menu ion-content ion-item{
 
 ion-content {
   background-image: url(../../assets/img/background.png);
-
+  
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+ion-item{
+  opacity: 0.9;
+}
+
 .toolbar-title {
   color: white;
 }
