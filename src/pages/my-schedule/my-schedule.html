@@ -22,9 +22,9 @@
     </span>
     <ion-item>
       <div text-center>
-        <button padding ion-button color="light" (click)="editSchedule()">
+        <button round padding ion-button color="light" (click)="editSchedule()">
           <ion-icon name="ios-card-outline"></ion-icon> Edit</button>
-        <button padding ion-button color="light" (click)="pauseSchedule()">
+        <button round padding ion-button color="light" (click)="pauseSchedule()">
           <ion-icon *ngIf="schedule.isPaused" name="ios-play-outline"></ion-icon>
 
           <ion-icon *ngIf="!schedule.isPaused" name="ios-pause-outline"></ion-icon>

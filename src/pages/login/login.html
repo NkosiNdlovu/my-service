@@ -26,9 +26,9 @@
         <ion-input type="password" [(ngModel)]="password" name="password" required="required"></ion-input>
       </ion-item>
       <ion-item>
-        <button *ngIf="email && password" ion-button color="primary" (click)="submitLogin()" padding block >Login</button>
+        <button *ngIf="email && password" ion-button round color="primary" (click)="submitLogin()" padding block >Login</button>
         <!-- Show dead button if form is not filled -->
-        <button *ngIf="!email && !password" ion-button color="primary" block padding>Login Now</button>
+        <button *ngIf="!email && !password" ion-button color="primary" block round padding>Login Now</button>
 
       </ion-item>
     </ion-list>
@@ -37,7 +37,7 @@
   <br/>
 
   <div padding text-center>
-    <button ion-button color="light" (click)="redirectToSignup()">
+    <button ion-button round color="light" (click)="redirectToSignup()">
 
       Create new account
     </button>
