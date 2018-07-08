@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 
 import { UserAccount } from '../../models/account';
 import { UserService } from '../../providers/users-service/users-service';
@@ -20,7 +20,8 @@ export class UserCreatePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public toastCtrl: ToastController,
-    public userService: UserService
+    public userService: UserService,
+    public loadingCtrl: LoadingController,
   ) {
     let that = this;
 
@@ -56,8 +57,16 @@ export class UserCreatePage {
 
   saveUser() {
 
+    var loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 3000
+    });
+
+    loader.present();
+
     this.userService.updateUserProfile(this.userId, this.currentUser).then(
       () => {
+        loader.dismiss();
         //toast
         let toast = this.toastCtrl.create({
           message: "update successful",
@@ -72,6 +81,8 @@ export class UserCreatePage {
         toast.present();
       },
       error => {
+        loader.dismiss();
+        
         let toast = this.toastCtrl.create({
           message: error.message,
           duration: 3000,
