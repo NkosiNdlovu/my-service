@@ -14,6 +14,8 @@ export class UserService {
   public data: any;
   public fireAuth: any;
   public userProfileCol: AngularFirestoreCollection<any>;
+  public providerProfileCol: AngularFirestoreCollection<any>;
+
   set currentUserId(value) {
     this._currentUserId = value;
     this.getCurrentUserProfile();
@@ -26,6 +28,7 @@ export class UserService {
   constructor(public db: AngularFirestore) {
     this.fireAuth = firebase.auth();
     this.userProfileCol = db.collection("profiles");
+    this.providerProfileCol = db.collection("serviceProviders");
     this.currentUser$ = new BehaviorSubject<UserAccount>(null);
   }
 
@@ -37,7 +40,7 @@ export class UserService {
       context.currentUser$.next(user);
     });
   }
-  getUsers(){
+  getUsers() {
     return this.db.collection("profiles").valueChanges();
   }
 
@@ -60,34 +63,24 @@ export class UserService {
             account['id'] = authenticatedUser.uid;
             context.userProfileCol.doc(authenticatedUser.uid).set(account);
           });
-
-        // //sign in the user
-        // var userRef = firebase
-        //   .firestore()
-        //   .collection("users")
-        //   .doc(newUser.uid);
-        // userRef
-        //   .set({
-        //     name: name,
-        //     email: account["email"],
-        //     user: newUser.uid,
-        //     adminEmail: ""
-        //   })
-        //   .then(function() {
-        //     context.fireAuth
-        //       .signInWithEmailAndPassword(account["email"], account["password"])
-        //       .then(authenticatedUser => {
-        //         // successful login, create user profile
-        //         account['id'] = authenticatedUser.uid;
-        //         context.userProfileCol.doc(authenticatedUser.uid).set(account);
-        //       });
-        //   });
       });
   }
 
-  updateUserProfile(userId,userAccount){
+  updateUserProfile(userId, userAccount) {
     // successful login, create user profile
     return this.userProfileCol.doc(userId).set(userAccount);
+  }
+
+  updateProviderProfile(userAccount) {
+
+    let provider = {
+      id: userAccount.id,
+      isAvailable: true,
+      workingLocation: userAccount.workingLocation,
+      currentLocation: userAccount.currentLocation,
+      isActive: userAccount.role.admin
+    };
+    return this.providerProfileCol.doc(userAccount.id).set(provider);
   }
 
   loginUser(email: string, password: string): any {
@@ -112,7 +105,7 @@ export class UserService {
     return firebase
       .auth()
       .signInWithPopup(provider)
-      .then(function(result) {
+      .then(function (result) {
         if (result.user) {
           // The signed-in user info.
           let user = result.user;
@@ -134,7 +127,7 @@ export class UserService {
           that.userProfileCol.doc(user.uid).set(userAccount);
         }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }

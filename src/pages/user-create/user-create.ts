@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { LoadingController, ModalController, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 
+import { Geolocation } from '@ionic-native/geolocation';
 import { UserAccount } from '../../models/account';
 import { UserService } from '../../providers/users-service/users-service';
 import { UserListPage } from '../user-list/user-list';
+import { AddressSearchPage } from '../address-search/address-search';
 
 @Component({
   selector: "page-user-create",
@@ -13,6 +15,8 @@ export class UserCreatePage {
   public userId: any;
   public guestPicture: any;
   public userDetails = [];
+  providerDetails: any;
+  gpsLocation: any;
 
   currentUser: UserAccount;
 
@@ -22,6 +26,9 @@ export class UserCreatePage {
     public toastCtrl: ToastController,
     public userService: UserService,
     public loadingCtrl: LoadingController,
+    public geolocation: Geolocation,
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController
   ) {
     let that = this;
 
@@ -29,14 +36,14 @@ export class UserCreatePage {
 
     if (navParams.get("userId") && navParams.get("userId") != '') {
       this.userId = navParams.get("userId");
-      this.userService.getUser(this.userId).subscribe((user:any) => {
+      this.userService.getUser(this.userId).subscribe((user: any) => {
 
         that.currentUser = user;
 
-        if(that.currentUser.roles == undefined){
+        if (that.currentUser.roles == undefined) {
           that.currentUser.roles = {
             admin: false,
-            provider:true
+            provider: true
           }
         }
       });
@@ -46,7 +53,7 @@ export class UserCreatePage {
       this.userId = '';
       this.currentUser.roles = {
         admin: false,
-        provider:true
+        provider: true
       }
     }
   }
@@ -55,8 +62,43 @@ export class UserCreatePage {
 
   }
 
-  saveUser() {
+  getCurrentPosition(){
+    let that = this;
 
+    var loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 3000
+    });
+
+    loader.present();
+    this.geolocation
+      .getCurrentPosition()
+      .then(resp => {
+        
+        loader.dismiss();
+
+        that.providerDetails.workingLocation = {
+          latitude: resp.coords.latitude,
+          longitude: resp.coords.longitude
+        };
+
+      })
+      .catch(error => {
+        
+        loader.dismiss();
+
+        let alert = this.alertCtrl.create({
+          title: "Error!",
+          subTitle:
+            "Unable to access you location, please turn on you location",
+          buttons: ["Dismiss"]
+        });
+        alert.present();
+      });
+  }
+  
+  saveUser() {
+    const that = this;
     var loader = this.loadingCtrl.create({
       content: "Please wait...",
       duration: 3000
@@ -74,6 +116,11 @@ export class UserCreatePage {
           position: "top"
         });
 
+        // update user profile
+        if (that.currentUser.roles.provider) {
+          that.userService.updateProviderProfile(this.currentUser);
+        }
+
         toast.onDidDismiss(() => {
           this.navCtrl.setRoot(UserListPage);
         });
@@ -82,7 +129,7 @@ export class UserCreatePage {
       },
       error => {
         loader.dismiss();
-        
+
         let toast = this.toastCtrl.create({
           message: error.message,
           duration: 3000,
@@ -92,5 +139,28 @@ export class UserCreatePage {
         toast.present();
       }
     );
+  }
+
+  selectProviderLocation() {
+    let modal = this.modalCtrl.create(AddressSearchPage);
+    let that = this;
+    modal.onDidDismiss(data => {
+
+      if (!data) {
+        return;
+      }
+
+      if (data.useCurrentLocation) {
+        that.getCurrentPosition();
+        return;
+      }
+
+      that.providerDetails.currentLocation = {
+        latitude: data.latitude,
+        longitude: data.longitude,
+        address: data.address
+      };
+    });
+    modal.present();
   }
 }

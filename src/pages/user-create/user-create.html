@@ -48,13 +48,21 @@
         <ion-checkbox name="admin" [(ngModel)]="currentUser.roles.admin"></ion-checkbox>
       </ion-item>
       <ion-item *ngIf="currentUser.roles">
-          <ion-label>Is User</ion-label>
-          <ion-checkbox name="admin" [(ngModel)]="currentUser.roles.user"></ion-checkbox>
-        </ion-item>
+        <ion-label>Is User</ion-label>
+        <ion-checkbox name="user" [(ngModel)]="currentUser.roles.user"></ion-checkbox>
+      </ion-item>
       <ion-item *ngIf="currentUser.roles">
         <ion-label>Is Provider</ion-label>
         <ion-checkbox name="provider" [(ngModel)]="currentUser.roles.provider"></ion-checkbox>
       </ion-item>
+
+      <ion-item *ngIf="currentUser.roles.admin" (click)="selectProviderLocation()">
+        <ion-icon margin color="primary" name="ios-locate-outline"></ion-icon>
+        <span *ngIf="!currentLocation.address">Select working location</span>
+        <span style="color:green" *ngIf="currentLocation.address">{{provider.workingLocation}}</span>
+        <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+      </ion-item>
+
       <div padding text-center>
         <button ion-button (click)="saveUser()">Save user </button>
       </div>
