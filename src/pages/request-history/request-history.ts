@@ -43,7 +43,7 @@ export class RequestHistoryPage {
   openMap(serviceRequest, event) {
 
     event.stopPropagation();
-    
+
     this.navCtrl.push(MapPage, {
       serviceRequests: [serviceRequest]
     });
@@ -53,15 +53,6 @@ export class RequestHistoryPage {
     const that = this;
 
     let actionButtons = [];
-    if (!serviceRequest.acknowledgeDBy) {
-      actionButtons.push({
-        text: "Acknowledge Request",
-        role: "destructive",
-        handler: () => {
-          that.ackRequest(serviceRequest);
-        }
-      });
-    }
 
     actionButtons.push({
       text: "View on map",
@@ -71,21 +62,33 @@ export class RequestHistoryPage {
       }
     });
 
-    actionButtons.push({
-      text: "Assign to provider",
-      role: "destructive",
-      handler: () => {
-        that.assignToProvider(serviceRequest);
-      }
-    });
+    if (!serviceRequest.acknowledgedBy) {
+      actionButtons.push({
+        text: "Acknowledge Request",
+        role: "destructive",
+        handler: () => {
+          that.ackRequest(serviceRequest);
+        }
+      });
+    }
 
-    actionButtons.push({
-      text: "Re-assign to provider",
-      role: "destructive",
-      handler: () => {
-        that.assignToProvider(serviceRequest);
-      }
-    });
+    if (serviceRequest.acknowledgedBy) {
+      actionButtons.push({
+        text: "Assign to provider",
+        role: "destructive",
+        handler: () => {
+          that.assignToProvider(serviceRequest);
+        }
+      });
+
+      actionButtons.push({
+        text: "Re-assign to provider",
+        role: "destructive",
+        handler: () => {
+          that.assignToProvider(serviceRequest);
+        }
+      });
+    }
 
     actionButtons.push({
       text: "Call Customer",
@@ -101,9 +104,9 @@ export class RequestHistoryPage {
     });
     actionSheet.present();
   }
-  ackRequest(serviceRequest) {
+  ackRequest(serviceRequest, event) {
     serviceRequest.acknowledgedBy = this.userId;
-
+    event.stopPropagation();
     this.saveRequest(serviceRequest);
   }
 

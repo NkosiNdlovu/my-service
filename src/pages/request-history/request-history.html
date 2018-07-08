@@ -19,21 +19,23 @@
 
       <h2>{{request.service?.name}}</h2>
       <p>
+
         <button ion-button icon-left clear item-right (click)="openMap(request,$event);">
           <ion-icon name="navigate"></ion-icon>
           View Map
         </button>
-        <button ion-button icon-left clear item-right (click)="ackRequest(request)">
-          <ion-icon name="ios-checkbox-outline"></ion-icon>
 
+        <button ion-button icon-left clear item-right (click)="ackRequest(request,$event)">
+          <ion-icon *ngIf="request?.acknowledgedBy" style="color:green" name="ios-checkbox-outline"></ion-icon>
+          <ion-icon *ngIf="!request?.acknowledgedBy" style="color:red" name="ios-car-outline"></ion-icon>
+          ACK
         </button>
-
 
         <div item-right>
           <p>
             <ion-note>{{request.requestDate | timeAgo }}</ion-note>
           </p>
-          <ion-note>Booking: {{request.bookingDate | date}}</ion-note>
+          <ion-note>Wash: {{request.bookingDate | date}}</ion-note>
           <p *ngIf="request">
             <!-- <ion-icon style="color:green" *ngIf="request.provider && job.provider.acceptJob" name="checkmark"></ion-icon> -->
             <!-- <ion-icon style="color:orange" *ngIf="request && request.provider && !job.provider.acceptJob" name="checkmark"></ion-icon> -->
