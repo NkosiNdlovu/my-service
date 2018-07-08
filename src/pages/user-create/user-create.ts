@@ -66,7 +66,7 @@ export class UserCreatePage {
         });
 
         toast.onDidDismiss(() => {
-          this.navCtrl.push(UserListPage);
+          this.navCtrl.setRoot(UserListPage);
         });
 
         toast.present();

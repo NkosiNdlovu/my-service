@@ -19,7 +19,7 @@
 
       <h2>{{request.service?.name}}</h2>
       <p>
-        <button ion-button icon-left clear item-right (click)="openMap(request)">
+        <button ion-button icon-left clear item-right (click)="openMap(request,$event);">
           <ion-icon name="navigate"></ion-icon>
           View Map
         </button>
@@ -35,9 +35,9 @@
           </p>
           <ion-note>Booking: {{request.bookingDate | date}}</ion-note>
           <p *ngIf="request">
-              <!-- <ion-icon style="color:green" *ngIf="request.provider && job.provider.acceptJob" name="checkmark"></ion-icon> -->
-              <!-- <ion-icon style="color:orange" *ngIf="request && request.provider && !job.provider.acceptJob" name="checkmark"></ion-icon> -->
-            </p>
+            <!-- <ion-icon style="color:green" *ngIf="request.provider && job.provider.acceptJob" name="checkmark"></ion-icon> -->
+            <!-- <ion-icon style="color:orange" *ngIf="request && request.provider && !job.provider.acceptJob" name="checkmark"></ion-icon> -->
+          </p>
         </div>
     </ion-item>
   </ion-list>

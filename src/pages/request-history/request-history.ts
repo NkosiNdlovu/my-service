@@ -40,7 +40,10 @@ export class RequestHistoryPage {
       });
   }
 
-  openMap(serviceRequest) {
+  openMap(serviceRequest, event) {
+
+    event.stopPropagation();
+    
     this.navCtrl.push(MapPage, {
       serviceRequests: [serviceRequest]
     });
