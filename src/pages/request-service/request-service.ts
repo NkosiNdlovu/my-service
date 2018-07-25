@@ -3,7 +3,7 @@ import { DatePicker } from '@ionic-native/date-picker';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
-import { ActionSheetController, AlertController, ModalController, NavController, ToastController } from 'ionic-angular';
+import { ActionSheetController, AlertController, ModalController, NavController, ToastController, LoadingController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 import { Guid } from '../../models/guid';
@@ -47,7 +47,8 @@ export class RequestServicePage {
     public actionSheetCtrl: ActionSheetController,
     public geolocation: Geolocation,
     public requestProvider: RequestProvider,
-    private modalCtrl:ModalController
+    private modalCtrl: ModalController,
+    public loadingCtrl: LoadingController,
   ) {
 
     let context = this;
@@ -104,6 +105,8 @@ export class RequestServicePage {
     //   // data.coords.latitude
     //   // data.coords.longitude
     //  });
+
+    this.setPreviousRequest();
   }
 
   getServices(ev) {
@@ -117,16 +120,16 @@ export class RequestServicePage {
     // });
   }
 
-  selectLocation(){
+  selectLocation() {
     let modal = this.modalCtrl.create(AddressSearchPage);
     let context = this;
     modal.onDidDismiss(data => {
 
-      if(!data){
+      if (!data) {
         return;
       }
 
-      if(data.useCurrentLocation){
+      if (data.useCurrentLocation) {
 
         context.currentLocation = {
           latitude: this.gpsLocation.latitude,
@@ -282,6 +285,22 @@ export class RequestServicePage {
       .then(date => (this.bookingDate = date));
   }
 
+  setPreviousRequest() {
+    
+    if (!this.requestProvider.currentServiceRequest){
+      return;
+    }
+
+    // set previous values
+    this.bookingDate = this.requestProvider.currentServiceRequest.bookingDate;
+
+    this.selectedService = this.requestProvider.currentServiceRequest.service;
+    // this.currentLocation = this.requestProvider.currentServiceRequest.location
+    this.bookingTimeRangeStart = this.requestProvider.currentServiceRequest.bookingTimeRangeStart;
+    this.bookingTimeRangeEnd = this.requestProvider.currentServiceRequest.bookingTimeRangeEnd;
+    this.selectedVehicleType = this.requestProvider.currentServiceRequest.vehicleType;
+  }
+
   requestService() {
     // remove fields that are for display purposes
     delete this.selectedService.isActive;
@@ -298,6 +317,7 @@ export class RequestServicePage {
 
     this.submitRequest();
   }
+
 
   submitRequest() {
     // check if the user is logged in
@@ -320,7 +340,9 @@ export class RequestServicePage {
               text: "OK",
               role: "cancel",
               handler: () => {
-                this.requestProvider.currentServiceRequest = this.selectedService;
+
+                this.requestProvider.currentServiceRequest = this.serviceRequest;
+
                 this.navCtrl.setRoot(
                   WelcomePage,
                   {},
@@ -339,7 +361,7 @@ export class RequestServicePage {
   }
 
   newGuid() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
       var r = (Math.random() * 16) | 0,
         v = c == "x" ? r : (r & 0x3) | 0x8;
       return v.toString(16);
@@ -347,12 +369,20 @@ export class RequestServicePage {
   }
 
   saveRequest(user) {
+
+    var loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 3000
+    });
+    loader.present();
+
     this.db
       .collection("/serviceRequests")
       .doc(this.serviceRequest.id)
       .set(JSON.parse(JSON.stringify(this.serviceRequest)))
       .then(res => {
         // Success
+        loader.dismiss();
         let alert = this.alertCtrl.create({
           title: "Success!",
           subTitle:
@@ -367,6 +397,8 @@ export class RequestServicePage {
       })
       .catch(error => {
         // Error
+
+        loader.dismiss();
         let alert = this.alertCtrl.create({
           title: "Error",
           subTitle: "Error occurred. Please try again later.",
