@@ -143,16 +143,22 @@ export class MyApp {
     let unsubscribe = firebase.auth().onAuthStateChanged((user: any) => {
 
       if (user) {
+        
         this.userService.currentUserId = user.uid;
         this.userLoggedIn = true;
         this.notifications.trackNotifications(user.uid);
         that.nav.setRoot(RequestServicePage);
+
       } else {
-        that.nav.setRoot(HomePage);
+        if (!that.currentUser) {
+          // system loading for the first time
+          that.nav.setRoot(HomePage);
+        }else {
+          // log off
+          that.nav.setRoot(LoginPage);
+          that.currentUser = null;
+        }
       }
-
-      unsubscribe();
-
     });
 
     translate.setDefaultLang("en");
@@ -172,6 +178,7 @@ export class MyApp {
   }
 
   isPageAccessible(page: PageModel) {
+
     if (!this.currentUser || !this.currentUser.roles) {
       return false;
     }
