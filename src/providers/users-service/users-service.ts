@@ -32,7 +32,6 @@ export class UserService {
     this.currentUser$ = new BehaviorSubject<UserAccount>(null);
   }
 
-
   getCurrentUserProfile() {
     let context = this;
     var userRef = this.userProfileCol.doc(this.currentUserId);
