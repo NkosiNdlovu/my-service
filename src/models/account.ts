@@ -10,6 +10,7 @@ export class UserAccount {
   state: string;
   country: string;
   roles: Roles;
+  workingLocation: any ;
 }
 
 export interface Roles {

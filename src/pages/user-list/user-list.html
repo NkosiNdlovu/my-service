@@ -12,7 +12,7 @@
 <ion-content padding>
 
   <ion-list>
-    <ion-item *ngFor="let user of users" (click)="editUser(user.id)">
+    <ion-item *ngFor="let user of users">
 
       <h2>{{user.firstName}} {{user.lastName}}</h2>
       <p>

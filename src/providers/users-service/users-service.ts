@@ -70,16 +70,15 @@ export class UserService {
     return this.userProfileCol.doc(userId).set(userAccount);
   }
 
-  updateProviderProfile(userAccount) {
+  updateProviderProfile(userAccount, workingLocation) {
 
     let provider = {
       id: userAccount.id,
       isAvailable: true,
-      workingLocation: userAccount.workingLocation,
-      currentLocation: userAccount.currentLocation,
-      isActive: userAccount.role.admin
+      isActive: userAccount.roles.admin
     };
     return this.providerProfileCol.doc(userAccount.id).set(provider);
+
   }
 
   loginUser(email: string, password: string): any {
@@ -88,7 +87,6 @@ export class UserService {
 
   logoutUser() {
     return this.fireAuth.signOut();
-    //redirection
   }
 
   forgotPasswordUser(email: any) {

@@ -38,10 +38,9 @@
         <ion-input type="text" [(ngModel)]="currentUser.state" name="state"></ion-input>
       </ion-item>
 
-
       <ion-item>
         <ion-label stacked>Phone</ion-label>
-        <ion-input type="text" [(ngModel)]="currentUser.phone" name="phone" placeholder="eg. 0802222222" required="required"></ion-input>
+        <ion-input type="text" [(ngModel)]="currentUser.phone" name="phone" placeholder="eg. 080 222 8722" required="required"></ion-input>
       </ion-item>
       <ion-item *ngIf="currentUser.roles">
         <ion-label>Is Admin</ion-label>
@@ -56,10 +55,10 @@
         <ion-checkbox name="provider" [(ngModel)]="currentUser.roles.provider"></ion-checkbox>
       </ion-item>
 
-      <ion-item *ngIf="currentUser.roles.admin" (click)="selectProviderLocation()">
+      <ion-item *ngIf="currentUser.roles.provider && providerDetails" (click)="selectProviderLocation()">
         <ion-icon margin color="primary" name="ios-locate-outline"></ion-icon>
-        <span *ngIf="!currentLocation.address">Select working location</span>
-        <span style="color:green" *ngIf="currentLocation.address">{{provider.workingLocation}}</span>
+        <span style="color:red" *ngIf="providerDetails.workingLocation && !providerDetails.workingLocation.address">Select working location</span>
+        <span style="color:green" *ngIf="providerDetails.workingLocation && providerDetails.workingLocation.address">{{providerDetails.workingLocation.address}}</span>
         <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
       </ion-item>
 

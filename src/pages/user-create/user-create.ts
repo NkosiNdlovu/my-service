@@ -1,11 +1,19 @@
-import { Component } from '@angular/core';
-import { LoadingController, ModalController, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { Component } from "@angular/core";
+import {
+  LoadingController,
+  ModalController,
+  NavController,
+  NavParams,
+  ToastController,
+  AlertController
+} from "ionic-angular";
 
-import { Geolocation } from '@ionic-native/geolocation';
-import { UserAccount } from '../../models/account';
-import { UserService } from '../../providers/users-service/users-service';
-import { UserListPage } from '../user-list/user-list';
-import { AddressSearchPage } from '../address-search/address-search';
+import { Geolocation } from "@ionic-native/geolocation";
+import { UserAccount } from "../../models/account";
+import { UserService } from "../../providers/users-service/users-service";
+import { UserListPage } from "../user-list/user-list";
+import { AddressSearchPage } from "../address-search/address-search";
+import { AngularFirestore } from "angularfire2/firestore";
 
 @Component({
   selector: "page-user-create",
@@ -28,41 +36,49 @@ export class UserCreatePage {
     public loadingCtrl: LoadingController,
     public geolocation: Geolocation,
     private alertCtrl: AlertController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    public db: AngularFirestore
   ) {
     let that = this;
 
-    this.currentUser = new UserAccount();
-
-    if (navParams.get("userId") && navParams.get("userId") != '') {
+    if (navParams.get("userId") && navParams.get("userId") != "") {
       this.userId = navParams.get("userId");
       this.userService.getUser(this.userId).subscribe((user: any) => {
-
+        this.currentUser = new UserAccount();
         that.currentUser = user;
+
+        that.getProviderDetails(that.currentUser.id);
 
         if (that.currentUser.roles == undefined) {
           that.currentUser.roles = {
             admin: false,
-            provider: true
-          }
+            provider: false,
+            user: true
+          };
         }
       });
     } else {
-
       // set defaults
-      this.userId = '';
+      this.userId = "";
       this.currentUser.roles = {
         admin: false,
         provider: true
-      }
+      };
     }
   }
 
-  ionViewDidLoad() {
-
+  getProviderDetails(providerId: string) {
+    const that = this;
+    this.db
+      .collection("providers", ref => ref.where("id", "==", providerId))
+      .valueChanges()
+      .subscribe(data => {
+        that.providerDetails = data;
+      });
   }
+  ionViewDidLoad() {}
 
-  getCurrentPosition(){
+  getCurrentPosition() {
     let that = this;
 
     var loader = this.loadingCtrl.create({
@@ -74,17 +90,14 @@ export class UserCreatePage {
     this.geolocation
       .getCurrentPosition()
       .then(resp => {
-        
         loader.dismiss();
 
         that.providerDetails.workingLocation = {
           latitude: resp.coords.latitude,
           longitude: resp.coords.longitude
         };
-
       })
       .catch(error => {
-        
         loader.dismiss();
 
         let alert = this.alertCtrl.create({
@@ -96,7 +109,7 @@ export class UserCreatePage {
         alert.present();
       });
   }
-  
+
   saveUser() {
     const that = this;
     var loader = this.loadingCtrl.create({
@@ -105,6 +118,17 @@ export class UserCreatePage {
     });
 
     loader.present();
+
+    if (this.checkLocationIfProviderIsSelected() == false) {
+      let toast = this.toastCtrl.create({
+        message: "Select provider working area.",
+        duration: 3000,
+        position: "top"
+      });
+
+      toast.present();
+      return;
+    }
 
     this.userService.updateUserProfile(this.userId, this.currentUser).then(
       () => {
@@ -118,7 +142,7 @@ export class UserCreatePage {
 
         // update user profile
         if (that.currentUser.roles.provider) {
-          that.userService.updateProviderProfile(this.currentUser);
+          that.userService.updateProviderProfile(this.currentUser, this.providerDetails.workingLocation);
         }
 
         toast.onDidDismiss(() => {
@@ -140,12 +164,16 @@ export class UserCreatePage {
       }
     );
   }
-
+  checkLocationIfProviderIsSelected(): boolean {
+    if (this.currentUser.roles.provider && !this.providerDetails.workingLocation) {
+      return false;
+    }
+    return true;
+  }
   selectProviderLocation() {
     let modal = this.modalCtrl.create(AddressSearchPage);
     let that = this;
     modal.onDidDismiss(data => {
-
       if (!data) {
         return;
       }
@@ -155,7 +183,7 @@ export class UserCreatePage {
         return;
       }
 
-      that.providerDetails.currentLocation = {
+      that.providerDetails.workingLocation = {
         latitude: data.latitude,
         longitude: data.longitude,
         address: data.address

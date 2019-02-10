@@ -161,7 +161,7 @@ export class MyJobCardsPage {
     let note = new UserNotification();
     note.body = message;
     note.tag = 'My tag';
-    note.title = 'GREEN CARWASH'
+    note.title = 'FYRE CARWASH'
     note.userId = userId;
     this.notifications.notifyUser(note)
   }

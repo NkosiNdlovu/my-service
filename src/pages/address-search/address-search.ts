@@ -29,9 +29,8 @@ export class AddressSearchPage {
   }
 
   chooseItem(item: any) {
-    console.log(this.latitude);
-
     this.geo = item;
+    console.log(this.geo)
     this.geoCode(this.geo); //convert Address to lat and long
   }
 
@@ -66,7 +65,9 @@ export class AddressSearchPage {
   //convert Address string to lat and long
   geoCode(address: any) {
     let geocoder = new google.maps.Geocoder();
+    console.log(address)
     geocoder.geocode({ address: address }, (results, status) => {
+      console.log(results);
       this.latitude = results[0].geometry.location.lat();
       this.longitude = results[0].geometry.location.lng();
 

@@ -12,3 +12,4 @@ cd C:\Users\Nkosi\AppData\Local\Android\Sdk\build-tools\27.0.3
 
 zipalign -v 4 "C:\projects\car-wash\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" "C:\projects\car-wash\deployment\car-wash-mobile.apk"
 
+
