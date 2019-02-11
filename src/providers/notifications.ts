@@ -38,7 +38,7 @@ export class Notifications {
 
   private showNotification(notification: UserNotification) {
     console.log(notification);
-    alert('ssssssssssssss')
+
     this.localNotification.requestPermission().then(permission => {
       if (permission === "granted") {
         // Create the notification

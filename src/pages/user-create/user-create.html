@@ -57,7 +57,7 @@
 
       <ion-item *ngIf="currentUser.roles.provider && providerDetails" (click)="selectProviderLocation()">
         <ion-icon margin color="primary" name="ios-locate-outline"></ion-icon>
-        <span style="color:red" *ngIf="providerDetails.workingLocation && !providerDetails.workingLocation.address">Select working location</span>
+        <span style="color:red" *ngIf="!providerDetails.workingLocation">Select working location {{providerDetails.workingLocation}}</span>
         <span style="color:green" *ngIf="providerDetails.workingLocation && providerDetails.workingLocation.address">{{providerDetails.workingLocation.address}}</span>
         <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
       </ion-item>

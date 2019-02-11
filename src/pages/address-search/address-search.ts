@@ -10,9 +10,6 @@ declare var google;
 export class AddressSearchPage {
   autocompleteItems;
   autocomplete;
-
-  latitude: number = 0;
-  longitude: number = 0;
   geo: any;
 
   service = new google.maps.places.AutocompleteService();
@@ -67,13 +64,13 @@ export class AddressSearchPage {
     let geocoder = new google.maps.Geocoder();
     console.log(address)
     geocoder.geocode({ address: address }, (results, status) => {
-      console.log(results);
-      this.latitude = results[0].geometry.location.lat();
-      this.longitude = results[0].geometry.location.lng();
+
+      let latitude = results[0].geometry.location.lat();
+      let longitude = results[0].geometry.location.lng();
 
       this.viewCtrl.dismiss({
-        lat: this.latitude,
-        lon: this.longitude,
+        latitude: latitude,
+        longitude: longitude,
         address: address,
         useCurrentLocation: false
       });

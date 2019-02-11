@@ -1,15 +1,17 @@
-import 'rxjs/add/operator/map';
+import "rxjs/add/operator/map";
 
-import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import * as firebase from 'firebase';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Injectable } from "@angular/core";
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from "angularfire2/firestore";
+import * as firebase from "firebase";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
-import { UserAccount } from '../../models/account';
+import { UserAccount } from "../../models/account";
 
 @Injectable()
 export class UserService {
-
   private _currentUserId: string;
   public data: any;
   public fireAuth: any;
@@ -54,12 +56,11 @@ export class UserService {
     return this.fireAuth
       .createUserWithEmailAndPassword(account["email"], account["password"])
       .then(newUser => {
-
         context.fireAuth
           .signInWithEmailAndPassword(account["email"], account["password"])
           .then(authenticatedUser => {
             // successful login, create user profile
-            account['id'] = authenticatedUser.uid;
+            account["id"] = authenticatedUser.uid;
             context.userProfileCol.doc(authenticatedUser.uid).set(account);
           });
       });
@@ -70,15 +71,17 @@ export class UserService {
     return this.userProfileCol.doc(userId).set(userAccount);
   }
 
-  updateProviderProfile(userAccount, workingLocation) {
-
+  updateProviderProfile(userAccount: UserAccount, workingLocation) {
     let provider = {
       id: userAccount.id,
       isAvailable: true,
-      isActive: userAccount.roles.admin
+      isActive: true,
+      firstName: userAccount.firstName,
+      lastName: userAccount.lastName,
+      workingLocation: workingLocation
     };
-    return this.providerProfileCol.doc(userAccount.id).set(provider);
 
+    return this.providerProfileCol.doc(userAccount.id).set(provider);
   }
 
   loginUser(email: string, password: string): any {
@@ -102,7 +105,7 @@ export class UserService {
     return firebase
       .auth()
       .signInWithPopup(provider)
-      .then(function (result) {
+      .then(function(result) {
         if (result.user) {
           // The signed-in user info.
           let user = result.user;
@@ -124,7 +127,7 @@ export class UserService {
           that.userProfileCol.doc(user.uid).set(userAccount);
         }
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
   }

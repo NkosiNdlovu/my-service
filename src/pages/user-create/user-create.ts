@@ -70,10 +70,10 @@ export class UserCreatePage {
   getProviderDetails(providerId: string) {
     const that = this;
     this.db
-      .collection("providers", ref => ref.where("id", "==", providerId))
+      .collection("serviceProviders", ref => ref.where("id", "==", providerId))
       .valueChanges()
       .subscribe(data => {
-        that.providerDetails = data;
+        that.providerDetails = data[0];
       });
   }
   ionViewDidLoad() {}
