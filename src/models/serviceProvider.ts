@@ -4,6 +4,7 @@ export class ServiceProvider{
   completionTime?: Date;
   declineJob?: boolean;
   id?: string;
-  name?: string;
+  firstName?: string;
   acceptJob?: boolean;
+  lastName: any;
 }

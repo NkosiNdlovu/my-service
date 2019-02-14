@@ -39,7 +39,8 @@ export class ProviderSearchPage {
   selectProvider(provider) {
     this.serviceRequest.provider = new ServiceProvider();
     this.serviceRequest.provider.id = provider.id;
-    this.serviceRequest.provider.name = provider.name;
+    this.serviceRequest.provider.firstName = provider.firstName;
+    this.serviceRequest.provider.lastName = provider.lastName;
     this.saveRequest(this.serviceRequest);
   }
 
@@ -53,7 +54,7 @@ export class ProviderSearchPage {
     this.providers = this.db
       .collection("/serviceProviders", ref =>
         ref
-          .orderBy("name")
+          .orderBy("firstName")
           .startAt(this.searchText)
           .endAt(this.searchText + "\uf8ff")
       )
