@@ -19,26 +19,25 @@
       <ion-item>
 
         <h2>{{serviceRequest.service?.name}}</h2>
-        <p>
-          <!-- <button ion-button icon-left clear item-right (click)="openMap(serviceRequest)">
-            <ion-icon name="navigate"></ion-icon>
-            View Map
-          </button> -->
-          <!-- <button ion-button icon-left clear item-right *ngIf="!serviceRequest.provider || !serviceRequest.provider.acceptserviceRequest" (click)="acceptserviceRequest(serviceRequest)">
-            <ion-icon style="color:green" name="checkmark"></ion-icon>
-            Accept serviceRequest
-          </button> -->
-          <!-- <button ion-button icon-left clear item-right (click)="declineserviceRequest(serviceRequest)">
-            <ion-icon style="color:red"  name="close"></ion-icon>
-            Decline serviceRequest
-          </button> -->
+          <p>
+              Request Received:
+              <ion-icon *ngIf="serviceRequest?.acknowledgedBy" style="color:green" name="ios-checkbox-outline"></ion-icon>
+              <ion-icon *ngIf="!serviceRequest?.acknowledgedBy" style="color:red" name="ios-car-outline"></ion-icon>
+          </p>
+
+          <p>
+            <ion-icon style="color:green" *ngIf="serviceRequest.provider && serviceRequest.provider.acceptserviceRequest" name="checkmark"></ion-icon>
+            <span *ngIf="!serviceRequest.provider" style="color:red">Not yet assigned to a provider </span>
+            <span *ngIf="serviceRequest.provider">Request assigned to {{serviceRequest.provider.firstName}} and has
+              <span *ngIf="serviceRequest.provider && serviceRequest.provider.acceptJob">ACCEPTED <ion-icon style="color:green"  name="checkmark"></ion-icon></span>
+              <span *ngIf="serviceRequest && serviceRequest.provider && !serviceRequest.provider.acceptJob">NOT ACCEPTED YET<ion-icon style="color:orange"  name="close"></ion-icon></span>
+            </span>
+          </p>
 
           <div item-right>
-            <ion-note>{{serviceRequest.bookingDate | date}}</ion-note>
-            <p>
-              <ion-icon style="color:green" *ngIf="serviceRequest.provider && serviceRequest.provider.acceptserviceRequest" name="checkmark"></ion-icon>
-            </p>
+            <ion-note>{{serviceRequest.bookingDate | date}} ({{serviceRequest.bookingTimeRangeStart}} - {{serviceRequest.bookingTimeRangeEnd}})</ion-note>
           </div>
+
       </ion-item>
     </div>
   </ion-list>

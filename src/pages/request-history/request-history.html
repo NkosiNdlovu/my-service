@@ -1,5 +1,4 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>Request history</ion-title>
     <button ion-button menuToggle>
@@ -14,7 +13,6 @@
 
       <h2>{{request.service?.name}}</h2>
       <p>
-
         <button ion-button icon-left clear item-right (click)="openMap(request,$event);">
           <ion-icon name="navigate"></ion-icon>
           View Map
@@ -36,9 +34,9 @@
       <p>
         Provider:
         <span *ngIf="!request.provider" style="color:red">None </span>
-        <span *ngIf="request.provider">{{request.provider.firstName}}
-          <span *ngIf="request.provider && request.provider.acceptJob">Accepted <ion-icon style="color:green"  name="checkmark"></ion-icon></span>
-          <span *ngIf="request && request.provider && !request.provider.acceptJob">NOT Accepted<ion-icon style="color:orange"  name="close"></ion-icon></span>
+        <span *ngIf="request.provider">{{request.provider.firstName}},
+          <span *ngIf="request.provider && request.provider.acceptJob"> <ion-icon style="color:green"  name="checkmark"> <span>HAS ACCEPTED</span></ion-icon></span>
+          <span *ngIf="request && request.provider && !request.provider.acceptJob"><ion-icon style="color:orange"  name="close"> <span> HAS NOT ACCEPTED</span></ion-icon></span>
         </span>
         </p>
     </ion-item>

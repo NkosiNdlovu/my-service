@@ -16,7 +16,7 @@
     </ion-item> -->
     <ion-item (click)="selectLocation()">
       <ion-icon margin color="primary" name="ios-locate-outline"></ion-icon>
-      <span *ngIf="!currentLocation.address">Current location</span>
+      <span *ngIf="!currentLocation.address">My Location</span>
       <span style="color:green" *ngIf="currentLocation.address">{{currentLocation.address}}</span>
       <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
     </ion-item>
@@ -36,7 +36,7 @@
 
     <ion-item (click)="selectBookingDate()">
       <span *ngIf="!bookingDate">Select booking date</span>
-      <span style="color:green" *ngIf="bookingDate">Date: {{bookingDate}}</span>
+      <span style="color:green" *ngIf="bookingDate">Date: {{bookingDate | date: 'dd/MM/yyyy'}}</span>
       <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
     </ion-item>
 
@@ -52,8 +52,13 @@
       <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
     </ion-item>
 
+    <ion-item>
+      <span *ngIf="!approximateCost">Cost to be calculated</span>
+      <span style="color:green" *ngIf="approximateCost">approximateCost</span>
+    </ion-item>
+
   </ion-list>
-  
+
   <div text-center>
     <button [disabled]="!selectedService || !selectedCategory" padding ion-button round color="gray" (click)="requestService()">Request service</button>
   </div>

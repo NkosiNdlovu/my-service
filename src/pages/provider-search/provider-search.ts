@@ -38,6 +38,7 @@ export class ProviderSearchPage {
 
   selectProvider(provider) {
     this.serviceRequest.provider = new ServiceProvider();
+    this.serviceRequest.providerId = provider.id;
     this.serviceRequest.provider.id = provider.id;
     this.serviceRequest.provider.firstName = provider.firstName;
     this.serviceRequest.provider.lastName = provider.lastName;

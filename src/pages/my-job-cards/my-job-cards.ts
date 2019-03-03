@@ -31,14 +31,15 @@ export class MyJobCardsPage {
   }
 
   ionViewDidLoad() {
+    alert(this.userId)
     this.db
-      .collection("/serviceRequests", ref =>
-        ref.where("providerId", "==", this.userId)
-      )
-      .valueChanges()
-      .subscribe((data: Array<ServiceRequest>) => {
-        this.jobs = data;
-      });
+    .collection("/serviceRequests", ref =>
+      ref.where("providerId", "==", this.userId)
+    )
+    .valueChanges()
+    .subscribe((data: Array<ServiceRequest>) => {
+      this.jobs = data;
+    });
   }
 
   acceptJob(job: ServiceRequest) {

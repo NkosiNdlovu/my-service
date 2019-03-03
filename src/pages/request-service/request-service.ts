@@ -37,6 +37,8 @@ export class RequestServicePage {
   serviceRequest: ServiceRequest = new ServiceRequest();
   unsubscribe: firebase.Unsubscribe;
 
+  approximateCost: number;
+
   constructor(
     private datePicker: DatePicker,
     public db: AngularFirestore,
@@ -286,7 +288,7 @@ export class RequestServicePage {
   }
 
   setPreviousRequest() {
-    
+
     if (!this.requestProvider.currentServiceRequest){
       return;
     }
