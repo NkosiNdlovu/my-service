@@ -31,7 +31,6 @@ export class MyJobCardsPage {
   }
 
   ionViewDidLoad() {
-    alert(this.userId)
     this.db
     .collection("/serviceRequests", ref =>
       ref.where("providerId", "==", this.userId)
@@ -39,6 +38,7 @@ export class MyJobCardsPage {
     .valueChanges()
     .subscribe((data: Array<ServiceRequest>) => {
       this.jobs = data;
+      console.log(data)
     });
   }
 

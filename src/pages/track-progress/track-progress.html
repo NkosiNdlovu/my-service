@@ -34,6 +34,20 @@
             </span>
           </p>
 
+          <p>
+            <span *ngIf="serviceRequest.provider && serviceRequest.provider.arrivalTime"> <span>HAS ARRIVED: {{serviceRequest.provider.arrivalTime | date : 'HH:mm' }}</span></span>
+          </p>
+
+          <p>
+              <span *ngIf="serviceRequest.provider && serviceRequest.provider.completionTime"> <span>DONE: {{serviceRequest.provider.completionTime | date : 'HH:mm' }}</span></span>
+          </p>
+
+          <p *ngIf="serviceRequest.provider && serviceRequest.provider.completionTime">
+            <rating [(ngModel)]="serviceRequest.serviceRating"
+              (rateChange)="onRateChange(serviceRequest, $event)">
+            </rating>
+          </p>
+
           <div item-right>
             <ion-note>{{serviceRequest.bookingDate | date}} ({{serviceRequest.bookingTimeRangeStart}} - {{serviceRequest.bookingTimeRangeEnd}})</ion-note>
           </div>
@@ -41,4 +55,6 @@
       </ion-item>
     </div>
   </ion-list>
+
+
 </ion-content>

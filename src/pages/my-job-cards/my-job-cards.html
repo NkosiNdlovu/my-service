@@ -13,9 +13,9 @@
     <div *ngFor="let job of jobs">
       <ion-item *ngIf="(!job.provider || !job.provider.declineJob ) && !job.provider.completionTime" (click)="showActions(job)">
 
-        <h2>{{job.service?.name}}</h2>
-        <p>
-          <!-- <button ion-button icon-left clear item-right (click)="openMap(job)">
+        <h2>{{job.service?.name}} {{job.location.address}}</h2>
+
+        <!-- <button ion-button icon-left clear item-right (click)="openMap(job)">
           <ion-icon name="navigate"></ion-icon>
           View Map
         </button> -->
@@ -28,12 +28,25 @@
           Decline job
         </button> -->
 
-          <div item-right>
-            <ion-note>{{job.bookingDate | date}}</ion-note>
-            <p>
-              <ion-icon style="color:green" *ngIf="job.provider && job.provider.acceptJob" name="checkmark"></ion-icon>
-            </p>
-          </div>
+        <p>
+          <span *ngIf="!job.provider" style="color:red">None </span>
+          <span *ngIf="job.provider">
+            <span *ngIf="job.provider && job.provider.acceptJob"> <ion-icon style="color:green"  name="checkmark"> <span>HAS ACCEPTED</span></ion-icon></span>
+            <span *ngIf="job.provider && job.provider.declineJob"> <ion-icon style="color:red"  name="close"> <span>HAS DECLINED</span></ion-icon></span>
+            <span *ngIf="job && job.provider && !job.provider.acceptJob && !job.provider.declineJob"><ion-icon style="color:orange"  name="close"> <span> HAS NOT ACCEPTED</span></ion-icon></span>
+          </span>
+        </p>
+
+        <p>
+            <span *ngIf="job.provider && job.provider.arrivalTime"> <ion-icon style="color:green"  name="checkmark"> <span>HAS ARRIVED: {{job.provider.arrivalTime | date : 'HH:mm' }}</span></ion-icon></span>
+        </p>
+
+        <div item-right>
+          <ion-note>{{job.bookingDate | date}} ({{job.bookingTimeRangeStart}} - {{job.bookingTimeRangeEnd}})</ion-note>
+          <p>
+            <ion-icon style="color:green" *ngIf="job.provider && job.provider.acceptJob" name="checkmark"></ion-icon>
+          </p>
+        </div>
       </ion-item>
     </div>
   </ion-list>

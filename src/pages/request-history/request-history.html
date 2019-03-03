@@ -36,7 +36,8 @@
         <span *ngIf="!request.provider" style="color:red">None </span>
         <span *ngIf="request.provider">{{request.provider.firstName}},
           <span *ngIf="request.provider && request.provider.acceptJob"> <ion-icon style="color:green"  name="checkmark"> <span>HAS ACCEPTED</span></ion-icon></span>
-          <span *ngIf="request && request.provider && !request.provider.acceptJob"><ion-icon style="color:orange"  name="close"> <span> HAS NOT ACCEPTED</span></ion-icon></span>
+          <span *ngIf="request.provider && request.provider.declineJob"> <ion-icon style="color:red"  name="close"> <span>HAS DECLINED</span></ion-icon></span>
+          <span *ngIf="request && request.provider && !request.provider.acceptJob && !request.provider.declineJob"><ion-icon style="color:orange"  name="close"> <span> HAS NOT ACCEPTED</span></ion-icon></span>
         </span>
         </p>
     </ion-item>

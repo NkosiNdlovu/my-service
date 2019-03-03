@@ -14,6 +14,7 @@ import * as firebase from 'firebase';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { TranslateLoader, TranslateModule, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { IonicRatingModule } from 'ionic-rating';
 
 import { AboutPage } from '../pages/about/about';
 import { AddressSearchPage } from '../pages/address-search/address-search';
@@ -190,6 +191,7 @@ export function providers() {
     AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp),
     BrowserModule,
+    IonicRatingModule ,
     AngularFirestoreModule,
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({

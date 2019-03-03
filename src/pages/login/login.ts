@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { AlertController, LoadingController, NavController, ToastController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { UserService } from '../../providers/users-service/users-service';
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
+import { MyJobCardsPage } from './../my-job-cards/my-job-cards';
+import { RequestHistoryPage } from './../request-history/request-history';
 
 //import { User } from '../../providers/user';
 @Component({
@@ -24,12 +27,12 @@ export class LoginPage {
     password: this.password
   };
 
-
   constructor(public navCtrl: NavController,
     public alertCtrl: AlertController,
     public toastCtrl: ToastController,
     public translateService: TranslateService,
     public usersService: UserService,
+    public db: AngularFirestore,
     public loadingCtrl: LoadingController) {
 
   }
@@ -52,7 +55,7 @@ export class LoginPage {
     this.usersService.loginUser(this.email, this.password).then(authData => {
       //successful
       loader.dismiss();
-      that.navCtrl.setRoot(HomePage);
+      that.setStartUpPage(authData.uid);
 
     }, error => {
       loader.dismiss();
@@ -68,8 +71,6 @@ export class LoginPage {
 
     });
   }
-
-
 
   showForgotPassword() {
 
@@ -133,7 +134,22 @@ export class LoginPage {
     prompt.present();
   }
 
+  setStartUpPage(userId: string){
+    const that = this;
 
+    this.db.collection("/profiles").doc(userId).valueChanges().subscribe((res :any)=> {
+      if(!res.roles){
+        that.navCtrl.setRoot(HomePage);
+      }else if(res.roles.admin){
+        that.navCtrl.setRoot(RequestHistoryPage);
+      }else if(res.roles.provider){
+        that.navCtrl.setRoot(MyJobCardsPage);
+      }else {
+        that.navCtrl.setRoot(HomePage);
+      }
+    });
+
+ }
 
   /*
     // Attempt to login in through our User service
