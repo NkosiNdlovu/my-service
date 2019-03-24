@@ -52,6 +52,7 @@ import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
 import { UserService } from '../providers/users-service/users-service';
 import { MyApp } from './app.component';
+import { CarWashOptionsPage } from '../pages/car-wash-options/car-wash-options';
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -99,6 +100,7 @@ let pages = [
   ProviderSearchPage,
   RequestServicePage,
   AddressSearchPage,
+  CarWashOptionsPage,
   TrackProgressPage,
   MyJobCardsPage,
   CardsPage,
@@ -132,6 +134,7 @@ export function declarations() {
     RequestServicePage,
     MyJobCardsPage,
     AddressSearchPage,
+    CarWashOptionsPage,
     TrackProgressPage,
     CardsPage,
     UserViewPage,

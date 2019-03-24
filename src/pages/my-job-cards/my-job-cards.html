@@ -13,7 +13,9 @@
     <div *ngFor="let job of jobs">
       <ion-item *ngIf="(!job.provider || !job.provider.declineJob ) && !job.provider.completionTime" (click)="showActions(job)">
 
-        <h2>{{job.service?.name}} {{job.location.address}}</h2>
+        <h2>{{job.service?.name}} - {{job.vehicleType?.name }} <span *ngIf="job.addedOptions">-</span>{{getSelectedOptions(job)}} </h2>
+
+        <h2>{{job.location.address}}</h2>
 
         <!-- <button ion-button icon-left clear item-right (click)="openMap(job)">
           <ion-icon name="navigate"></ion-icon>

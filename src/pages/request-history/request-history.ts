@@ -41,11 +41,11 @@ export class RequestHistoryPage {
   }
 
   openMap(serviceRequest, event) {
-    
+
     if(event){
       event.stopPropagation();
     }
-    
+
     this.navCtrl.push(MapPage, {
       serviceRequests: [serviceRequest]
     });
@@ -106,15 +106,15 @@ export class RequestHistoryPage {
     });
     actionSheet.present();
   }
-  
+
   ackRequest(serviceRequest, event) {
-    
+
     if(event){
       event.stopPropagation();
     }
 
     serviceRequest.acknowledgedBy = this.userId;
-    
+
     this.saveRequest(serviceRequest);
   }
 
@@ -154,4 +154,12 @@ export class RequestHistoryPage {
         }
       );
   }
+
+  getSelectedOptions(job) {
+    if(!job.addedOptions){
+      return "";
+    }
+    return job.addedOptions.map(o => o.name).join(", ");
+  }
+
 }

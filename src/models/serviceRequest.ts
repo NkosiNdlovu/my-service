@@ -1,3 +1,4 @@
+import { VehicleType } from './../pages/request-service/request-service.model';
 import { ServiceProvider } from './serviceProvider';
 
 export class ServiceRequest{
@@ -7,13 +8,14 @@ export class ServiceRequest{
   id: string ;
   location?: any;
   service: IdName;
-  vehicleType: IdName;
+  vehicleType: VehicleType;
   user: UserNameSurname;
   requestDate?:Date;
   bookingTimeRangeStart?: number;
   bookingTimeRangeEnd?: number;
   providerId?: string;
   provider?: ServiceProvider;
+  addedOptions: any[];
 
   constructor(){
     this.bookingDate = null;

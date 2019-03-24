@@ -200,4 +200,11 @@ export class MyJobCardsPage {
       serviceRequests: [serviceRequest]
     });
   }
+
+  getSelectedOptions(job) {
+    if(!job.addedOptions){
+      return "";
+    }
+    return job.addedOptions.map(o => o.name).join(", ");
+  }
 }

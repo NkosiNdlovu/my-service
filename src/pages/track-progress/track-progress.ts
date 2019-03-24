@@ -48,4 +48,12 @@ export class TrackProgressPage {
       this.ref.tick();
     }, 100);
   }
+
+  getSelectedOptions(serviceRequest) {
+    if(!serviceRequest.addedOptions){
+      return "";
+    }
+
+    return serviceRequest.addedOptions.map(o => o.name).join(", ");
+  }
 }

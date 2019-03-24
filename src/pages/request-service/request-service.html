@@ -29,7 +29,7 @@
 
     <ion-item (click)="selectVehicleType()">
       <span *ngIf="!selectedVehicleType">Select type of vehicle</span>
-      <span style="color:green" *ngIf="selectedVehicleType">Vehicle Type: {{selectedVehicleType}}</span>
+      <span style="color:green" *ngIf="selectedVehicleType">Vehicle: {{selectedVehicleType.name}}</span>
       <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
     </ion-item>
 
@@ -47,13 +47,19 @@
     </ion-item>
 
     <ion-item (click)="selectEndTime()">
-      <span *ngIf="!bookingTimeRangeEnd">Select availability (end time</span>
+      <span *ngIf="!bookingTimeRangeEnd">Select availability (end time)</span>
       <span style="color:green" *ngIf="bookingTimeRangeEnd">Availability until: {{bookingTimeRangeEnd}}:00H </span>
       <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
     </ion-item>
 
+    <ion-item (click)="selectAddedOptions()">
+      <span *ngIf="addedOptions.length == 0">Added options: None</span>
+      <span style="color:green" *ngIf="addedOptions.length != 0">Options: {{getSelectedOptions()}} </span>
+      <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+    </ion-item>
+
     <ion-item>
-      <span *ngIf="!approximateCost">Cost to be calculated</span>
+      <span *ngIf="!approximateCost">Total price: R {{getTotalPrice()}}</span>
       <span style="color:green" *ngIf="approximateCost">approximateCost</span>
     </ion-item>
 

@@ -18,7 +18,7 @@
     <div *ngFor="let serviceRequest of serviceRequests | async">
       <ion-item>
 
-        <h2>{{serviceRequest.service?.name}}</h2>
+        <h2>{{serviceRequest.service?.name}} <span *ngIf="serviceRequest.vehicleType">- </span> {{serviceRequest.vehicleType?.name }} <span *ngIf="serviceRequest.addedOptions">-</span> {{getSelectedOptions(serviceRequest)}}</h2>
           <p>
               Request Received:
               <ion-icon *ngIf="serviceRequest?.acknowledgedBy" style="color:green" name="ios-checkbox-outline"></ion-icon>

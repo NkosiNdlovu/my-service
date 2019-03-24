@@ -1,17 +1,26 @@
-import { Component } from '@angular/core';
-import { DatePicker } from '@ionic-native/date-picker';
-import { Geolocation } from '@ionic-native/geolocation';
-import { AngularFirestore } from 'angularfire2/firestore';
-import * as firebase from 'firebase';
-import { ActionSheetController, AlertController, ModalController, NavController, ToastController, LoadingController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
+import { Component } from "@angular/core";
+import { DatePicker } from "@ionic-native/date-picker";
+import { Geolocation } from "@ionic-native/geolocation";
+import { AngularFirestore } from "angularfire2/firestore";
+import * as firebase from "firebase";
+import {
+  ActionSheetController,
+  AlertController,
+  ModalController,
+  NavController,
+  ToastController,
+  LoadingController
+} from "ionic-angular";
+import { Observable } from "rxjs/Observable";
 
-import { Guid } from '../../models/guid';
-import { ServiceRequest } from '../../models/serviceRequest';
-import { RequestProvider } from '../../providers/request/request-provider';
-import { AddressSearchPage } from '../address-search/address-search';
-import { TrackProgressPage } from '../track-progress/track-progress';
-import { WelcomePage } from '../welcome/welcome';
+import { Guid } from "../../models/guid";
+import { ServiceRequest } from "../../models/serviceRequest";
+import { RequestProvider } from "../../providers/request/request-provider";
+import { AddressSearchPage } from "../address-search/address-search";
+import { TrackProgressPage } from "../track-progress/track-progress";
+import { WelcomePage } from "../welcome/welcome";
+import { CarWashOptionsPage } from "../car-wash-options/car-wash-options";
+import { VehicleType } from "./request-service.model";
 
 @Component({
   selector: "page-request-service",
@@ -20,18 +29,20 @@ import { WelcomePage } from '../welcome/welcome';
 export class RequestServicePage {
   currentItems: any = [];
   item: Observable<any>;
+  totalCarWashPrice = 0;
   serviceCategories: Array<any>;
-  vehicleTypes: Array<any>;
+  vehicleTypes: Array<VehicleType>;
   test: Observable<any[]>;
   selectedCategory: any;
   selectedService: any;
-  selectedVehicleType: any;
+  selectedVehicleType: VehicleType;
   currentLocation: any;
 
   gpsLocation: any;
   bookingDate: Date;
   bookingTimeRangeStart: number;
   bookingTimeRangeEnd: number;
+  addedOptions = [];
   allowedHoursSelectionButtons: Array<any>;
   allowedHours = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
   serviceRequest: ServiceRequest = new ServiceRequest();
@@ -50,9 +61,8 @@ export class RequestServicePage {
     public geolocation: Geolocation,
     public requestProvider: RequestProvider,
     private modalCtrl: ModalController,
-    public loadingCtrl: LoadingController,
+    public loadingCtrl: LoadingController
   ) {
-
     let context = this;
     this.serviceCategories = [];
     this.currentLocation = {};
@@ -72,14 +82,13 @@ export class RequestServicePage {
     // get vehicle types
     db.collection("/carWashVehicleType")
       .valueChanges()
-      .subscribe(data => {
+      .subscribe((data: any) => {
         this.vehicleTypes = data;
       });
 
     this.geolocation
       .getCurrentPosition()
       .then(resp => {
-
         context.currentLocation = {
           latitude: resp.coords.latitude,
           longitude: resp.coords.longitude
@@ -89,7 +98,6 @@ export class RequestServicePage {
           latitude: resp.coords.latitude,
           longitude: resp.coords.longitude
         };
-
       })
       .catch(error => {
         let alert = this.alertCtrl.create({
@@ -111,6 +119,25 @@ export class RequestServicePage {
     this.setPreviousRequest();
   }
 
+  getSelectedOptions() {
+    return this.addedOptions.map(o => o.name).join(", ");
+  }
+
+  getTotalPrice() {
+    if (!this.selectedVehicleType) {
+      return 0;
+    }
+
+    let total = this.addedOptions
+      .filter(o => o.selected == true)
+      .map(o => o.price)
+      .reduce((sum, current) => sum + current, 0);
+
+    total += this.selectedVehicleType.price;
+
+    return total;
+  }
+
   getServices(ev) {
     let val = ev.target.value;
     if (!val || !val.trim()) {
@@ -126,17 +153,15 @@ export class RequestServicePage {
     let modal = this.modalCtrl.create(AddressSearchPage);
     let context = this;
     modal.onDidDismiss(data => {
-
       if (!data) {
         return;
       }
 
       if (data.useCurrentLocation) {
-
         context.currentLocation = {
           latitude: this.gpsLocation.latitude,
-          longitude: this.gpsLocation.longitude,
-        }
+          longitude: this.gpsLocation.longitude
+        };
         return;
       }
 
@@ -173,17 +198,16 @@ export class RequestServicePage {
     let context = this;
     let actionButtons = [];
     let vehicleTypes = [
-      "SUV",
-      "Hatchback",
-      "Sedan",
-      "Small single cabe",
-      "Single cab",
-      "Double cab"
+      { name: "SUV", price: 100 },
+      { name: "Hatchback/Sedan", price: 95 },
+      { name: "Small single cab", price: 95 },
+      { name: "Single cab", price: 95 },
+      { name: "Double cab", price: 105 }
     ];
 
-    vehicleTypes.forEach(type => {
+    vehicleTypes.forEach((type: any) => {
       actionButtons.push({
-        text: type,
+        text: type.name + " R " + type.price,
         role: "destructive",
         handler: () => {
           context.selectedVehicleType = type;
@@ -252,6 +276,21 @@ export class RequestServicePage {
     actionSheet.present();
   }
 
+  selectAddedOptions() {
+    let modal = this.modalCtrl.create(CarWashOptionsPage, {
+      selectedCarWashPrice: this.selectedVehicleType.price
+    });
+    let context = this;
+    modal.onDidDismiss(data => {
+      if (!data) {
+        return;
+      }
+
+      this.addedOptions = data.filter(o => o.selected);
+    });
+    modal.present();
+  }
+
   selectEndTime() {
     let context = this;
     let actionButtons = [];
@@ -288,8 +327,7 @@ export class RequestServicePage {
   }
 
   setPreviousRequest() {
-
-    if (!this.requestProvider.currentServiceRequest){
+    if (!this.requestProvider.currentServiceRequest) {
       return;
     }
 
@@ -301,6 +339,7 @@ export class RequestServicePage {
     this.bookingTimeRangeStart = this.requestProvider.currentServiceRequest.bookingTimeRangeStart;
     this.bookingTimeRangeEnd = this.requestProvider.currentServiceRequest.bookingTimeRangeEnd;
     this.selectedVehicleType = this.requestProvider.currentServiceRequest.vehicleType;
+    console.log(this.selectedVehicleType)
   }
 
   requestService() {
@@ -316,10 +355,9 @@ export class RequestServicePage {
     this.serviceRequest.bookingTimeRangeStart = this.bookingTimeRangeStart;
     this.serviceRequest.bookingTimeRangeEnd = this.bookingTimeRangeEnd;
     this.serviceRequest.vehicleType = this.selectedVehicleType;
-
+    this.serviceRequest.addedOptions = this.addedOptions;
     this.submitRequest();
   }
-
 
   submitRequest() {
     // check if the user is logged in
@@ -342,7 +380,6 @@ export class RequestServicePage {
               text: "OK",
               role: "cancel",
               handler: () => {
-
                 this.requestProvider.currentServiceRequest = this.serviceRequest;
 
                 this.navCtrl.setRoot(
@@ -363,7 +400,7 @@ export class RequestServicePage {
   }
 
   newGuid() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
       var r = (Math.random() * 16) | 0,
         v = c == "x" ? r : (r & 0x3) | 0x8;
       return v.toString(16);
@@ -371,7 +408,6 @@ export class RequestServicePage {
   }
 
   saveRequest(user) {
-
     var loader = this.loadingCtrl.create({
       content: "Please wait...",
       duration: 3000
@@ -387,8 +423,7 @@ export class RequestServicePage {
         loader.dismiss();
         let alert = this.alertCtrl.create({
           title: "Success!",
-          subTitle:
-            `Your request was saved successfully.
+          subTitle: `Your request was saved successfully.
              Go to the 'Track Progress' screen to
              check for progress`,
           buttons: ["Dismiss"]
