@@ -59,7 +59,7 @@
     </ion-item>
 
     <ion-item>
-      <span *ngIf="!approximateCost">Total price: R {{getTotalPrice()}}</span>
+      <span *ngIf="!approximateCost" class="total-price-label">Total price: R {{getTotalPrice()}}</span>
       <span style="color:green" *ngIf="approximateCost">approximateCost</span>
     </ion-item>
 

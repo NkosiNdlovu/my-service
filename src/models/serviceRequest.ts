@@ -16,6 +16,7 @@ export class ServiceRequest{
   providerId?: string;
   provider?: ServiceProvider;
   addedOptions: any[];
+  price: any;
 
   constructor(){
     this.bookingDate = null;

@@ -1,4 +1,4 @@
-import { Component, NgZone } from "@angular/core";
+import { Component, NgZone, ApplicationRef } from "@angular/core";
 import { ViewController, NavParams } from "ionic-angular";
 import { CarWashOption } from "./car-wash-models";
 
@@ -11,7 +11,11 @@ declare var google;
 export class CarWashOptionsPage {
   selectedCarWashPrice = 95;
   options: Array<CarWashOption>;
-  constructor(public viewCtrl: ViewController, params: NavParams) {
+  constructor(
+    public viewCtrl: ViewController, 
+    params: NavParams,
+    private ref: ApplicationRef,
+  ) {
     this.selectedCarWashPrice = params.get("selectedCarWashPrice");
     this.options = [];
     this.options.push({
@@ -36,6 +40,11 @@ export class CarWashOptionsPage {
     total += this.selectedCarWashPrice;
 
     return total;
+  }
+
+  onOptionClick(option) {
+    option.selected = !option.selected 
+    this.ref.tick();
   }
 
   dismiss() {

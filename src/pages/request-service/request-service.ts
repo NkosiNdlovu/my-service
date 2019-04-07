@@ -134,6 +134,7 @@ export class RequestServicePage {
       .reduce((sum, current) => sum + current, 0);
 
     total += this.selectedVehicleType.price;
+    this.serviceRequest.price = total;
 
     return total;
   }
@@ -173,6 +174,7 @@ export class RequestServicePage {
     });
     modal.present();
   }
+
   selectServiceCategory() {
     let context = this;
     let actionButtons = [];
@@ -197,29 +199,31 @@ export class RequestServicePage {
   selectVehicleType() {
     let context = this;
     let actionButtons = [];
-    let vehicleTypes = [
-      { name: "SUV", price: 100 },
-      { name: "Hatchback/Sedan", price: 95 },
-      { name: "Small single cab", price: 95 },
-      { name: "Single cab", price: 95 },
-      { name: "Double cab", price: 105 }
-    ];
+    
+    this.db
+      .collection("/carWashVehicleType")
+      .valueChanges()
+      .subscribe(vehicleTypes => {
+        vehicleTypes.forEach((type: any) => {
 
-    vehicleTypes.forEach((type: any) => {
-      actionButtons.push({
-        text: type.name + " R " + type.price,
-        role: "destructive",
-        handler: () => {
-          context.selectedVehicleType = type;
-        }
+          type.price = type.prices[context.selectedService.id]
+          actionButtons.push({
+            text: type.name + " R " + type.price,
+            role: "destructive",
+            handler: () => {
+              context.selectedVehicleType = type;
+            }
+          });
+        });
+    
+        let actionSheet = this.actionSheetCtrl.create({
+          title: "Select Vehicle Type",
+          buttons: actionButtons
+        });
+        actionSheet.present();
       });
-    });
 
-    let actionSheet = this.actionSheetCtrl.create({
-      title: "Select Vehicle Type",
-      buttons: actionButtons
-    });
-    actionSheet.present();
+    
   }
 
   selectService() {

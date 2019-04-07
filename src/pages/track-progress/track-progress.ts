@@ -31,6 +31,8 @@ export class TrackProgressPage {
     this.serviceRequests = this.db
       .collection("/serviceRequests", ref =>
         ref.where("user.id", "==", this.userId)
+        .orderBy("requestDate", "desc").limit(10)
+
       )
       .valueChanges();
   }
