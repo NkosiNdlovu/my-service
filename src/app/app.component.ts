@@ -22,6 +22,9 @@ import { WelcomePage } from '../pages/welcome/welcome';
 import { Notifications } from '../providers/notifications';
 import { PostsService } from '../providers/posts-service/posts-service';
 import { UserService } from '../providers/users-service/users-service';
+import { FcmWashProvider } from '../providers/fcm/fcm';
+import { FCM } from '@ionic-native/fcm';
+import { Firebase } from '@ionic-native/firebase';
 
 @Component({
   templateUrl: "app.html",
@@ -124,7 +127,8 @@ export class MyApp {
     public userService: UserService,
     public alertCtrl: AlertController,
     private ref: ApplicationRef,
-    private notifications: Notifications
+    private notifications: Notifications,
+    private fcm: FcmWashProvider
   ) {
     // Set the default language for translation strings, and the current language.
 
@@ -143,7 +147,9 @@ export class MyApp {
     let unsubscribe = firebase.auth().onAuthStateChanged((user: any) => {
 
       if (user) {
-        
+
+        this.fcm.getToken(user.uid);
+
         this.userService.currentUserId = user.uid;
         this.userLoggedIn = true;
         this.notifications.trackNotifications(user.uid);
@@ -153,7 +159,7 @@ export class MyApp {
         if (!that.currentUser) {
           // system loading for the first time
           that.nav.setRoot(HomePage);
-        }else {
+        } else {
           // log off
           that.nav.setRoot(LoginPage);
           that.currentUser = null;
@@ -174,6 +180,7 @@ export class MyApp {
       statusBar.styleDefault();
 
       splashScreen.hide();
+
     });
   }
 

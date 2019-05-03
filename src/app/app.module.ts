@@ -53,6 +53,9 @@ import { User } from '../providers/user';
 import { UserService } from '../providers/users-service/users-service';
 import { MyApp } from './app.component';
 import { CarWashOptionsPage } from '../pages/car-wash-options/car-wash-options';
+import { FcmWashProvider } from '../providers/fcm/fcm';
+import { FCM } from '@ionic-native/fcm';
+import { Firebase } from '@ionic-native/firebase';
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -169,6 +172,8 @@ export function entryComponents() {
 
 export function providers() {
   return [
+    FcmWashProvider,
+    Firebase,
     Push,
     Geolocation,
     PhonegapLocalNotification,
