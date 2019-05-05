@@ -10,4 +10,15 @@ page-request-history {
       margin: 4px 8px 4px 8px;
       font-size: 16px;
     }
+
+    .service-request-card {
+        margin-bottom: 16px;
+        border: 1px solid #ddd;
+        padding-top: 8px; 
+        p {
+            color: #141823;
+            margin: 8px 0 8px 0;
+        }
+        color: #141823  ;
+    }
 }

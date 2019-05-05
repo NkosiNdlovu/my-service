@@ -25,6 +25,7 @@ import { UserService } from '../providers/users-service/users-service';
 import { FcmWashProvider } from '../providers/fcm/fcm';
 import { FCM } from '@ionic-native/fcm';
 import { Firebase } from '@ionic-native/firebase';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
   templateUrl: "app.html",
@@ -128,7 +129,8 @@ export class MyApp {
     public alertCtrl: AlertController,
     private ref: ApplicationRef,
     private notifications: Notifications,
-    private fcm: FcmWashProvider
+    private fcm: FcmWashProvider,
+    private db: AngularFirestore
   ) {
     // Set the default language for translation strings, and the current language.
 
@@ -147,8 +149,12 @@ export class MyApp {
     let unsubscribe = firebase.auth().onAuthStateChanged((user: any) => {
 
       if (user) {
-
-        this.fcm.getToken(user.uid);
+        
+        that.db.collection("profiles").doc(user.uid).valueChanges().subscribe(
+          profile => {
+            that.fcm.getToken(profile);
+          }
+        );
 
         this.userService.currentUserId = user.uid;
         this.userLoggedIn = true;

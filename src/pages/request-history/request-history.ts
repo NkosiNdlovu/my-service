@@ -32,7 +32,7 @@ export class RequestHistoryPage {
 
   ionViewDidLoad() {
     this.db
-      .collection("/serviceRequests")
+      .collection("/serviceRequests", ref => ref.orderBy("requestDate", "desc"))
       .valueChanges()
       .subscribe((data: Array<ServiceRequest>) => {
         this.serviceRequests = data;
@@ -49,6 +49,11 @@ export class RequestHistoryPage {
     this.navCtrl.push(MapPage, {
       serviceRequests: [serviceRequest]
     });
+  }
+  getTransactionNumber(serviceRequest){
+    let id : string;
+    id= serviceRequest.id;
+    return id.substring(0,8).toUpperCase();
   }
 
   loadAction(serviceRequest) {
