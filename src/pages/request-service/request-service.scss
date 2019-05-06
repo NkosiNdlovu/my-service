@@ -12,4 +12,9 @@ page-request-service {
     color:green;
     font-size: 20px;
   }
+
+  ion-content {
+    background-image: none !important;
+    background-color: white !important;
+  }
 }

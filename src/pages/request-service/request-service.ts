@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ApplicationRef } from "@angular/core";
 import { DatePicker } from "@ionic-native/date-picker";
 import { Geolocation } from "@ionic-native/geolocation";
 import { AngularFirestore } from "angularfire2/firestore";
@@ -56,12 +56,13 @@ export class RequestServicePage {
     public toastCtrl: ToastController,
     private alertCtrl: AlertController,
     public navCtrl: NavController,
-    // public items: Items,
     public actionSheetCtrl: ActionSheetController,
     public geolocation: Geolocation,
     public requestProvider: RequestProvider,
     private modalCtrl: ModalController,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    private ref: ApplicationRef
+
   ) {
     let context = this;
     this.serviceCategories = [];
@@ -131,7 +132,7 @@ export class RequestServicePage {
     let total = this.addedOptions
       .filter(o => o.selected == true)
       .map(o => o.price)
-      .reduce((sum, current) => sum + current, 0);
+      .reduce((sum, current) => Number(sum) + Number(current), 0);
 
     total += this.selectedVehicleType.price;
     this.serviceRequest.price = total;
@@ -447,5 +448,10 @@ export class RequestServicePage {
         });
         alert.present();
       });
+  }
+
+  selectChange(e) {
+    this.ref.tick();
+    console.log(e);
   }
 }

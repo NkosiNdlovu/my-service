@@ -32,14 +32,14 @@ export class MyJobCardsPage {
 
   ionViewDidLoad() {
     this.db
-    .collection("/serviceRequests", ref =>
-      ref.where("providerId", "==", this.userId)
-    )
-    .valueChanges()
-    .subscribe((data: Array<ServiceRequest>) => {
-      this.jobs = data;
-      console.log(data)
-    });
+      .collection("/serviceRequests", ref =>
+        ref.where("providerId", "==", this.userId)
+      )
+      .valueChanges()
+      .subscribe((data: Array<ServiceRequest>) => {
+        this.jobs = data;
+        console.log(data)
+      });
   }
 
   acceptJob(job: ServiceRequest) {
@@ -132,14 +132,14 @@ export class MyJobCardsPage {
     actionSheet.present();
   }
 
-  navigate(job) {}
+  navigate(job) { }
 
   confirmArrival(job: ServiceRequest) {
     if (!job.provider) {
       job.provider = new ServiceProvider();
       job.provider.id = this.userId;
     }
-    this.notifyUser(job.user.id , '')
+    this.notifyUser(job.user.id, '')
     job.provider.arrivalTime = new Date();
 
     this.notifyUser(job.user.id, NOTIFICATION_MESSAGES.job_arrival);
@@ -158,7 +158,7 @@ export class MyJobCardsPage {
     this.saveJob(job);
   }
 
-  notifyUser(userId:string, message:string){
+  notifyUser(userId: string, message: string) {
     let note = new UserNotification();
     note.body = message;
     note.tag = 'My tag';
@@ -202,9 +202,15 @@ export class MyJobCardsPage {
   }
 
   getSelectedOptions(job) {
-    if(!job.addedOptions){
+    if (!job.addedOptions) {
       return "";
     }
     return job.addedOptions.map(o => o.name).join(", ");
+  }
+
+  getTransactionNumber(job) {
+    let id: string;
+    id = job.id;
+    return id.substring(0, 8).toUpperCase();
   }
 }

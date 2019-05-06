@@ -9,7 +9,103 @@
 
 
 <ion-content padding>
-  <ion-list>
+
+    <ion-stepper #stepper (selectIndexChange)="selectChange($event)">
+        <ion-step label="Select location"
+                  [description]="currentLocation.address ? currentLocation.address : 'Use current location'">
+          <ion-item (click)="selectLocation()">
+            <ion-icon margin color="primary" name="ios-locate-outline"></ion-icon>
+            <span *ngIf="!currentLocation.address">My Location</span>
+            <span style="color:green" *ngIf="currentLocation.address">{{currentLocation.address}}</span>
+            <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+          </ion-item>
+
+          <button ion-button small ionicStepperNext>Next</button>
+        </ion-step>
+
+        <ion-step label="Select type of car wash"
+                  [description]="selectedService ? selectedService.name : ''">
+            
+            <ion-item (click)="selectService()">
+              <!-- <span *ngIf="!selectedService">Select type of car wash</span> -->
+              <span style="color:green" *ngIf="selectedService">Car wash: {{selectedService.name}}</span>
+              <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+            </ion-item>
+
+          <button ion-button color="light" small ionicStepperPrevious>Previous</button> 
+          <button ion-button small ionicStepperNext>Next</button>
+        </ion-step>
+
+        <ion-step label="Select type of vehicle"
+                  [description]="selectedVehicleType ? selectedVehicleType.name : ''">
+            
+            <ion-item (click)="selectVehicleType()">
+              <span *ngIf="!selectedVehicleType">Select type of vehicle</span>
+              <span style="color:green" *ngIf="selectedVehicleType">Vehicle: {{selectedVehicleType.name}}</span>
+              <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+            </ion-item>
+
+          <button ion-button color="light" small ionicStepperPrevious>Previous</button> 
+          <button ion-button small ionicStepperNext>Next</button>
+        </ion-step>
+
+        
+        <ion-step label="Select booking date"
+                description="{{bookingDate | date: 'dd/MM/yyyy'}}">
+
+          <ion-item (click)="selectBookingDate()">
+            <span *ngIf="!bookingDate">Select booking date</span>
+            <span style="color:green" *ngIf="bookingDate">Date: {{bookingDate | date: 'dd/MM/yyyy'}}</span>
+            <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+          </ion-item>
+
+          <button ion-button color="light" small ionicStepperPrevious>Previous</button> 
+          <button ion-button small ionicStepperNext>Next</button>
+        </ion-step>
+
+      
+        <ion-step label="Select availability (start time)"
+                [description]="bookingTimeRangeStart ? bookingTimeRangeStart + ':00H' : ''">
+
+          <ion-item (click)="selectStartTime()">
+            <span *ngIf="!bookingTimeRangeStart">Select availability (start time)</span>
+            <span style="color:green" *ngIf="bookingTimeRangeStart">Available from: {{bookingTimeRangeStart}}:00H</span>
+            <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+          </ion-item>
+              
+          <button ion-button color="light" small ionicStepperPrevious>Previous</button> 
+          <button ion-button small ionicStepperNext>Next</button>
+        </ion-step>
+      
+        <ion-step label="Select availability (end time)"
+                [description]="bookingTimeRangeEnd ? bookingTimeRangeEnd + ':00H' : ''">
+
+          <ion-item (click)="selectEndTime()">
+            <span *ngIf="!bookingTimeRangeEnd">Select availability (end time)</span>
+            <span style="color:green" *ngIf="bookingTimeRangeEnd">Availability until: {{bookingTimeRangeEnd}}:00H </span>
+            <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+          </ion-item>
+
+          <button ion-button color="light" small ionicStepperPrevious>Previous</button> 
+          <button ion-button small ionicStepperNext>Next</button>
+        </ion-step>
+              
+        <ion-step label="Added options"
+                [description]="getSelectedOptions()">
+
+          <ion-item (click)="selectAddedOptions()">
+            <span *ngIf="addedOptions.length == 0">Added options: None</span>
+            <span style="color:green" *ngIf="addedOptions.length != 0">Options: {{getSelectedOptions()}} </span>
+            <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+          </ion-item>
+              
+          <button ion-button color="light" small ionicStepperPrevious>Previous</button> 
+          <button ion-button small ionicStepperNext>Next</button>
+        </ion-step>
+
+      </ion-stepper>
+
+  <ion-list *ngIf="false">
     <!-- <ion-item (click)="selectServiceCategory()">
           <span *ngIf="!selectedCategory">Select type of service</span>
           <span style="color:green" *ngIf="selectedCategory">Service type: {{selectedCategory.name}}</span>

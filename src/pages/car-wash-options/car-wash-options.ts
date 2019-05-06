@@ -35,7 +35,7 @@ export class CarWashOptionsPage {
     let total = this.options
       .filter(o => o.selected == true)
       .map(o => o.price)
-      .reduce((sum, current) => sum + current, 0);
+      .reduce((sum, current) => Number(sum) + Number(current), 0);
 
     total += this.selectedCarWashPrice;
 

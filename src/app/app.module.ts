@@ -1,7 +1,9 @@
 import { ErrorHandler, NgModule } from '@angular/core';
 import { Http } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePicker } from '@ionic-native/date-picker';
+import { Firebase } from '@ionic-native/firebase';
 import { Geolocation } from '@ionic-native/geolocation';
 import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification';
 import { Push } from '@ionic-native/push';
@@ -12,12 +14,14 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicRatingModule } from 'ionic-rating';
+import { IonicStepperModule } from 'ionic-stepper';
 import { TranslateLoader, TranslateModule, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { TimeAgoPipe } from 'time-ago-pipe';
-import { IonicRatingModule } from 'ionic-rating';
 
 import { AboutPage } from '../pages/about/about';
 import { AddressSearchPage } from '../pages/address-search/address-search';
+import { CarWashOptionsPage } from '../pages/car-wash-options/car-wash-options';
 import { CardsPage } from '../pages/cards/cards';
 import { ContactPage } from '../pages/contact/contact';
 import { ContentPage } from '../pages/content/content';
@@ -45,6 +49,7 @@ import { UserEditPage } from '../pages/user-profile-edit/user-edit';
 import { UserViewPage } from '../pages/user-view/user-view';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { Api } from '../providers/api';
+import { FcmWashProvider } from '../providers/fcm/fcm';
 import { LocationTracker } from '../providers/location-tracker';
 import { Notifications } from '../providers/notifications';
 import { RequestProvider } from '../providers/request/request-provider';
@@ -52,10 +57,6 @@ import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
 import { UserService } from '../providers/users-service/users-service';
 import { MyApp } from './app.component';
-import { CarWashOptionsPage } from '../pages/car-wash-options/car-wash-options';
-import { FcmWashProvider } from '../providers/fcm/fcm';
-import { FCM } from '@ionic-native/fcm';
-import { Firebase } from '@ionic-native/firebase';
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -199,8 +200,10 @@ export function providers() {
     AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp),
     BrowserModule,
+    BrowserAnimationsModule,
     IonicRatingModule ,
     AngularFirestoreModule,
+    IonicStepperModule,
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       provide: TranslateLoader,
