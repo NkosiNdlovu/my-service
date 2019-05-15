@@ -45,13 +45,13 @@
 
         <div >
           <ion-note>{{job.bookingDate | date}} ({{job.bookingTimeRangeStart}} - {{job.bookingTimeRangeEnd}})</ion-note>
-          <p>
+          <!-- <p>
             <ion-icon style="color:green" *ngIf="job.provider && job.provider.acceptJob" name="checkmark"></ion-icon>
-          </p>
+          </p> -->
         </div>
 
         <p>
-          Job #: <strong> {{getTransactionNumber(request)}} </strong>
+          Job #: <strong> {{getTransactionNumber(job)}} </strong>
         </p>
         
       </ion-item>

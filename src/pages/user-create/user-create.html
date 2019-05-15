@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Create user</ion-title>
+    <ion-title>User</ion-title>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -52,7 +52,7 @@
       </ion-item>
       <ion-item *ngIf="currentUser.roles">
         <ion-label>Is Provider</ion-label>
-        <ion-checkbox name="provider" [(ngModel)]="currentUser.roles.provider"></ion-checkbox>
+        <ion-checkbox name="provider" [(ngModel)]="currentUser.roles.provider" (ngModelChange)="providerRoleChanged($event)"></ion-checkbox>
       </ion-item>
 
       <ion-item *ngIf="currentUser.roles.provider && providerDetails" (click)="selectProviderLocation()">
@@ -60,6 +60,11 @@
         <span style="color:red" *ngIf="!providerDetails.workingLocation">Select working location {{providerDetails.workingLocation}}</span>
         <span style="color:green" *ngIf="providerDetails.workingLocation && providerDetails.workingLocation.address">{{providerDetails.workingLocation.address}}</span>
         <ion-icon name="ios-arrow-down-outline" item-right></ion-icon>
+      </ion-item>
+
+      <ion-item  *ngIf="currentUser.roles.provider && providerDetails">
+        <ion-label>Is Mobile</ion-label>
+        <ion-checkbox name="isMobile" [(ngModel)]="providerDetails.isMobile"></ion-checkbox>
       </ion-item>
 
       <div padding text-center>

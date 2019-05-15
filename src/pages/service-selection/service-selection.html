@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>FYRE AUTOCARE</ion-title>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content text-center padding>
+      <div class="splash-logo-container">
+          <div class="splash-logo"></div>
+        </div>
+    <h2 >Select Service</h2>
+  
+    <button round class="btn-request" ion-button block padding (click)="requestCarWash()">
+      <span padding margin>
+        Request Mobile Wash
+      </span>
+    </button>
+  
+    <button round class="btn-request" ion-button block padding (click)="goToNearestCarWash()">
+        <span padding margin>
+          Go to nearest car wash
+        </span>
+      </button>
+
+  </ion-content>
+  

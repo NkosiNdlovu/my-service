@@ -72,7 +72,10 @@ export class UserCreatePage {
     this.db
       .collection("serviceProviders", ref => ref.where("id", "==", providerId))
       .valueChanges()
-      .subscribe(data => {
+      .subscribe((data: any) => {
+        if(!data[0]){
+          return;
+        }
         that.providerDetails = data[0];
       });
   }
@@ -142,14 +145,16 @@ export class UserCreatePage {
 
         // update user profile
         if (that.currentUser.roles.provider) {
-          that.userService.updateProviderProfile(this.currentUser, this.providerDetails.workingLocation);
+          that.userService.updateProviderProfile(this.currentUser, this.providerDetails).then( result => { 
+
+            toast.onDidDismiss(() => {
+              this.navCtrl.setRoot(UserListPage);
+            });
+    
+            toast.present();
+          });
         }
 
-        toast.onDidDismiss(() => {
-          this.navCtrl.setRoot(UserListPage);
-        });
-
-        toast.present();
       },
       error => {
         loader.dismiss();
@@ -170,6 +175,15 @@ export class UserCreatePage {
     }
     return true;
   }
+
+  providerRoleChanged(value){
+    if(value){
+      this.providerDetails = {}
+    }else {
+      this.providerDetails = null;
+    }
+  }
+
   selectProviderLocation() {
     let modal = this.modalCtrl.create(AddressSearchPage);
     let that = this;

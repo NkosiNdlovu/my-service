@@ -22,6 +22,7 @@ import { TimeAgoPipe } from 'time-ago-pipe';
 import { AboutPage } from '../pages/about/about';
 import { AddressSearchPage } from '../pages/address-search/address-search';
 import { CarWashOptionsPage } from '../pages/car-wash-options/car-wash-options';
+import { CarWashStationSelectionPageModule } from '../pages/car-wash-station-selection/car-wash-station-selection.module';
 import { CardsPage } from '../pages/cards/cards';
 import { ContactPage } from '../pages/contact/contact';
 import { ContentPage } from '../pages/content/content';
@@ -39,6 +40,7 @@ import { ProviderSearchPage } from '../pages/provider-search/provider-search';
 import { RequestHistoryPage } from '../pages/request-history/request-history';
 import { RequestServicePage } from '../pages/request-service/request-service';
 import { SearchPage } from '../pages/search/search';
+import { ServiceSelectionPageModule } from '../pages/service-selection/service-selection.module';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignupPage } from '../pages/signup/signup';
 import { TrackProgressPage } from '../pages/track-progress/track-progress';
@@ -200,6 +202,8 @@ export function providers() {
     AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp),
     BrowserModule,
+    ServiceSelectionPageModule,
+    CarWashStationSelectionPageModule,
     BrowserAnimationsModule,
     IonicRatingModule ,
     AngularFirestoreModule,

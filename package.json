@@ -39,7 +39,7 @@
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-device": "^2.0.2",
-    "cordova-plugin-firebase": "~2.0.5",
+    "cordova-plugin-firebase": "git+https://github.com/dpa99c/cordova-plugin-firebase.git#GH-1057-April-05-android-build-issue",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.1.19",

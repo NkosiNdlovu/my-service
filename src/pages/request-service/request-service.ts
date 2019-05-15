@@ -344,7 +344,15 @@ export class RequestServicePage {
     this.bookingTimeRangeStart = this.requestProvider.currentServiceRequest.bookingTimeRangeStart;
     this.bookingTimeRangeEnd = this.requestProvider.currentServiceRequest.bookingTimeRangeEnd;
     this.selectedVehicleType = this.requestProvider.currentServiceRequest.vehicleType;
-    console.log(this.selectedVehicleType)
+
+  }
+  setProviderForCarWashStation(serviceRequest){
+    if (!this.requestProvider.currentServiceRequest) {
+      return;
+    }
+
+    serviceRequest.provider = this.requestProvider.currentServiceRequest.provider;
+    serviceRequest.providerId = this.requestProvider.currentServiceRequest.providerId;
   }
 
   requestService() {
@@ -361,6 +369,9 @@ export class RequestServicePage {
     this.serviceRequest.bookingTimeRangeEnd = this.bookingTimeRangeEnd;
     this.serviceRequest.vehicleType = this.selectedVehicleType;
     this.serviceRequest.addedOptions = this.addedOptions;
+
+    this.setProviderForCarWashStation(this.serviceRequest)
+
     this.submitRequest();
   }
 
@@ -433,9 +444,12 @@ export class RequestServicePage {
              check for progress`,
           buttons: ["Dismiss"]
         });
+
         alert.present().then(res => {
           this.navCtrl.setRoot(TrackProgressPage);
         });
+
+        this.requestProvider.currentServiceRequest = null;
       })
       .catch(error => {
         // Error

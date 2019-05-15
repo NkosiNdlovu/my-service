@@ -71,16 +71,17 @@ export class UserService {
     return this.userProfileCol.doc(userId).set(userAccount);
   }
 
-  updateProviderProfile(userAccount: UserAccount, workingLocation) {
+  updateProviderProfile(userAccount: UserAccount, providerDetails) {
     let provider = {
       id: userAccount.id,
       isAvailable: true,
       isActive: true,
       firstName: userAccount.firstName,
       lastName: userAccount.lastName,
-      workingLocation: workingLocation
+      workingLocation: providerDetails.workingLocation,
+      isMobile: providerDetails.isMobile
     };
-
+    
     return this.providerProfileCol.doc(userAccount.id).set(provider);
   }
 

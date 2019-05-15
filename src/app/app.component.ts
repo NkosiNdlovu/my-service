@@ -159,7 +159,8 @@ export class MyApp {
         this.userService.currentUserId = user.uid;
         this.userLoggedIn = true;
         this.notifications.trackNotifications(user.uid);
-        that.nav.setRoot(RequestServicePage);
+        that.nav.setRoot(HomePage);
+        // that.nav.setRoot(RequestServicePage);
 
       } else {
         if (!that.currentUser) {
