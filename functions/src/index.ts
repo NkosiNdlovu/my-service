@@ -17,7 +17,8 @@ exports.newServiceRequestsNotification = functions.firestore
       notification: {
         title: 'New car wash request',
         body: `${data.service.name} has been requested!`,
-        icon: 'https://goo.gl/Fz9nrQ'
+        icon: 'https://goo.gl/Fz9nrQ',
+        sound: 'default'
       }
     }
 
@@ -63,7 +64,8 @@ exports.newJobCardAssignedNotification = functions.firestore
       notification: {
         title: 'You have been assigned new job card',
         body: `${event.after.data().service.name} has been requested!`,
-        icon: 'https://goo.gl/Fz9nrQ'
+        icon: 'https://goo.gl/Fz9nrQ',
+        sound: 'default'
       }
     }
 
@@ -109,7 +111,8 @@ exports.requestAcknowledgedNotification = functions.firestore
     notification: {
       title: 'Your request has been acknowledged',
       body: `${event.after.data().service.name} has been acknowledged!`,
-      icon: 'https://goo.gl/Fz9nrQ'
+      icon: 'https://goo.gl/Fz9nrQ',
+      sound: 'default'
     }
   }
 

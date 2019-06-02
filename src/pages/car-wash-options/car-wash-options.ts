@@ -37,7 +37,7 @@ export class CarWashOptionsPage {
       .map(o => o.price)
       .reduce((sum, current) => Number(sum) + Number(current), 0);
 
-    total += this.selectedCarWashPrice;
+    total += Number(this.selectedCarWashPrice);
 
     return total;
   }

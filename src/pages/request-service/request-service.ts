@@ -134,7 +134,7 @@ export class RequestServicePage {
       .map(o => o.price)
       .reduce((sum, current) => Number(sum) + Number(current), 0);
 
-    total += this.selectedVehicleType.price;
+    total += Number(this.selectedVehicleType.price);
     this.serviceRequest.price = total;
 
     return total;
