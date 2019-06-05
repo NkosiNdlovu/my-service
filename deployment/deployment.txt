@@ -4,6 +4,8 @@ cd C:\Program Files\Java\jre1.8.0_181\bin
 
 keytool -genkey -v -keystore "C:\projects\car-wash\keystore\debug.keystore" -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
 
+password: memeza
+
 cd C:\Program Files\Java\jre1.8.0_181\bin
 
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore "C:\projects\car-wash\keystore\debug.keystore" "C:\projects\car-wash\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" alias_name
@@ -12,3 +14,13 @@ cd C:\Users\Nkosi\AppData\Local\Android\Sdk\build-tools\27.0.3
 
 zipalign -v 4 "C:\projects\car-wash\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" "C:\projects\car-wash\deployment\car-wash-mobile.apk"
 
+
+
+
+
+
+
+
+Issues:
+
+https://stackoverflow.com/questions/56014935/problem-with-play-services-measurement-base-on-ionic
