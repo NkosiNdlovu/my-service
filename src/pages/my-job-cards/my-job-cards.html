@@ -54,6 +54,10 @@
           Job #: <strong> {{getTransactionNumber(job)}} </strong>
         </p>
         
+        <p>
+            <ion-note>{{job.requestDate | timeAgo }}</ion-note>
+        </p>
+
       </ion-item>
     </div>
   </ion-list>

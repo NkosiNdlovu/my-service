@@ -34,6 +34,7 @@ export class MyJobCardsPage {
     this.db
       .collection("/serviceRequests", ref =>
         ref.where("providerId", "==", this.userId)
+           .orderBy("requestDate", "desc")
       )
       .valueChanges()
       .subscribe((data: Array<ServiceRequest>) => {

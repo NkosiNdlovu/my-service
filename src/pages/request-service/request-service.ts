@@ -34,6 +34,7 @@ export class RequestServicePage {
   vehicleTypes: Array<VehicleType>;
   test: Observable<any[]>;
   selectedCategory: any;
+  services : any[];
   selectedService: any;
   selectedVehicleType: VehicleType;
   currentLocation: any;
@@ -78,6 +79,7 @@ export class RequestServicePage {
       .valueChanges()
       .subscribe(data => {
         this.serviceCategories = data;
+        this.getServices();
       });
 
     // get vehicle types
@@ -140,16 +142,35 @@ export class RequestServicePage {
     return total;
   }
 
-  getServices(ev) {
-    let val = ev.target.value;
-    if (!val || !val.trim()) {
-      this.currentItems = [];
+  getServices() {
+    if (!this.selectedCategory) {
       return;
     }
-    // this.currentItems = this.items.query({
-    //   name: val
-    // });
+
+    let context = this;
+
+    this.db
+      .collection("/serviceCategory")
+      .doc(this.selectedCategory.id)
+      .collection("services")
+      .valueChanges()
+      .subscribe(data => {
+        let actionButtons = [];
+        context.selectedService = data[0]; 
+        context.services = data;
+      });
   }
+
+  // getServices(ev) {
+  //   let val = ev.target.value;
+  //   if (!val || !val.trim()) {
+  //     this.currentItems = [];
+  //     return;
+  //   }
+  //   // this.currentItems = this.items.query({
+  //   //   name: val
+  //   // });
+  // }
 
   selectLocation() {
     let modal = this.modalCtrl.create(AddressSearchPage);
@@ -234,15 +255,16 @@ export class RequestServicePage {
 
     let context = this;
 
-    this.db
-      .collection("/serviceCategory")
-      .doc(this.selectedCategory.id)
-      .collection("services")
-      .valueChanges()
-      .subscribe(data => {
+    // this.db
+    //   .collection("/serviceCategory")
+    //   .doc(this.selectedCategory.id)
+    //   .collection("services")
+    //   .valueChanges()
+    //   .subscribe(data => {
         let actionButtons = [];
+    //     context.selectedService = data[0]; 
 
-        data.forEach((service: any) => {
+        this.services.forEach((service: any) => {
           actionButtons.push({
             text: service.name,
             role: "destructive",
@@ -257,7 +279,7 @@ export class RequestServicePage {
           buttons: actionButtons
         });
         actionSheet.present();
-      });
+      // });
   }
 
   selectStartTime() {
