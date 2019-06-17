@@ -71,7 +71,7 @@ export class MyApp {
       roles: { user: false, provider: false, admin: true }
     },
     {
-      title: "Track progress",
+      title: "My History",
       icon: "ios-apps-outline",
       component: TrackProgressPage,
       roles: { user: true, provider: false, admin: false }
@@ -117,6 +117,8 @@ export class MyApp {
   loading = true;
   userLoggedIn = false;
 
+  userProfile: any;
+
   constructor(
     private push: Push,
 
@@ -152,6 +154,8 @@ export class MyApp {
         
         that.db.collection("profiles").doc(user.uid).valueChanges().subscribe(
           profile => {
+            that.ref.tick();
+            that.userProfile = profile;
             that.fcm.getToken(profile);
           }
         );

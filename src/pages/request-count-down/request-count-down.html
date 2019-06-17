@@ -1,18 +1,30 @@
-<!--
-  Generated template for the RequestCountDownPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
+    <ion-navbar>
+      <ion-title>FYRE AUTOCARE</ion-title>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content text-center padding>
+      <div class="splash-logo-container">
+          <div class="splash-logo"></div>
+        </div>
+    <h2>Pending request</h2>
+    <ion-card>
+        <ion-item>
+          <div text-center>
+           My request
+          </div>
+        </ion-item>
+    </ion-card>
 
-  <ion-navbar>
-    <ion-title>request-count-down</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-</ion-content>
+    <button round class="btn-request" ion-button block padding (click)="requestCarWash()">
+      <span padding margin>
+        Request another car wash
+      </span>
+    </button>
+  
+  </ion-content>
+  

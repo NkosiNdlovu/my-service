@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Track Progress</ion-title>
+    <ion-title>My History</ion-title>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -16,7 +16,7 @@
     </ion-item>
 
     <div *ngFor="let serviceRequest of serviceRequests | async">
-      <ion-item>
+      <ion-item class="service-request-card">
 
         <h2>{{serviceRequest.service?.name}} <span *ngIf="serviceRequest.vehicleType">- </span> {{serviceRequest.vehicleType?.name }} <span *ngIf="serviceRequest.addedOptions">-</span> {{getSelectedOptions(serviceRequest)}}</h2>
         <p>
@@ -51,6 +51,9 @@
             (rateChange)="onRateChange(serviceRequest, $event)">
           </rating>
         </p>
+        <p>
+            <ion-note>{{serviceRequest.requestDate | timeAgo }}</ion-note>
+        <p>
 
       </ion-item>
     </div>

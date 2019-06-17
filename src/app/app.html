@@ -1,12 +1,10 @@
 <ion-menu [content]="content">
   <ion-content>
 
-    <ion-list>
-      <div>
-        <ion-icon margin style="color:red; font-weight:900;font-size:28px" menuClose name="close"></ion-icon>
-      </div>
-    </ion-list>
-
+    <div class="user-name-label">
+      <!-- <ion-icon margin style="color:red; font-weight:900;font-size:28px" menuClose name="close"></ion-icon> -->
+      {{userProfile?.firstName }}
+    </div>
     <ion-list *ngIf="!loading">
       <div *ngFor="let p of pages">
         <button menuClose ion-item *ngIf="isPageAccessible(p)" (click)="openPage(p)">

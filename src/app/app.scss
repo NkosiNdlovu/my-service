@@ -61,3 +61,12 @@ ion-item{
   margin-right: 16px ;
   color: color($colors, primary, base)
 }
+.user-name-label {
+  background-color: color($colors, primary, base);
+  height: 58px;
+  opacity: 0.9;
+  padding: 16px;
+  font-size: 24px;
+  overflow: hidden;
+  color:#123;
+}
