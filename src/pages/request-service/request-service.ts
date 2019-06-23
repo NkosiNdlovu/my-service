@@ -383,7 +383,7 @@ export class RequestServicePage {
 
     // set defaults
     this.serviceRequest.requestDate = new Date();
-    this.serviceRequest.bookingDate = new Date();
+    this.serviceRequest.bookingDate = this.bookingDate;
     this.serviceRequest.id = Guid.newGuid();
     this.serviceRequest.service = this.selectedService;
     this.serviceRequest.location = this.currentLocation;

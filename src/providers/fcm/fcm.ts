@@ -25,7 +25,7 @@ export class FcmWashProvider {
         
         that.saveTokenToFirestore(token, profile)
        })
-      .catch(error => alert('Error getting token' + error));
+      .catch(error => alert('Error getting token: ' + error));
 
     this.fcm.onNotificationOpen()
       .subscribe(data => alert(`User opened a notification ${data}`));

@@ -1,3 +1,4 @@
+import { RequestCountDownPage } from './../pages/request-count-down/request-count-down';
 import { ApplicationRef, Component, ViewChild } from '@angular/core';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -69,6 +70,12 @@ export class MyApp {
       icon: "ios-apps-outline",
       component: RequestHistoryPage,
       roles: { user: false, provider: false, admin: true }
+    },
+    {
+      title: "Pending request",
+      icon: "ios-apps-outline",
+      component: RequestCountDownPage,
+      roles: { user: true, provider: false, admin: false }
     },
     {
       title: "My History",

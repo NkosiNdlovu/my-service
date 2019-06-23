@@ -59,6 +59,7 @@ import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
 import { UserService } from '../providers/users-service/users-service';
 import { MyApp } from './app.component';
+import { RequestCountDownPage } from '../pages/request-count-down/request-count-down';
 
 // Initialize Firebase
 export const firebaseConfig = {
@@ -129,7 +130,8 @@ let pages = [
   MenuPage,
   SettingsPage,
   SearchPage,
-  RequestHistoryPage
+  RequestHistoryPage,
+  RequestCountDownPage
 ];
 
 export function declarations() {
@@ -165,7 +167,8 @@ export function declarations() {
     RequestHistoryPage,
     TimeAgoPipe,
     MySchedulePage,
-    CreateSchedulePage
+    CreateSchedulePage,
+    RequestCountDownPage
   ];
 }
 

@@ -8,17 +8,65 @@
   </ion-header>
   
   <ion-content text-center padding>
-      <div class="splash-logo-container">
-          <div class="splash-logo"></div>
-        </div>
+    
     <h2>Pending request</h2>
-    <ion-card>
+    
+    <ion-card *ngIf="!serviceRequests.length">
         <ion-item>
           <div text-center>
-           My request
+           No pending requests
           </div>
         </ion-item>
     </ion-card>
+
+    <ion-list lines="none">
+      <ion-item  class="service-request-card" *ngFor="let request of serviceRequests" >
+          <!-- (click)="loadAction(request)" -->
+        <h3 style="color:black" >{{request.service?.name}}  - {{request.vehicleType?.name }} <span *ngIf="request.addedOptions">-</span>{{getSelectedOptions(request)}} </h3>
+        <p>
+          <button ion-button icon-left outline ios (click)="openMap(request,$event);">
+            <ion-icon name="navigate"></ion-icon>
+            View Map
+          </button>
+  
+          <button ion-button icon-left outline  (click)="ackRequest(request,$event)">
+            <ion-icon *ngIf="request?.acknowledgedBy" style="color:green" name="ios-checkbox-outline"></ion-icon>
+            <ion-icon *ngIf="!request?.acknowledgedBy" style="color:red" name="ios-car-outline"></ion-icon>
+            Acknowledge
+          </button>
+  
+        <!-- </p> -->
+        <p>
+          Provider:
+          <span *ngIf="!request.provider" style="color:red">None </span>
+          <span *ngIf="request.provider">{{request.provider.firstName}},
+            <span *ngIf="request.provider && request.provider.acceptJob"> <ion-icon style="color:green"  name="checkmark"> <span>HAS ACCEPTED</span></ion-icon></span>
+            <span *ngIf="request.provider && request.provider.declineJob"> <ion-icon style="color:red"  name="close"> <span>HAS DECLINED</span></ion-icon></span>
+            <span *ngIf="request && request.provider && !request.provider.acceptJob && !request.provider.declineJob"><ion-icon style="color:orange"  name="close"> <span> HAS NOT ACCEPTED</span></ion-icon></span>
+          </span>
+        </p>
+  
+        <p>
+          Job #: <strong> {{getTransactionNumber(request)}} </strong>
+        </p>
+        
+        <p *ngIf="request.provider && request.provider.arrivalTime">
+          <span> <span>HAS ARRIVED: {{request.provider.arrivalTime | date : 'HH:mm' }}</span></span>
+        </p>
+  
+        <p *ngIf="request.provider && request.provider.completionTime">
+            <span> <span>DONE: {{request.provider.completionTime | date : 'HH:mm' }}</span></span>
+        </p>
+  
+        <p>
+          <ion-note>Requested {{request.requestDate | timeAgo }}</ion-note>
+          <br/>
+          <ion-note>Wash day: {{request.bookingDate | date}} ({{request.bookingTimeRangeStart}} - {{request.bookingTimeRangeEnd}})</ion-note>
+        </p>
+  
+      </ion-item>
+    </ion-list>
+  
 
     <button round class="btn-request" ion-button block padding (click)="requestCarWash()">
       <span padding margin>
