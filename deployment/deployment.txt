@@ -24,3 +24,4 @@ zipalign -v 4 "C:\projects\car-wash\platforms\android\app\build\outputs\apk\rele
 Issues:
 
 https://stackoverflow.com/questions/56014935/problem-with-play-services-measurement-base-on-ionic
+https://forum.ionicframework.com/t/firebase-app-unable-to-compile-on-android-with-aapt-error/166564/7
