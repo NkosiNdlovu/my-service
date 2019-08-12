@@ -21,6 +21,7 @@ import { TrackProgressPage } from "../track-progress/track-progress";
 import { WelcomePage } from "../welcome/welcome";
 import { CarWashOptionsPage } from "../car-wash-options/car-wash-options";
 import { VehicleType } from "./request-service.model";
+import { UserService } from "../../providers/users-service/users-service";
 
 @Component({
   selector: "page-request-service",
@@ -62,7 +63,8 @@ export class RequestServicePage {
     public requestProvider: RequestProvider,
     private modalCtrl: ModalController,
     public loadingCtrl: LoadingController,
-    private ref: ApplicationRef
+    private ref: ApplicationRef,
+    private userService: UserService
 
   ) {
     let context = this;
@@ -401,9 +403,11 @@ export class RequestServicePage {
     // check if the user is logged in
     this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
       this.unsubscribe();
+      
       if (user) {
+        var profile = this.userService.currentUser$.getValue()
         // set user name and id
-        this.serviceRequest.user = { id: user.uid, name: user.email };
+        this.serviceRequest.user = { id: user.uid, name: user.email, phoneNumber: profile.phone };
         // User is logged in- go to the confirmation page
         this.saveRequest(user);
       } else {

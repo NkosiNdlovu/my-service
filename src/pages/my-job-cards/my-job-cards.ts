@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { ActionSheetController, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
+import { ActionSheetController, LoadingController, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 
 import { ServiceProvider } from '../../models/serviceProvider';
 import { ServiceRequest } from '../../models/serviceRequest';
+import { NOTIFICATION_MESSAGES, UserNotification } from '../../models/user-notification';
+import { Notifications } from '../../providers/notifications';
 import { UserService } from '../../providers/users-service/users-service';
 import { MapPage } from '../map/map';
-import { Notifications } from '../../providers/notifications';
-import { UserNotification, NOTIFICATION_MESSAGES } from '../../models/user-notification';
 
 @Component({
   selector: "page-my-job-cards",
@@ -17,6 +17,7 @@ export class MyJobCardsPage {
   jobs: Array<ServiceRequest>;
   userId: string;
   constructor(
+    private alertCtrl: AlertController,
     public navCtrl: NavController,
     public navParams: NavParams,
     public db: AngularFirestore,
@@ -34,7 +35,7 @@ export class MyJobCardsPage {
     this.db
       .collection("/serviceRequests", ref =>
         ref.where("providerId", "==", this.userId)
-           .orderBy("requestDate", "desc")
+          .orderBy("requestDate", "desc")
       )
       .valueChanges()
       .subscribe((data: Array<ServiceRequest>) => {
@@ -92,10 +93,10 @@ export class MyJobCardsPage {
 
     if (job.provider && job.provider.acceptJob) {
       actionButtons.push({
-        text: "Navigate to job",
+        text: "View Client Address",
         role: "destructive",
         handler: () => {
-          that.navigate(job);
+          that.viewClientAddress(job);
         }
       });
 
@@ -133,7 +134,17 @@ export class MyJobCardsPage {
     actionSheet.present();
   }
 
-  navigate(job) { }
+  viewClientAddress(job) { 
+
+    let alert = this.alertCtrl.create({
+      title: 'Client Address',
+      subTitle: job.location.address,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+
 
   confirmArrival(job: ServiceRequest) {
     if (!job.provider) {

@@ -38,6 +38,7 @@ export class IdName{
 }
 
 export class UserNameSurname{
+  phoneNumber: string;
   id: string;
   name: string  ;
   surname?: string;

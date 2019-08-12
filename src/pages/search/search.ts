@@ -151,7 +151,7 @@ export class SearchPage {
     this.serviceRequest.bookingDate = new Date();
     this.serviceRequest.id = Guid.newGuid();
     this.serviceRequest.service = this.selectedService;
-    this.serviceRequest.user = {'id': user.uid, 'name': user.email};
+    this.serviceRequest.user = {'id': user.uid, 'name': user.email, phoneNumber: user.phone};
     
     this.db.collection('/serviceRequests').doc(this.serviceRequest.id).set(JSON.parse( JSON.stringify(this.serviceRequest)))
       .then((res)=>{
