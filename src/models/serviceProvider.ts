@@ -7,4 +7,5 @@ export class ServiceProvider{
   firstName?: string;
   acceptJob?: boolean;
   lastName: any;
+  phoneNumber: any;
 }

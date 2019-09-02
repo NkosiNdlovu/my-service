@@ -393,6 +393,7 @@ export class RequestServicePage {
     this.serviceRequest.bookingTimeRangeEnd = this.bookingTimeRangeEnd;
     this.serviceRequest.vehicleType = this.selectedVehicleType;
     this.serviceRequest.addedOptions = this.addedOptions;
+    this.serviceRequest.status = "PENDING";
 
     this.setProviderForCarWashStation(this.serviceRequest)
 

@@ -23,8 +23,6 @@
           <ion-icon *ngIf="!request?.acknowledgedBy" style="color:red" name="ios-car-outline"></ion-icon>
           Acknowledge
         </button>
-
-      <!-- </p> -->
       <p>
         Provider:
         <span *ngIf="!request.provider" style="color:red">None </span>
@@ -52,7 +50,15 @@
         <br/>
         <ion-note>Wash day: {{request.bookingDate | date}} ({{request.bookingTimeRangeStart}} - {{request.bookingTimeRangeEnd}})</ion-note>
       </p>
-
+      <P *ngIf="request.provider">
+        <a href="tel:{{request?.provider?.phoneNumber}}"> 
+          <ion-icon class="client-caller" name="call"></ion-icon> Call provider
+        </a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="tel:{{request?.user?.phoneNumber}}"> 
+          <ion-icon class="client-caller" name="call"></ion-icon> Call Client 
+        </a>
+      </P>
     </ion-item>
   </ion-list>
 

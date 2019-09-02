@@ -32,7 +32,9 @@ export class RequestHistoryPage {
 
   ionViewDidLoad() {
     this.db
-      .collection("/serviceRequests", ref => ref.orderBy("requestDate", "desc"))
+      .collection("/serviceRequests", ref => 
+      ref.where("status", "==", "PENDING")
+      .orderBy("requestDate", "desc"))
       .valueChanges()
       .subscribe((data: Array<ServiceRequest>) => {
         this.serviceRequests = data;
@@ -97,14 +99,6 @@ export class RequestHistoryPage {
       });
     }
 
-    actionButtons.push({
-      text: "Call Customer",
-      role: "destructive",
-      handler: () => {
-        that.callCustomer(serviceRequest);
-      }
-    });
-
     let actionSheet = this.actionSheetCtrl.create({
       title: "Actions",
       buttons: actionButtons
@@ -121,10 +115,6 @@ export class RequestHistoryPage {
     serviceRequest.acknowledgedBy = this.userId;
 
     this.saveRequest(serviceRequest);
-  }
-
-  callCustomer(serviceRequest) {
-    // Use the call API
   }
 
   assignToProvider(serviceRequest) {

@@ -12,7 +12,6 @@ import { ServiceRequest } from "../../models/serviceRequest";
 import { MapPage } from "../map/map";
 import { RequestHistoryPage } from "../request-history/request-history";
 
-// @IonicPage()
 @Component({
   selector: "page-provider-search",
   templateUrl: "provider-search.html"
@@ -28,6 +27,7 @@ export class ProviderSearchPage {
     public db: AngularFirestore,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController
+
   ) {
     this.serviceRequest = navParams.get("serviceRequest");
   }
@@ -37,12 +37,18 @@ export class ProviderSearchPage {
   }
 
   selectProvider(provider) {
-    this.serviceRequest.provider = new ServiceProvider();
-    this.serviceRequest.providerId = provider.id;
-    this.serviceRequest.provider.id = provider.id;
-    this.serviceRequest.provider.firstName = provider.firstName;
-    this.serviceRequest.provider.lastName = provider.lastName;
-    this.saveRequest(this.serviceRequest);
+    this.db.collection("profiles").doc(provider.id).valueChanges().subscribe(
+      (profile: any) => {
+        
+        this.serviceRequest.provider = new ServiceProvider();
+        this.serviceRequest.providerId = provider.id;
+        this.serviceRequest.provider.id = provider.id;
+        this.serviceRequest.provider.firstName = provider.firstName;
+        this.serviceRequest.provider.lastName = provider.lastName;
+        this.serviceRequest.provider.phoneNumber = profile.phone;
+        this.saveRequest(this.serviceRequest);
+      }
+    );
   }
 
   openMap(provider) {

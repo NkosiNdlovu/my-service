@@ -34,8 +34,10 @@ export class MyJobCardsPage {
   ionViewDidLoad() {
     this.db
       .collection("/serviceRequests", ref =>
-        ref.where("providerId", "==", this.userId)
-          .orderBy("requestDate", "desc")
+        ref
+        .where("providerId", "==", this.userId)
+        .where("status", "==", "PENDING")
+        .orderBy("requestDate", "desc")
       )
       .valueChanges()
       .subscribe((data: Array<ServiceRequest>) => {

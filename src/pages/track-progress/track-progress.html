@@ -22,13 +22,21 @@
         <p>
           <ion-note>{{serviceRequest.bookingDate | date}} ({{serviceRequest.bookingTimeRangeStart}} - {{serviceRequest.bookingTimeRangeEnd}})</ion-note>
         </p>  
-
+        <p>
+          <button ion-button icon-left outline ios (click)="cancelRequest(serviceRequest,$event);">
+            <ion-icon name="close"></ion-icon>
+            Cancel
+          </button>
+  
+          <a href="tel:{{serviceRequest?.provider?.phoneNumber}}" *ngIf="serviceRequest.provider"> 
+            <ion-icon class="client-caller" name="call"></ion-icon> Call provider
+          </a>
+        <p>
         <p>
             Request Received:
             <ion-icon *ngIf="serviceRequest?.acknowledgedBy" style="color:green" name="ios-checkbox-outline"></ion-icon>
             <ion-icon *ngIf="!serviceRequest?.acknowledgedBy" style="color:red" name="ios-car-outline"></ion-icon>
         </p>
-
         <p>
           <ion-icon style="color:green" *ngIf="serviceRequest.provider && serviceRequest.provider.acceptserviceRequest" name="checkmark"></ion-icon>
           <span *ngIf="!serviceRequest.provider" style="color:red">Not yet assigned to a provider </span>
@@ -54,10 +62,7 @@
         <p>
             <ion-note>{{serviceRequest.requestDate | timeAgo }}</ion-note>
         <p>
-
       </ion-item>
     </div>
   </ion-list>
-
-
 </ion-content>

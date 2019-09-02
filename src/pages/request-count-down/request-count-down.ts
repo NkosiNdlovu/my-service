@@ -30,7 +30,7 @@ export class RequestCountDownPage {
       .collection("/serviceRequests", ref => 
         ref
         .where("user.id", "==", this.userId)
-        .where("bookingDate", ">=", new Date().toISOString().substring(0,10))
+        .where("bookingDate", "<=", new Date().toISOString().substring(0,10))
         .orderBy("bookingDate", "desc")
         )
       .valueChanges()
