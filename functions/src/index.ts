@@ -1,8 +1,42 @@
 import * as functions from 'firebase-functions';
 
 import * as admin from 'firebase-admin';
+
+const nodemailer = require('nodemailer');
+const cors = require('cors')({origin: true});
+
 admin.initializeApp();
 
+/**
+* Here we're using Gmail to send 
+*/
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+      user: 'nkosi05@gmail.com',
+      pass: 'memeza'
+  }
+});
+
+function sendEmail(serviceName) { 
+  const mailOptions = {
+     from: 'nkosi05@gmail.com', 
+      to: 'fyrewash@gmail.com',
+      subject: 'New car wash request!!!', 
+      html: `<p style="font-size: 16px;">${serviceName} has been requested!</p>
+          <br />
+          <img src="https://images.prod.meredith.com/product/fc8754735c8a9b4aebb786278e7265a5/1538025388228/l/rick-and-morty-pickle-rick-sticker" />
+      ` 
+  };
+
+  // returning result
+  return transporter.sendMail(mailOptions, (error, info) => {
+      if(error){
+          return error.toString();
+      }
+      return null;
+  });
+}
 
 exports.newServiceRequestsNotification = functions.firestore
   .document('serviceRequests/{id}')
@@ -37,7 +71,26 @@ exports.newServiceRequestsNotification = functions.firestore
       const token = result.data().token;
 
       tokens.push(token)
-    })
+    });
+
+
+    const mailOptions = {
+     from: 'nkosi05@gmail.com', 
+      to: 'fyrewash@gmail.com',
+      subject: 'New car wash request!!!', 
+      html: `<p style="font-size: 16px;">${data.service.name} has been requested!</p>
+          <br />
+          <img src="https://images.prod.meredith.com/product/fc8754735c8a9b4aebb786278e7265a5/1538025388228/l/rick-and-morty-pickle-rick-sticker" />
+      ` 
+    };
+
+    // returning result
+    transporter.sendMail(mailOptions, (error, info) => {
+        // if(error){
+        //     return error.toString();
+        // }
+        // return null;
+    });
 
     return admin.messaging().sendToDevice(tokens, payload);
 
@@ -85,6 +138,20 @@ exports.newJobCardAssignedNotification = functions.firestore
 
       tokens.push(token)
     })
+
+    const mailOptions = {
+     from: 'nkosi05@gmail.com', 
+      to: 'fyrewash@gmail.com',
+      subject: 'You have been assigned new job card', 
+      html: `<p style="font-size: 16px;">You have been assigned new job card</p>
+          <br />
+          <img src="https://images.prod.meredith.com/product/fc8754735c8a9b4aebb786278e7265a5/1538025388228/l/rick-and-morty-pickle-rick-sticker" />
+      ` 
+    };
+
+    // returning result
+    transporter.sendMail(mailOptions, (error, info) => { // 
+    });
 
     return admin.messaging().sendToDevice(tokens, payload);
 
